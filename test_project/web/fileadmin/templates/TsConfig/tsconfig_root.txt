@@ -1,0 +1,267 @@
+# Default PAGE object:
+page = PAGE
+page {
+# Allgemeine Seiteneigenschaften setzen
+  config.doctype = html5
+# Metatags angeben
+  meta.author = Paul Luding
+  meta.language = de
+  meta.description = Dies ist die Beschreibung
+  meta.viewport = width=device-width, initial-scale=1
+#CSS-datein einfügen
+  includeCSS{
+    main1 = fileadmin/css/custom.css
+    main2 = fileadmin/css/style.css
+    main2.title = main
+    main2.media = all
+  }
+#JS-datein einfügen
+  includeJSFooter{
+    main1 = fileadmin/javascript/main.js
+    main2 = fileadmin/javascript/app.js
+  }
+
+  headerData {
+    10 = IMAGE
+    10{
+      file{
+        import =1
+        import{
+          data = levelmedia:-1,slide
+          listNum = 0
+          }
+        treatIdAsReference = 1
+        width = 1920
+        }
+         sourceCollection{
+           small{
+             width=1920
+             pixelDensity= 1
+           }
+           big{
+             width=1920
+             pixelDensity = 2
+           }
+      }
+      layoutKey = cssbg
+      layout {
+        cssbg{
+          element = <style type="text/css">###SOURCECOLLECTION###</style>
+          source = @media(min-resolution: ###PIXELDENSITY###dppx),
+          (-webkit-min-device-pixel-ratio: ###PIXELDENSITY###)
+            { .trailer{background-image:url(###SRC###); }}
+          }
+        }
+      }
+    }
+
+# Designvorlage integrieren
+10 = FLUIDTEMPLATE
+  10{
+    file.cObject = CASE
+    file.cObject{
+        key{
+            data = levelfield: -1, backend_layout_next_level, slide
+            override.data = TSFE:page|backend_layout
+            }
+        1 = TEXT
+        1.value = fileadmin/templates/vorlage.html
+
+        2 = TEXT
+        2.value = fileadmin/templates/vorlage_einspaltig.html
+
+        default < .1
+        }
+      variables{
+      brandLineFirst = TEXT
+      brandLineFirst.value = MedienUnternehmen
+
+      brandLineSecond = TEXT
+      brandLineSecond.value = Luding, Paul
+
+      contentTrailer = TEXT
+      contentTrailer.value = HALLLLLOOOOOOOO
+
+      today = TEXT
+      today.data = date:d.m.Y
+
+      labelNews = TEXT
+      labelNews.value = Aktuelles
+
+      labelToday = TEXT
+      labelToday.value = Heute ist der
+
+      #Inhalt der Hauptspalte ausgeben
+      contentMain = CONTENT
+      contentMain{
+      table = tt_content
+      select.orderBy = sorting
+      select.where = colPos=0
+      select.languageField = sys_language_uid
+      }
+
+      contentMargin = COA
+      contentMargin{
+      10 < styles.content.get
+      10.select.where = colPos=2
+
+
+      20 < styles.content.get
+      20.select.where = colPos=2
+      20.select.pidInList = 21
+      }
+
+       #Den Inhalt des Trailers auslesen
+       contentTrailer < styles.content.get
+       contentTrailer.select.where = colPos=5
+      contentUserlist = lib.userlist
+      contentUserlist = CONTENT
+      contentUserlist {
+      table = fe_users
+
+      select.orderBy = username
+
+
+      renderObj = TEXT
+      renderObj{
+        field = username
+        wrap = <br />
+        }
+      }
+
+      menuBreadcrumb = HMENU
+      menuBreadcrumb {
+    special = rootline
+    special.range = 0|-2
+
+    1 = TMENU
+    1 {
+        NO.linkWrap =  | »
+        CUR = 1
+        CUR.linkWrap =  |
+        CUR.doNotLinkIt = 1
+    }
+
+}
+
+
+      menuPrimary = HMENU
+      menuPrimary{
+      special = directory
+      special.value = 5
+
+      wrap = <ul class="nav navbar-nav navbar-right">|</ul>
+
+      1 = TMENU
+      1{
+      expAll = 1
+      NO = 1
+      NO{
+      wrapItemAndSub = <li>|</li>
+        }
+      ACT < .NO
+      ACT {
+      wrapItemAndSub = <li class="active">|</li>
+        }
+
+        IFSUB < .NO
+        IFSUB {
+          wrapItemAndSub = <li class="dropdown"> | </li>
+          linkWrap = | <span class="caret"></span>
+          ATagParams = class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          ATagBeforeWrap = 1
+       }
+        ACTIFSUB < .IFSUB
+        ACTIFSUB{
+          wrapItemAndSub = <li class="active dropdown">|</li>
+        }
+      }
+        2 < .1
+        2{
+        wrap = <ul class="dropdown-menu">|</ul>
+        }
+      }
+
+
+      menuSecondary = HMENU
+      menuSecondary{
+        special = directory
+        special.value = 12
+        wrap = <ul>|</ul>
+      1 = TMENU
+        1{
+          NO=1
+          NO{
+            wrapItemAndSub= <li>|</li>
+        }
+      }
+
+      logo = IMAGE
+      logo{
+        file = fileadmin/images/logo.png
+        params = class="logo"
+      }
+
+      image = IMG_RESOURCE
+      image{
+        file{
+          import=1
+          import{
+            data = levelmedia:-1,slide
+            listNum = 0
+            }
+          treatIdAsReference = 1
+          width = 1920
+        }
+      }
+      sourceCollection{
+        small{
+          width=200
+          srcsetCandidate = 1x
+          }
+        big{
+          width=200
+          pixelDensity = 2
+          srcsetCandidate=2x
+          }
+        }
+      layoutKey = srcset
+      layout{
+        srcset{
+          element = <img src="###SRC###" srcset="###SOURCECOLLECTION###" ###PARAMS### ###ALTPARAMS###>
+          source=|*|###SRC### ###SRCSETCANDIDATE###,|*|###SRC### ###SRCSETCANDIDATE###
+          }
+        }
+      }
+        }
+      }
+    }
+  }
+
+lib.contentElement {
+partialRootPath{
+10 = fileadmin/templates/content/partials
+}
+}
+
+config {
+    #prefixLocalAnchors = all
+    #simulateStaticDocuments = 0
+    #baseURL >
+    #tx_realurl_enable = 1
+
+  ### activate RealUrl
+  simulateStaticDocuments = 0
+  tx_realurl_enable = 1
+  baseURL = {$baseurl}
+  prefixLocalAnchors = all
+  typolinkCheckRootline = 1
+  ### remove baseurl, use absolute links instead
+  baseURL >
+  prefixLocalAnchors >
+  absRefPrefix = /
+
+
+
+
+}
