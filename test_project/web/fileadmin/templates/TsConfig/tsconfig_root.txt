@@ -1,3 +1,12 @@
+config {
+linkVars = L
+uniqueLinkVars = 1
+sys_language_uid = 0
+language = de
+locale_all = de_DE
+}
+
+
 # Default PAGE object:
 page = PAGE
 page {
@@ -88,8 +97,15 @@ page {
       labelNews = TEXT
       labelNews.value = Aktuelles
 
-      labelToday = TEXT
-      labelToday.value = Heute ist der
+      labelToday = COA_INT
+      labelToday{
+      10 = TEXT
+      10.value = Guten Morgen
+      10.wrap = |!&nbsp;
+
+      20 = TEXT
+      20.value = Heute ist der
+      }
 
       #Inhalt der Hauptspalte ausgeben
       contentMain = CONTENT
@@ -233,15 +249,51 @@ page {
           }
         }
       }
+
+      #Den Sprachwechsler darstellen
+      language = COA
+      language {
+      wrap = <div class="btn-group">|</div>
+      10 = TEXT
+      10{
+        value = Sprache
+        wrap(
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-globee"></i>&nbsp;
+                |
+                &nbsp;<span class="caret"></span>
+            </a>
+            )
+         }
+      20 = HMENU
+      20{
+      special = language
+      special.value = 0,1
+
+      1 = TMENU
+      1{
+      wrap = <ul class="dropdown-menu dropdown-menu-right">|</ul>
+
+      NO = 1
+        NO{
+           linkWrap = <li>|</li>
+           stdWrap.override = Deutsch|| Englisch
+
+              }
+          ACT < .NO
+          ACT.linkWrap = <li class="active">|</li>
+          }
+         }
+      }
+      }
         }
       }
     }
-  }
 
 lib.contentElement {
-partialRootPath{
-10 = fileadmin/templates/content/partials
-}
+    partialRootPath{
+    10 = fileadmin/templates/content/partials
+    }
 }
 
 config {
@@ -260,8 +312,23 @@ config {
   baseURL >
   prefixLocalAnchors >
   absRefPrefix = /
-
-
-
-
 }
+#Zeitabhängiger Begrüßungstext
+[hour = >10]
+page.10.variables.labelToday.10.value = Guten Tag
+[hour = >18]
+page.10.variables.labelToday.10.value = Guten Abend
+
+#Mehrsprachigkeit
+[globalVar = GP:L=1]
+config {
+sys_language_uid = 1
+language = en
+locale_all = en_UK
+}
+page.10.variables.language{
+value = Deutsch
+typolink.additionalParams = &L=0
+}
+page.10.variables.langage.20.1.NO.stdWrap.override = German || English
+[global]
