@@ -1,3 +1,4 @@
+/*
 var cacheName = 'typo3-pwa-01';
 var filesToCache = [
 	'./',
@@ -30,3 +31,4 @@ self.addEventListener('fetch', function(pEvent) {
 		})
 	);
 });
+*/

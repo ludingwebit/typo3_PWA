@@ -1,62 +1,50 @@
 <header>
-    <div class="trailer">
-        <nav class="navbar navbar-inverse navbar-fixed-top" data-spy="affix" data-offset-top="80">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    {logo -> f:format.raw()}
-                    <a class="navbar-brand" href="#">
-                        <div class="brand-line">{brandLineFirst}</div>
-                        <div class="brand-line">{brandLineSecond}</div>
-                    </a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    {menuPrimary -> f:format.raw()}
-                </div>
-            </div>
-        </nav>
-
-        <div class="jumbotron">
-            <div class="container">{contentTrailer -> f:format.raw()}</div>
+    <nav id="sidebar">
+        <div id="dismiss">
+            <span class="icon-arrow-left"></span>
         </div>
-    </div>
-
-    <div class="infobar">
-        <div class="container">
-            <div class="pull-right search">
-                <form class="form-inline" action="{searchUrl}" method="post">
-                    <div class="input-group">
-                        <input type="text" name="tx_indexedsearch[sword]" class="form-control"
-                               placeholder="{labelSearchPlaceholder}"/>
-                        <span class="input-group-btn">
-              <button type="submit" class="btn btn-success">
-                <i class="glyphicon glyphicon-search"></i>
-                {labelSearch}
-              </button>
-            </span>
-                    </div>
-                    <div class="clearfix"></div>
-                </form>
-            </div>
-            <div class="print">
-                {print -> f:format.raw()}
-            </div>
-            <div class="language">
-                {language -> f:format.raw()}
-            </div>
-            Sie sind hier: {menuBreadcrumb -> f:format.raw()}
+        <div class="sidebar-header">
+            {logo -> f:format.raw()}
         </div>
-    </div>
+        {menuPrimary -> f:format.raw()}
+    </nav>
+    <nav id="top-bar">
+        <div class="frame row">
+            <!--Menu Button-->
+            <!--           <div class="col-sm-1">
+                           <button type="button" id="sidebarCollapse">
+                               <span class="icon-align-justify"></span>
+                           </button>
+                       </div>-->
+            <div class="col-sm">
+                <h2 id="brand-name">{brandName -> f:format.raw()}</h2>
+                <!--                <button type="button" id="settings-mobile" class="dropdown-btn">
+                                    <span class="icon-more-vertical"></span>
+                                </button>-->
+            </div>
+            <div id="settings-mobile" class="material-dropdown">
+                <figure></figure>
+                <figure class="middle"></figure>
+                <p class="cross">x</p>
+                <figure></figure>
+                <ul class="dropdown">
+                    <li><a href="#">Einstellungen</a></li>
+                    <li><a onclick="reloadSite()" href="javascript: void(0)">Aktualisieren</a></li>
+                </ul>
+            </div>
+            <div id="settings-desktop">
+                <a class="button" href="javascript: void(0)">Einstellungen</a>
+                <a class="button" onclick="reloadSite()" href="javascript: void(0)">Aktualisieren</a>
+            </div>
+        </div>
+    </nav>
 </header>
 
-<main class="container">
+<main id="content" class="container">
     <div class="row">
-        <button id="hello-button">Hello-Button</button>
+        <!--
+                <button id="hello-button">Hello-Button</button>
+        -->
         <f:if condition="{contentMargin}">
             <f:then>
                 <div class="col-md-8 content-main">{contentMain -> f:format.raw()}</div>
@@ -74,27 +62,33 @@
             </f:if>
         </div>
     </div>
-</main>
 
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <h4>{labelNews}</h4>
-                <aside class="row">
-                    <div class="col-md-4 date-wrapper">
-                        {labelToday -> f:format.raw()}
-                        <div class="date">{today}</div>
-                    </div>
-                    <div class="col-md-8 news-wrapper">
-                        {footerNews -> f:format.raw()}
-                    </div>
-                </aside>
-            </div>
-            <div class="col-md-4">
-                <h4>{labelMore}</h4>
-                <nav>{menuSecondary -> f:format.raw()}</nav>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>{labelNews}</h4>
+                    <aside class="row">
+                        <div class="col-md-4 date-wrapper">
+                            {labelToday -> f:format.raw()}
+                            <div class="date">{today}</div>
+                        </div>
+                        <div class="col-md-8 news-wrapper">
+                            {footerNews -> f:format.raw()}
+                        </div>
+                    </aside>
+                </div>
+                <div class="col-md-4">
+                    <h4>{labelMore}</h4>
+                    <nav>{menuSecondary -> f:format.raw()}</nav>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
+</main>
+<div id="footer">
+    <nav style="transition: all 0.3s ease 0s;" id="mobile-bottom-bar" class="mobile-bottom-bar">
+        {menuPrimaryMobile -> f:format.raw()}
+    </nav>
+</div>

@@ -20,7 +20,7 @@ page {
 #CSS-datein einfügen
   includeCSS{
     main1 = fileadmin/css/custom.css
-    main2 = fileadmin/css/style.css
+    main2 = fileadmin/css/mini-dark.min.css
     main2.title = main
     main2.media = all
   }
@@ -84,28 +84,37 @@ page {
       variables{
       brandLineFirst = TEXT
       brandLineFirst.value = MedienUnternehmen
+      brandLineFirst.lang.en = MediaGroup
 
       brandLineSecond = TEXT
       brandLineSecond.value = Luding, Paul
 
-      contentTrailer = TEXT
-      contentTrailer.value = HALLLLLOOOOOOOO
+      brandName = TEXT
+      brandName.value = Restaurant webit!
+      brandName.params = class="brand-name"
 
       today = TEXT
       today.data = date:d.m.Y
 
       labelNews = TEXT
       labelNews.value = Aktuelles
+      labelNews.lang.en = News
 
       labelToday = COA_INT
       labelToday{
       10 = TEXT
       10.value = Guten Morgen
+      10.lang.en = Good Morning
       10.wrap = |!&nbsp;
 
       20 = TEXT
       20.value = Heute ist der
+      20.lang.en = Today is
       }
+
+      labelMore = TEXT
+      labelMore.value = Mehr
+      labelMore.lang.en = More
 
       #Inhalt der Hauptspalte ausgeben
       contentMain = CONTENT
@@ -160,43 +169,42 @@ page {
 
 }
 
+    menuPrimary = HMENU
+    menuPrimary {
+        special = directory
+        special.value = 5
 
-      menuPrimary = HMENU
-      menuPrimary{
-      special = directory
-      special.value = 5
+        wrap = <ul class="list-unstyled components">|</ul>
 
-      wrap = <ul class="nav navbar-nav navbar-right">|</ul>
-
-      1 = TMENU
-      1{
-      expAll = 1
-      NO = 1
-      NO{
-      wrapItemAndSub = <li>|</li>
+        1 = TMENU
+        1 {
+        NO = 1
+        NO {
+        wrapItemAndSub = <li>|</li>
+            }
         }
-      ACT < .NO
-      ACT {
-      wrapItemAndSub = <li class="active">|</li>
-        }
-
-        IFSUB < .NO
-        IFSUB {
-          wrapItemAndSub = <li class="dropdown"> | </li>
-          linkWrap = | <span class="caret"></span>
-          ATagParams = class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-          ATagBeforeWrap = 1
+        logo = IMAGE
+        logo{
+          file = fileadmin/images/logo.png
+          params = class="logo"
+             }
        }
-        ACTIFSUB < .IFSUB
-        ACTIFSUB{
-          wrapItemAndSub = <li class="active dropdown">|</li>
-        }
-      }
-        2 < .1
-        2{
-        wrap = <ul class="dropdown-menu">|</ul>
-        }
-      }
+
+       menuPrimaryMobile = HMENU
+       menuPrimaryMobile {
+            special = directory
+            special.value = 5
+
+            1 = TMENU
+            1 {
+            NO = 1
+            NO.ATagParams = class="footer-link"
+            NO{
+                 allWrap.insertData=1
+                 allWrap = <li><span id="menu-item-{field:uid}">|
+                 wrapItemAndSub = |</span></li>
+               }
+            }
 
 
       menuSecondary = HMENU
@@ -257,6 +265,7 @@ page {
       10 = TEXT
       10{
         value = Sprache
+        lang.en = Language
         wrap(
              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-globee"></i>&nbsp;
@@ -316,8 +325,10 @@ config {
 #Zeitabhängiger Begrüßungstext
 [hour = >10]
 page.10.variables.labelToday.10.value = Guten Tag
+page.10.variables.labelToday.10.value.lang.en = Good day
 [hour = >18]
 page.10.variables.labelToday.10.value = Guten Abend
+page.10.variables.labelToday.10.value.lang.en = Good Evening
 
 #Mehrsprachigkeit
 [globalVar = GP:L=1]
