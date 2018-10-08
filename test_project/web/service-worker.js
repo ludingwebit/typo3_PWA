@@ -2,7 +2,7 @@
 var cacheName = 'typo3-pwa-01';
 var filesToCache = [
 	'./',
-	'/fileadmin/css/custom.css',
+	'/fileadmin/css/app.css',
 	'/fileadmin/css/style.css',
 	'/fileadmin/javascript/app.js'
 ];

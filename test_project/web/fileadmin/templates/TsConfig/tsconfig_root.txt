@@ -19,7 +19,7 @@ page {
   meta.viewport = width=device-width, initial-scale=1
 #CSS-datein einfügen
   includeCSS{
-    main1 = fileadmin/css/custom.css
+    main1 = fileadmin/css/app.css
     main2 = fileadmin/css/mini-dark.min.css
     main2.title = main
     main2.media = all
@@ -82,6 +82,7 @@ page {
         default < .1
         }
       variables{
+
       brandLineFirst = TEXT
       brandLineFirst.value = MedienUnternehmen
       brandLineFirst.lang.en = MediaGroup
@@ -92,8 +93,11 @@ page {
       brandName = TEXT
       brandName.value = Restaurant webit!
       brandName.params = class="brand-name"
-
-      today = TEXT
+        logo = IMAGE
+        logo{
+          file = fileadmin/images/logo.jpg
+          params = class="logo"
+             }      today = TEXT
       today.data = date:d.m.Y
 
       labelNews = TEXT
@@ -185,7 +189,7 @@ page {
         }
         logo = IMAGE
         logo{
-          file = fileadmin/images/logo.png
+          file = fileadmin/images/logo.jpg
           params = class="logo"
              }
        }

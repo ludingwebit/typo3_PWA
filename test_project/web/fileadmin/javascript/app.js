@@ -1,20 +1,13 @@
-/*
-'use strict';
+// Sorgt dafür, dass das Reservierungsdatum immer das tägliche anzeigt
+Date.prototype.toDateInputValue = (function () {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0, 10);
+});
 
-(function () {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('../service-worker.js').then(function () {
-            console.log('Service Worker wurde registriert');
-        });
-    } else {
-        console.warn('Browser bietet keine Unterstützung für Service Worker');
-    }
-
-    document.getElementById('hello-button').addEventListener('click', function () {
-        alert('Hallo zurück!');
-    });
-})();*/
-
+function byId(pId) {
+    return document.getElementById(pId);
+}
 //Material Dropdown Menu for Mobile View
 let materialdropdown = document.querySelector('.material-dropdown'),
     middle = document.querySelector('.middle'),
@@ -44,7 +37,6 @@ $(document).ready(function () {
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 let dropdown = document.getElementsByClassName("dropdown-btn");
 let i;
-
 for (i = 0; i < dropdown.length; i++) {
     dropdown[i].addEventListener("click", function () {
         this.classList.toggle("active");
@@ -61,6 +53,7 @@ window.onload = responsiveSidebar;
 function reloadSite() {
     location.reload();
 }
+
 function responsiveSidebar() {
     let myWidth = window.innerWidth;
     let setMob = document.getElementById('settings-mobile');
@@ -68,7 +61,7 @@ function responsiveSidebar() {
     let diss = document.getElementById('dismiss');
     let sidebar = document.getElementById('sidebar');
     let mobilebottombar = document.getElementById('mobile-bottom-bar');
-    if (myWidth >= 751) {
+    if (myWidth >= 900) {
         console.log("Size: ", myWidth);
         $("#sidebar").addClass('active');
         sidebar.style.transition = "unset";
@@ -78,7 +71,16 @@ function responsiveSidebar() {
         Object.assign(setDesk.style, {display: "flex", position: "relative"});
         Object.assign(setMob.style, {display: "none"})
         Object.assign(mobilebottombar.style, {display: "none",})
-    } else {
+    } else if (window.matchMedia("(orientation: portrait)").matches) {
+        Object.assign(sidebar.style, {transition: "all 0.3s"});
+        $("#sidebar").removeClass('active');
+        document.getElementById('content').style.padding = "60px 0 60px 0";
+        diss.style.display = '-webkit-inline-box';
+        Object.assign(setMob.style, {display: "inline-block", float: "right", margin: "0px 10px 0px 0px"})
+        Object.assign(setDesk.style, {display: "none", position: "absolute"});
+        document.getElementById('brand-name').style.paddingLeft = "20px";
+        Object.assign(mobilebottombar.style, {display: "flex",})
+    } else if (window.matchMedia("(orientation: landscape)").matches) {
         Object.assign(sidebar.style, {transition: "all 0.3s"});
         $("#sidebar").removeClass('active');
         document.getElementById('content').style.padding = "60px 0 60px 0";
@@ -88,5 +90,5 @@ function responsiveSidebar() {
         document.getElementById('brand-name').style.paddingLeft = "20px";
         Object.assign(mobilebottombar.style, {display: "flex",})
     }
-
 }
+
