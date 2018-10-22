@@ -172,28 +172,6 @@ page {
     }
 
 }
-
-    menuPrimary = HMENU
-    menuPrimary {
-        special = directory
-        special.value = 5
-
-        wrap = <ul class="list-unstyled components">|</ul>
-
-        1 = TMENU
-        1 {
-        NO = 1
-        NO {
-        wrapItemAndSub = <li>|</li>
-            }
-        }
-        logo = IMAGE
-        logo{
-          file = fileadmin/images/logo.jpg
-          params = class="logo"
-             }
-       }
-
        menuPrimaryMobile = HMENU
        menuPrimaryMobile {
             special = directory
@@ -202,12 +180,15 @@ page {
             1 = TMENU
             1 {
             NO = 1
-            NO.ATagParams = class="footer-link"
+            NO
             NO{
-                 allWrap.insertData=1
-                 allWrap = <li><span id="menu-item-{field:uid}">|
-                 wrapItemAndSub = |</span></li>
+                 ATagParams = class="footer-link"
+                 stdWrap.wrap.insertData=1
+                 stdWrap.wrap = <span id="menu-item-{field:uid}"><p>|</p></span>
                }
+            CUR < .NO
+            CUR.ATagParams = class="footer-link active"
+            CUR.DoNotLink = 1
             }
 
 

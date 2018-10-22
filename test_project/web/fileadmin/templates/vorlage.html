@@ -1,49 +1,35 @@
 <header>
-    <nav id="sidebar">
-        <div id="dismiss">
-            <span class="icon-arrow-left"></span>
-        </div>
-        <div class="sidebar-header">
-{logo -> f:format.raw()}        </div>
-        {menuPrimary -> f:format.raw()}
-    </nav>
-    <nav id="top-bar">
-        <div class="frame row">
-            <!--Menu Button-->
-            <!--           <div class="col-sm-1">
-                           <button type="button" id="sidebarCollapse">
-                               <span class="icon-align-justify"></span>
-                           </button>
-                       </div>-->
-            <div class="col-sm">
-                <h2 id="brand-name">{brandName -> f:format.raw()}</h2>
-                <!--                <button type="button" id="settings-mobile" class="dropdown-btn">
-                                    <span class="icon-more-vertical"></span>
-                                </button>-->
+    <div>
+        <nav id="top-bar">
+            <div class="frame row">
+                <div class="col-sm">
+                    <h2 id="brand-name">{brandName -> f:format.raw()}</h2>
+                </div>
+                <div id="settings-mobile" class="material-dropdown">
+                    <figure></figure>
+                    <figure class="middle"></figure>
+                    <p class="cross">x</p>
+                    <figure></figure>
+                    <ul class="dropdown">
+                        <li><a href="#">Einstellungen</a></li>
+                        <li><a href="#">Aktualisieren</a></li>
+                    </ul>
+                </div>
             </div>
-            <div id="settings-mobile" class="material-dropdown">
-                <figure></figure>
-                <figure class="middle"></figure>
-                <p class="cross">x</p>
-                <figure></figure>
-                <ul class="dropdown">
-                    <li><a href="#">Einstellungen</a></li>
-                    <li><a onclick="reloadSite()" href="javascript: void(0)">Aktualisieren</a></li>
-                </ul>
+        </nav>
+        <nav style="transition: all 0.3s ease 0s;" id="mobile-bottom-bar" class="mobile-bottom-bar">
+            <div class="sidebar-header">
+                {logo -> f:format.raw()}
             </div>
-            <div id="settings-desktop">
-                <a class="button" href="javascript: void(0)">Einstellungen</a>
-                <a class="button" onclick="reloadSite()" href="javascript: void(0)">Aktualisieren</a>
+            <div>
+                {menuPrimaryMobile -> f:format.raw()}
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
 </header>
 
 <main id="content" class="container">
     <div class="row">
-        <!--
-                <button id="hello-button">Hello-Button</button>
-        -->
         <f:if condition="{contentMargin}">
             <f:then>
                 <div class="col-md-8 content-main">{contentMain -> f:format.raw()}</div>
@@ -84,8 +70,4 @@
         </div>
     </footer>
 </main>
-<div id="footer">
-    <nav style="transition: all 0.3s ease 0s;" id="mobile-bottom-bar" class="mobile-bottom-bar">
-        {menuPrimaryMobile -> f:format.raw()}
-    </nav>
-</div>
+
