@@ -3,9 +3,24 @@ linkVars = L
 uniqueLinkVars = 1
 sys_language_uid = 0
 language = de
-locale_all = de_DE
+locale_all = de_DE.UTF-8
 }
-
+ToDo: News Plug-In muss deutsch laufen und Englisch
+ToDo: Aufräumen der TSConfig, was wird benötigt was nicht.
+Plugin.tx_news {
+_LOCAL_LANG {
+    default {
+    }
+    de {
+      more-link = Weiterlesen...
+      back-link = Zurück zur News-Übersicht
+      list_nonewsfound = Z. Zt. Keine Meldungen / News vorhanden.
+      related-news = Ähnliche Meldungen / News
+      related-files = Dateien zu diesem Artikel
+      related-links = Links zu diesem Artikel
+    }
+  }
+}
 
 # Default PAGE object:
 page = PAGE
@@ -84,8 +99,8 @@ page {
       variables{
 
       brandLineFirst = TEXT
-      brandLineFirst.value = MedienUnternehmen
-      brandLineFirst.lang.en = MediaGroup
+      brandLineFirst.value = Restaurant webit!
+      brandLineFirst.lang.en = Restaurant webit!
 
       brandLineSecond = TEXT
       brandLineSecond.value = Luding, Paul
@@ -97,8 +112,12 @@ page {
         logo{
           file = fileadmin/images/logo.jpg
           params = class="logo"
-             }      today = TEXT
-      today.data = date:d.m.Y
+             }
+      now = TEXT
+      now{
+          data = date:U
+          strftime = %d.%m.%Y
+      }
 
       labelNews = TEXT
       labelNews.value = Aktuelles
@@ -244,41 +263,50 @@ page {
       }
 
       #Den Sprachwechsler darstellen
-      language = COA
-      language {
-      wrap = <div class="btn-group">|</div>
-      10 = TEXT
-      10{
-        value = Sprache
-        lang.en = Language
-        wrap(
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="glyphicon glyphicon-globee"></i>&nbsp;
-                |
-                &nbsp;<span class="caret"></span>
-            </a>
-            )
-         }
-      20 = HMENU
-      20{
-      special = language
-      special.value = 0,1
-
-      1 = TMENU
-      1{
-      wrap = <ul class="dropdown-menu dropdown-menu-right">|</ul>
-
-      NO = 1
-        NO{
-           linkWrap = <li>|</li>
-           stdWrap.override = Deutsch|| Englisch
-
-              }
-          ACT < .NO
-          ACT.linkWrap = <li class="active">|</li>
-          }
-         }
+temp.langmenu = HMENU
+temp.langmenu {
+  special = language
+  special.value = 0,1
+  1 = GMENU
+  1 {
+    NO = 1
+    NO {
+      XY = [10.w]+15, [10.h]+5
+      backColor = #123456
+      transparentBackground = 1
+      10 = IMAGE
+      10.file = GIFBUILDER
+      10.file {
+        backColor = white
+        XY = [10.w]+2, [10.h]+2
+        10 = IMAGE
+        10.file = typo3/gfx/flags/gb.gif  || typo3/gfx/flags/de.gif
+        10.offset = 1,1
       }
+     }
+    ACT < .NO
+    ACT {
+      # aktuelle Sprache wird hervorgehoben
+      2 = BOX
+      2.dimensions = 6,6,[10.w]-4,[10.h]-6
+      2.color = #666666
+
+      3 = EFFECT
+      3.value = blur=25
+
+      #10.file.20 = EFFECT
+      #10.file.20.value = wave = 1,20
+    }
+
+    USERDEF1 < .NO
+    USERDEF1 {
+      # nicht verfuegbare Sprachen werden ausgegraut und nicht verlinkt:
+      10.file.20 = EFFECT
+      10.file.20.value = gray
+      noLink = 1
+    }
+  }
+}
       }
         }
       }
@@ -328,3 +356,5 @@ typolink.additionalParams = &L=0
 }
 page.10.variables.langage.20.1.NO.stdWrap.override = German || English
 [global]
+
+

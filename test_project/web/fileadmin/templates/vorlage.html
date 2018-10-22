@@ -23,6 +23,8 @@
             </div>
             <div>
                 {menuPrimaryMobile -> f:format.raw()}
+                {temp.langmenu -> f:format.raw()}
+
             </div>
         </nav>
     </div>
@@ -47,27 +49,26 @@
             </f:if>
         </div>
     </div>
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <h4>{labelNews}</h4>
-                    <aside class="row">
-                        <div class="col-md-4 date-wrapper">
-                            {labelToday -> f:format.raw()}
-                            <div class="date">{today}</div>
-                        </div>
-                        <div class="col-md-8 news-wrapper">
-                            {footerNews -> f:format.raw()}
-                        </div>
-                    </aside>
-                </div>
-                <div class="col-md-4">
-                    <h4>{labelMore}</h4>
-                    <nav>{menuSecondary -> f:format.raw()}</nav>
-                </div>
+</main>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h4>{labelNews}</h4>
+                <aside class="row">
+                    <div class="col-md-4 date-wrapper">
+                        {labelToday -> f:format.raw()}
+                        <div class="date">{now}</div>
+                    </div>
+                    <div class="col-md-8 news-wrapper">
+                        {footerNews -> f:format.raw()}
+                    </div>
+                </aside>
+            </div>
+            <div class="col-md-4">
+                <h4>{labelMore}</h4>
+                <nav>{menuSecondary -> f:format.raw()}</nav>
             </div>
         </div>
-    </footer>
-</main>
-
+    </div>
+</footer>

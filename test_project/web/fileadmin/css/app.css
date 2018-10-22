@@ -25,6 +25,13 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #424242;
     -webkit-tap-highlight-color: #424242;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
 }
 
 p {
@@ -54,6 +61,20 @@ nav {
     overflow: hidden;
     padding-bottom: 60px;
 }
+footer{
+    position: static;
+    right: 0;
+    left: 0;
+    z-index: -1;
+    background: #424242 !important;
+    text-align: center;
+}
+/*Typo3 benutzt Header um die Überschriften anzuzeigen*/
+header{
+    height: 100% !important;
+    white-space: normal !important;
+}
+
 
 #sidebar nav {
     padding: 0 !important;
@@ -655,6 +676,16 @@ input:not([type]), [type="time"], [type="date"] {
         left: 250px;
         border-radius: 0;
         top: 0;
+    }
+    footer{
+        position: absolute;
+        right: 0;
+        left: 0;
+        margin-left: 250px;
+        padding: 1rem;
+        z-index: -1;
+        background: #424242 !important;
+        text-align: center;
     }
     span[id^='menu-item-'] {
         display: inline-block;
