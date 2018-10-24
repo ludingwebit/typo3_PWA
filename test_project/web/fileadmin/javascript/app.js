@@ -1,13 +1,21 @@
 // Wenn der Service Worker eine Änderung erfährt, wird ein Button getriggert, der den neuen installiert
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/fileadmin/service-worker.js").then(function (registration) {
+        console.log("Service Worker wurde registriert mit dem Scope:", registration.scope);
+    }).catch(function (err) {
+        console.log("Service Worker Registrierung fehlgeschlagen:", err);
+    });
+}
 /*
 function showRefreshUI(registration) {
     // TODO: Display a toast or refresh UI.
 
     // This demo creates and injects a button.
-            var button = document.createElement('button');
-            button.style.bottom = '-40%';
-            button.setAttribute('class', 'primary');
-            button.textContent = 'Tshis site has updated. Please click to see changes.';
+    var button = document.createElement('button');
+    button.style.bottom = '-40%';
+    button.setAttribute('class', 'primary');
+    button.textContent = 'Tshis site has updated. Please click to see changes.';
 
     button.addEventListener('click', function () {
         if (!registration.waiting) {
@@ -23,6 +31,7 @@ function showRefreshUI(registration) {
 
     document.body.appendChild(button);
 };
+
 function onNewServiceWorker(registration, callback) {
     if (registration.waiting) {
         // SW is waiting to activate. Can occur if multiple clients open and
@@ -36,7 +45,8 @@ function onNewServiceWorker(registration, callback) {
                 // A new service worker is available, inform the user
                 Notification.requestPermission().then(function (permission) {
                     if (permission === "granted") {
-                        console.log("Die Notification würde ankommen!");                     registration.showNotification("It's a trap!", notificationOptions);
+                        console.log("Die Notification würde ankommen!");
+                        registration.showNotification("It's a trap!", notificationOptions);
                     } else {
                         console.log("Hat nicht funktioniert finde eine Lösung");
                     }
@@ -54,6 +64,7 @@ function onNewServiceWorker(registration, callback) {
     // Add a listener in case a new SW is found,
     registration.addEventListener('updatefound', listenInstalledStateChange);
 }
+
 window.addEventListener('load', function () {
     navigator.serviceWorker.register('/sw.js')
         .then(function (registration) {
@@ -87,11 +98,12 @@ Date.prototype.toDateInputValue = function () {
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset())
     return local.toJSON().slice(0, 10)
 }
-function byId (pId) {
+
+function byId(pId) {
     return document.getElementById(pId)
 }
 
-function notifyMe () {
+function notifyMe() {
     // Let's check if the browser supports notifications
     if (!('Notification' in window)) {
         console.log('This browser does not support desktop notification')
