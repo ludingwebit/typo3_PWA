@@ -1,7 +1,7 @@
 // Wenn der Service Worker eine Änderung erfährt, wird ein Button getriggert, der den neuen installiert
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/fileadmin/service-worker.js").then(function (registration) {
+    navigator.serviceWorker.register("/fileadmin/workbox-sw.js").then(function (registration) {
         console.log("Service Worker wurde registriert mit dem Scope:", registration.scope);
     }).catch(function (err) {
         console.log("Service Worker Registrierung fehlgeschlagen:", err);
