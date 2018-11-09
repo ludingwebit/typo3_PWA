@@ -40,10 +40,6 @@ web/fileadmin/_processed_/2/
 web/fileadmin/_processed_/3/
 web/fileadmin/_processed_/a/
 web/fileadmin/_processed_/c/
-web/fileadmin/css/icons/
-web/fileadmin/images/DSC07022_ph_1.jpg
-web/fileadmin/images/logo.jpg
-web/fileadmin/images/manifest/
 web/fileadmin/user_upload/0087c7325601b820.jpg
 web/typo3conf/ext/news/
 web/typo3temp/assets/_processed_/
@@ -52,3 +48,4 @@ web/typo3temp/assets/images/
 web/typo3temp/var/Cache/Code/
 web/typo3temp/var/Cache/Data/assets/
 web/typo3temp/var/Cache/Data/l10n/
+web/uploads/tx_templavoilaplus/

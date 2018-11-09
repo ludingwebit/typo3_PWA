@@ -1,0 +1,10 @@
+Array
+(
+    [id] => 17508929
+    [name] => Paul
+    [datum] => 2018-11-09
+    [zeit] => 21:12
+    [email] => ulemann@example.com
+    [anzahl] => 2
+    [status] => Sending
+)

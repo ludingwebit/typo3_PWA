@@ -1,9 +1,12 @@
-<header>
+<header xmlns:f="http://www.w3.org/1999/XSL/Transform">
     <div>
         <nav id="top-bar">
             <div class="frame row">
                 <div class="col-sm">
                     <h2 id="brand-name">{brandName -> f:format.raw()}</h2>
+                    <button disabled class="js-push-btn">
+                        Enable Push Messaging
+                    </button>
                 </div>
                 <div id="settings-mobile" class="material-dropdown">
                     <figure></figure>
@@ -23,8 +26,6 @@
             </div>
             <div>
                 {menuPrimaryMobile -> f:format.raw()}
-                {temp.langmenu -> f:format.raw()}
-
             </div>
         </nav>
     </div>
@@ -47,6 +48,12 @@
                     {contentUserlist -> f:format.raw()}
                 </div>
             </f:if>
+            <div class="row">
+                <f:if condition="contentForReservation">
+                    {contentForReservation -> f:format.raw()}
+
+                </f:if>
+            </div>
         </div>
     </div>
 </main>
@@ -71,4 +78,6 @@
             </div>
         </div>
     </div>
+    <script>ProgressiveKITT.setStylesheet("/fileadmin/javascript/UIKit/themes/flat.css");
+    ProgressiveKITT.render();</script>
 </footer>

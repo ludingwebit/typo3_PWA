@@ -1,0 +1,93 @@
+
+renderingOptions:
+  submitButtonLabel: 'Reservierung tätigen'
+identifier: form-reservation
+label: ''
+type: Form
+prototypeName: standard
+finishers:
+  -
+    options:
+      message: 'Ihre Reservierung wurde abgesendet, sie werden über den Zustand benachrichtigt.'
+    identifier: Confirmation
+renderables:
+  -
+    renderingOptions:
+      previousButtonLabel: 'Vorheriger Schritt'
+      nextButtonLabel: 'Reservierung tätigen'
+    identifier: page-1
+    label: ''
+    type: Page
+    renderables:
+      -
+        defaultValue: 'Max Mustermann'
+        identifier: '-name'
+        label: Name
+        type: Text
+        properties:
+          fluidAdditionalAttributes:
+            placeholder: Name
+            required: required
+          elementDescription: 'Bitte tragen Sie ihren Namen ein'
+        validators:
+          -
+            identifier: NotEmpty
+      -
+        defaultValue: '1'
+        type: Text
+        identifier: '-guests'
+        label: Anzahl
+        properties:
+          fluidAdditionalAttributes:
+            placeholder: XX
+            required: required
+          elementDescription: 'Für wieviele wollen Sie reservieren'
+        validators:
+          -
+            identifier: NotEmpty
+          -
+            options:
+              minimum: '1'
+              maximum: '30'
+            identifier: NumberRange
+      -
+        defaultValue: ''
+        properties:
+          dateFormat: d-m-Y
+          enableDatePicker: false
+          displayTimeSelector: false
+          fluidAdditionalAttributes:
+            required: required
+        type: Text
+        identifier: '-date'
+        label: Datumsauswahl
+        validators:
+          -
+            identifier: DateTime
+          -
+            identifier: NotEmpty
+      -
+        defaultValue: ''
+        type: Text
+        identifier: '-email'
+        label: Email
+        properties:
+          fluidAdditionalAttributes:
+            required: required
+          elementDescription: 'Tragen Sie ihre E-Mail Adresse ein'
+        validators:
+          -
+            identifier: NotEmpty
+          -
+            identifier: EmailAddress
+      -
+        properties:
+          dateFormat: d-m-Y
+          enableDatePicker: false
+          displayTimeSelector: false
+        type: Date
+        identifier: datepicker-1
+        label: Datumsauswahl
+        validators:
+          -
+            identifier: DateTime

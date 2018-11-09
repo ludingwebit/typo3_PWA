@@ -4,6 +4,7 @@ config {
     sys_language_uid = 0
     language = de
     locale_all = de_DE.UTF-8
+    contentObjectExceptionHandler = 0
     #prefixLocalAnchors = all
     #simulateStaticDocuments = 0
     #baseURL >
@@ -20,11 +21,32 @@ config {
     prefixLocalAnchors >
     absRefPrefix = /
 }
+plugin.tx_fluidform.settings.forms.contactBasic {
+    finisher {
+        # Copy database finisher pre-definition
+        database < plugin.tx_fluidform.presets.finisher.database
+        database {
+            # Activate the database finisher
+            active = 1
+            # Define the Container, where the records should be saved
+            storagePid = 605
+        }
+    }
 
+    finisher {
+        javascript < plugin.tx_fluidform.presets.finisher.javascript
+        javascript.functions {
+            # After successfully sent, but before displaying the success message
+            beforeSuccess (
+                ga('send', 'event', 'Forms', 'Submit', 'Kontaktformular');
+            )
+
+        }
+    }
+}
 plugin.tx_news {
     _LOCAL_LANG {
         default {
-
         }
 
         de {
@@ -51,6 +73,12 @@ page {
     meta.description = Dies ist die Beschreibung
     meta.viewport = width=device-width, initial-scale=1
     #CSS-datein einfügen
+
+    headerData.100 = COA
+    headerData.100 {
+        10 = TEXT
+        10.value = <link rel="manifest" href="/fileadmin/manifest.json"></link>
+    }
     includeCSS {
         main1 = fileadmin/css/app.css
         main2 = fileadmin/css/mini-dark.min.css
@@ -58,7 +86,14 @@ page {
         main2.media = all
     }
 
+
     #JS-datein einfügen
+
+    includeJS {
+        jquery0 = fileadmin/javascript/jquery.3.3.1.min.js
+        main0 = fileadmin/javascript/UIKit/progressive-ui-kitt.js
+    }
+
     includeJSFooter {
         main1 = fileadmin/javascript/main.js
         main2 = fileadmin/javascript/app.js
@@ -78,8 +113,12 @@ page {
             1 = TEXT
             1.value = fileadmin/templates/vorlage.html
 
+            partialRootPath {
+                10 = fileadmin/templates/content/partials
+            }
+
             2 = TEXT
-            2.value = fileadmin/templates/vorlage_einspaltig.html
+            2.value = fileadmin/templates/vorlage_reservierung.html
 
             default < .1
         }
@@ -166,6 +205,10 @@ page {
                 }
             }
 
+            contentForReservation = TEXT
+            contentForReservation.value = Hallo
+            contentForReservation.wrap = <div id="status" class="center-block"> | </div>
+
             menuBreadcrumb = HMENU
             menuBreadcrumb {
                 special = rootline
@@ -189,7 +232,6 @@ page {
                 1 = TMENU
                 1 {
                     NO = 1
-                    NO
                     NO {
                         ATagParams = class="footer-link"
                         stdWrap.wrap.insertData = 1
@@ -200,7 +242,6 @@ page {
                     CUR.ATagParams = class="footer-link active"
                     CUR.DoNotLink = 1
                 }
-
 
 
                 #Den Sprachwechsler darstellen
@@ -259,6 +300,7 @@ lib.contentElement {
         10 = fileadmin/templates/content/partials
     }
 }
+
 #Zeitabhängiger Begrüßungstext
 [hour = >10]
     page.10.variables.labelToday.10.value = Guten Tag

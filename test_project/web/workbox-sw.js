@@ -28,7 +28,6 @@ workbox.routing.registerRoute(
 
 
 
-/*
 workbox.routing.registerRoute(
     mainCaching,
     workbox.strategies.cacheFirst({
@@ -61,7 +60,7 @@ workbox.routing.registerRoute(
             })
         ],
     })
-);*/
+);
 
 
 

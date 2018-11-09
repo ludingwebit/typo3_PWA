@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1205023a037f3fcaf611ce707f822e46",
+    "content-hash": "de8f8a55ac49457a892e0732396903f8",
     "packages": [
         {
             "name": "cogpowered/finediff",
@@ -655,16 +655,16 @@
         },
         {
             "name": "georgringer/news",
-            "version": "7.0.6",
+            "version": "7.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/georgringer/news.git",
-                "reference": "815006b43671820e455e890ca1365042bcd8f416"
+                "reference": "5daa221ee2f922c6d9d1ab15ef4779f6bcdbaeda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/georgringer/news/zipball/815006b43671820e455e890ca1365042bcd8f416",
-                "reference": "815006b43671820e455e890ca1365042bcd8f416",
+                "url": "https://api.github.com/repos/georgringer/news/zipball/5daa221ee2f922c6d9d1ab15ef4779f6bcdbaeda",
+                "reference": "5daa221ee2f922c6d9d1ab15ef4779f6bcdbaeda",
                 "shasum": ""
             },
             "require": {
@@ -720,7 +720,7 @@
                 "news",
                 "typo3"
             ],
-            "time": "2018-10-08T06:21:29+00:00"
+            "time": "2018-10-24T07:56:12+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1640,6 +1640,64 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2018-10-02T16:36:10+00:00"
+        },
+        {
+            "name": "templavoilaplus/templavoilaplus",
+            "version": "7.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pluspol-interactive/templavoilaplus.git",
+                "reference": "105acb77fe98e84082808ee211ad0f34aa036f6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pluspol-interactive/templavoilaplus/zipball/105acb77fe98e84082808ee211ad0f34aa036f6f",
+                "reference": "105acb77fe98e84082808ee211ad0f34aa036f6f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0 <7.3.99",
+                "typo3/cms-core": "^7.6.0 || ^8.7.0"
+            },
+            "conflict": {
+                "templavoila": "*",
+                "templavoila/templavoila": "*",
+                "typo3-ter/templavoila": "*"
+            },
+            "replace": {
+                "templavoilaplus": "self.version",
+                "typo3-ter/templavoilaplus": "self.version"
+            },
+            "suggest": {
+                "friendsoftypo3/typo3db-legacy": ">1.0.1"
+            },
+            "type": "typo3-cms-extension",
+            "autoload": {
+                "psr-4": {
+                    "Ppi\\TemplaVoilaPlus\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Opitz",
+                    "email": "opitz@pluspol-interactive.de",
+                    "homepage": "http://www.pluspol-interactive.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Point-and-click, popular and easy template engine for TYPO3. Replacement for old TemplaVoilà!.",
+            "homepage": "https://templavoila.plus/",
+            "keywords": [
+                "engine",
+                "extension",
+                "template",
+                "typo3"
+            ],
+            "time": "2018-08-21T13:30:03+00:00"
         },
         {
             "name": "typo3/class-alias-loader",

@@ -26,6 +26,9 @@ return [
         'frontend' => [
             'packagePath' => 'typo3/sysext/frontend/',
         ],
+        'css_styled_content' => [
+            'packagePath' => 'typo3/sysext/css_styled_content/',
+        ],
         'fluid_styled_content' => [
             'packagePath' => 'typo3/sysext/fluid_styled_content/',
         ],
