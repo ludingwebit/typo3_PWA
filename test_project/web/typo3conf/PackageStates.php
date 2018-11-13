@@ -128,6 +128,9 @@ return [
         'news' => [
             'packagePath' => 'typo3conf/ext/news/',
         ],
+        'maps2' => [
+            'packagePath' => 'typo3conf/ext/maps2/',
+        ],
     ],
     'version' => 5,
 ];

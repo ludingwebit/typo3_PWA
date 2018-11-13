@@ -1,8 +1,6 @@
 $(document).ready(function () {
     populateReservations();
-    /*
-        offerNotification();
-    */
+    getReservationsFromServer()
     let form = $("#form-reservation");
     form.submit(function (event) {
         event.preventDefault();
@@ -28,10 +26,10 @@ $(document).ready(function () {
                 {hideAfter: 7000});
             subscribeUser();
             location.reload();
+
         }
     });
 });
-
 let createResObject = function (id, restName, restDate, restTime, restGuest, restMail) {
     let reservationDetails = {
         id: id,
@@ -40,8 +38,9 @@ let createResObject = function (id, restName, restDate, restTime, restGuest, res
         zeit: restTime,
         email: restMail,
         anzahl: restGuest,
-        status: "Sending"
+        status: "Senden"
     };
+
     return reservationDetails;
 };
 let populateReservations = function (indexName, indexValue) {
@@ -96,37 +95,57 @@ let showNewReserverationNotification = function () {
     });
 };
 
-/*let offerNotification = function () {
-    if ("Notification" in window && "serviceWorker" in navigator) {
-        /!*
-                console.log("Notifications sind eine tolle Sache!")
-        *!/
-        Notification.requestPermission().then(function (permission) {
-            if (permission === "granted") {
-                showNewReserverationNotification();
-            }
-        });
-    }
-};*/
 
-/*
-function uploadToDB(dbSwitch, reservationDetails) {
-    if (dbSwitch == true) {
-        //write me
-        let xhr;
-        if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-            xhr = new XMLHttpRequest();
-        } else if (window.ActiveXObject) { // IE 8 and older
-            xhr = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xhr.open("POST", "/reservation-app/reserve.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send(object);
-    } else {
-        addToObjectStore("reservation-store", reservationDetails);
-        console.log("Hinzufügen von ", restName, restDate, restMail, "/", restTime, "/", restGuest);
-        showNewReserverationNotification();
-        return
-    }
-    ;
+/*let checkReservationStatus = function () {
+    var ajax_call = function () {
+        //your jQuery ajax code
+    };
+
+    var interval = 1000 * 60 * X; // where X is your every X minutes
+
+    setInterval(ajax_call, interval);
 }*/
+let getReservationsFromServer = function () {
+    return new Promise(function (resolve, reject) {
+        return fetch("/reservation-app/confirm.php")
+            .then(function (response) {
+                let jsonArr = response.json();
+                return jsonArr
+            }).then(function (reservations) {
+                reservations.map(function (reservation) {
+/*
+                    console.log("[DATENBANK] ", reservation);
+*/
+                    resolve(syncObjectStore("reservation-store", reservation));
+                })
+            }).catch(function (err) {
+                reject(err);
+            })
+        /*            }).then(function (recieve) {
+                        openDatabase().then(function (db) {
+                                let objectStore = openObjectStore(db, "reservation-store", "readwrite");
+                                objectStore.openCursor().onsuccess = function (event) {
+                                    let cursor = event.target.result;
+
+                                    for (let i = 0; i < recieve.length; i++) {
+
+                                        if (!cursor) {
+                                            objectStore.add(recieve[i]);
+                                        } else {
+                                            if (cursor.value.id === recieve[i].id && cursor.value.status !== recieve[i].status) {
+                                                cursor.update(recieve[i]).onsuccess = resolve;
+                                            } else {
+                                                reject("[INDEXEDDB]: An dem Elemnt hat sich in der Datenbank nichts geändert.");
+                                            }
+                                        }
+                                    }
+                                }
+
+                                resolve(recieve);
+                            }
+                        )
+                    }).catch(function (err) {
+                        console.log(err);
+                    })*/
+    })
+}

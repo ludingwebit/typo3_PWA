@@ -48,19 +48,18 @@ class StaticDataStructuresHandler
     public function main(&$params, &$pObj)
     {
         $removeDSItems = $this->getRemoveItems($params, substr($params['field'], 0, -2) . 'ds');
+        $showAdminAll = $this->getShowAdminAllItems($params, substr($params['field'], 0, -2) . 'ds');
 
         $dsRepo = GeneralUtility::makeInstance(\Ppi\TemplaVoilaPlus\Domain\Repository\DataStructureRepository::class);
         $dsList = $dsRepo->getAll();
 
-        $params['items'] = array(
-            array(
-                '', ''
-            )
-        );
+        $params['items'] = [
+            ['', ''],
+        ];
 
         foreach ($dsList as $dsObj) {
             /** @var \Ppi\TemplaVoilaPlus\Domain\Model\AbstractDataStructure $dsObj */
-            if ($dsObj->isPermittedForUser($params['row'], $removeDSItems)) {
+            if ($dsObj->isPermittedForUser($params['row'], $removeDSItems, $showAdminAll)) {
                 $params['items'][] = array(
                     $dsObj->getLabel(),
                     $dsObj->getKey(),
@@ -126,17 +125,15 @@ class StaticDataStructuresHandler
         $dsRepo = GeneralUtility::makeInstance(\Ppi\TemplaVoilaPlus\Domain\Repository\DataStructureRepository::class);
         $dsList = $dsRepo->getDatastructuresByStoragePidAndScope($storagePid, $scope);
 
-        $params['items'] = array(
-            array(
-                '', ''
-            )
-        );
+        $params['items'] = [
+            ['', ''],
+        ];
 
         $is85OrNewer = version_compare(TYPO3_version, '8.5.0', '>=') ? true : false;
 
         foreach ($dsList as $dsObj) {
             /** @var \Ppi\TemplaVoilaPlus\Domain\Model\AbstractDataStructure $dsObj */
-            if ($dsObj->isPermittedForUser($params['row'], $removeDSItems)) {
+            if ($dsObj->isPermittedForUser($params['row'], $removeDSItems, $showAdminAll)) {
                 $params['items'][] = array(
                     $dsObj->getLabel(),
                     ($is85OrNewer && !is_numeric($dsObj->getKey()) ? 'FILE:' : '') . $dsObj->getKey(),
@@ -184,28 +181,13 @@ class StaticDataStructuresHandler
 
         $storagePid = $this->getStoragePid($params);
 
-        $removeTOItems = $this->getRemoveItems($params, substr($params['field'], 0, -2) . 'to');
 
         $dsRepo = GeneralUtility::makeInstance(\Ppi\TemplaVoilaPlus\Domain\Repository\DataStructureRepository::class);
-        $toRepo = GeneralUtility::makeInstance(\Ppi\TemplaVoilaPlus\Domain\Repository\TemplateRepository::class);
 
         try {
-            $ds = $dsRepo->getDatastructureByUidOrFilename($dataSource);
             if (strlen($dataSource)) {
-                $toList = $toRepo->getTemplatesByDatastructure($ds, $storagePid);
-                foreach ($toList as $toObj) {
-                    /** @var \Ppi\TemplaVoilaPlus\Domain\Model\Template $toObj */
-                    if (!$toObj->hasParent() && $toObj->isPermittedForUser($params['table'], $removeTOItems)) {
-                        $params['items'][] = array(
-                            $toObj->getLabel(),
-                            $toObj->getKey(),
-                            ($toObj->getIcon()
-                                ? $toObj->getIcon()
-                                : 'EXT:templavoilaplus/Resources/Public/Icon/icon_pagetemplate.gif'
-                            )
-                        );
-                    }
-                }
+                $dsObj = $dsRepo->getDatastructureByUidOrFilename($dataSource);
+                $this->addToItems($params, $dsObj, $storagePid);
             }
         } catch (\InvalidArgumentException $e) {
             // we didn't find the DS which we were looking for therefore an empty list is returned
@@ -227,39 +209,64 @@ class StaticDataStructuresHandler
         $scope = $this->getScope($params);
 
         $removeDSItems = $this->getRemoveItems($params, substr($params['field'], 0, -2) . 'ds');
-        $removeTOItems = $this->getRemoveItems($params, substr($params['field'], 0, -2) . 'to');
 
         $dsRepo = GeneralUtility::makeInstance(\Ppi\TemplaVoilaPlus\Domain\Repository\DataStructureRepository::class);
-        $toRepo = GeneralUtility::makeInstance(\Ppi\TemplaVoilaPlus\Domain\Repository\TemplateRepository::class);
         $dsList = $dsRepo->getDatastructuresByStoragePidAndScope($storagePid, $scope);
 
         foreach ($dsList as $dsObj) {
             /** @var \Ppi\TemplaVoilaPlus\Domain\Model\AbstractDataStructure $dsObj */
-            if (!$dsObj->isPermittedForUser($params['row'], $removeDSItems)) {
+            if (!$dsObj->isPermittedForUser($params['row'], $removeDSItems, $showAdminAll)) {
                 continue;
             }
-            $curDS = array();
-            $curDS[] = array(
-                $dsObj->getLabel(),
-                '--div--'
-            );
+            $curDS = [
+                'field' => $params['field'],
+                'row' => $params['row'],
+                'items' => [[
+                    $dsObj->getLabel(),
+                    '--div--'
+                ]],
+            ];
 
-            $toList = $toRepo->getTemplatesByDatastructure($dsObj, $storagePid);
-            foreach ($toList as $toObj) {
-                /** @var \Ppi\TemplaVoilaPlus\Domain\Model\Template $toObj */
-                if (!$toObj->hasParent() && $toObj->isPermittedForUser($params['row'], $removeTOItems)) {
-                    $curDS[] = array(
-                        $toObj->getLabel(),
-                        $toObj->getKey(),
-                        ($toObj->getIcon()
-                            ? $toObj->getIcon()
-                            : 'EXT:templavoilaplus/Resources/Public/Icon/icon_pagetemplate.gif'
-                        )
-                    );
-                }
-            }
+            $this->addToItems($curDS, $dsObj, $storagePid);
+
             if (count($curDS) > 1) {
-                $params['items'] = array_merge($params['items'], $curDS);
+                $params['items'] = array_merge($params['items'], $curDS['items']);
+            }
+        }
+    }
+
+    /**
+     * Adds selectable TOs as items into the list (depending on dsObj)
+     *
+     * @param array $params Parameters for itemProcFunc
+     * @param int $storagePid
+     *
+     * @return void
+     */
+    protected function addToItems(array &$params, $dsObj, $storagePid)
+    {
+        $removeTOItems = $this->getRemoveItems($params, substr($params['field'], 0, -2) . 'to');
+        $toRepo = GeneralUtility::makeInstance(\Ppi\TemplaVoilaPlus\Domain\Repository\TemplateRepository::class);
+
+        $iconPrefix = '';
+        if (version_compare(TYPO3_version, '8.0.0', '<')) {
+            $iconPrefix = '../';
+        }
+
+        $defaultIcon = 'EXT:templavoilaplus/Resources/Public/Icons/TemplateFce48.png';
+        if ($dsObje->getScope === \Ppi\TemplaVoilaPlus\Domain\Model\AbstractDataStructure::SCOPE_PAGE) {
+            $defaultIcon = 'EXT:templavoilaplus/Resources/Public/Icons/TemplatePage48.png';
+        }
+
+        $toList = $toRepo->getTemplatesByDatastructure($dsObj, $storagePid);
+        foreach ($toList as $toObj) {
+            /** @var \Ppi\TemplaVoilaPlus\Domain\Model\Template $toObj */
+            if (!$toObj->hasParent() && $toObj->isPermittedForUser($params['row'], $removeTOItems, $showAdminAll)) {
+                $params['items'][] = [
+                    $toObj->getLabel(),
+                    $toObj->getKey(),
+                    $toObj->getIcon() ? $iconPrefix . $toObj->getIcon() : $defaultIcon,
+                ];
             }
         }
     }
@@ -431,6 +438,24 @@ class StaticDataStructuresHandler
 
         return GeneralUtility::trimExplode(',', $modTSConfig['value'], true);
     }
+
+
+    /**
+     * Find relevant removeItems blocks for a certain field with the given paramst
+     *
+     * @param array $params
+     * @param string $field
+     *
+     * @return bool
+     */
+    protected function getShowAdminAllItems($params, $field)
+    {
+        $pid = $params['row'][$params['table'] == 'pages' ? 'uid' : 'pid'];
+        $modTSConfig = BackendUtility::getModTSconfig($pid, 'TCEFORM.' . $params['table'] . '.' . $field . '.showAdminAllItems');
+
+        return (bool) $modTSConfig['value'];
+    }
+
 
 
     /**

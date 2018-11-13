@@ -7,13 +7,14 @@ let CACHED_URLS = [
     '/fileadmin/css/app.css',
     '/fileadmin/css/mini-dark.min.css',
     '/fileadmin/javascript/app.js',
+    '/fileadmin/javascript/offline-map.js',
     '/hauptnavigation/homepage.html',
     '/hauptnavigation/anfahrt.html',
     '/hauptnavigation/kontakt.html',
     '/hauptnavigation/speisekarte.html',
     '/hauptnavigation/reservierung.html'
-
 ]
+let googleMapsAPIJS = "https://maps.googleapis.com/maps/api/js?key=";
 
 self.addEventListener('install', function (event) {
     console.log('[Service Worker] Installation wird gestartet');
@@ -22,7 +23,7 @@ self.addEventListener('install', function (event) {
             console.log('[Service Worker] Dateien werden gecacht');
             return cache.addAll(CACHED_URLS);
         })
-    );
+    )
 });
 
 //CACHING index.html
@@ -63,65 +64,79 @@ self.addEventListener('activate', function (event) {
                         return caches.delete(cacheName);
                     }
                 })
-            );
+            )
         })
     );
 });
 
 //Erstellt eine Query aus den gegebenen Eintrag
-let createReservationUrl = function (reservationDetails) {
+/*let createReservationUrl = function (reservationDetails) {
     let reservationUrl = new URL("http://127.0.0.1/reservation-app/reserve.php");
     Object.keys(reservationDetails).forEach(function (key) {
         reservationUrl.searchParams.append(key, reservationDetails[key]);
     });
     return reservationUrl;
-    l
-};
+};*/
+let createReservationJSON = (reservationDetails => {
+    let post_entries = [];
+    let object_keys = Object.keys(reservationDetails);
 
+    for (const key of object_keys) {
+        post_entries.push(encodeURIComponent(key) + '=' + encodeURIComponent(reservationDetails[key]));
+    }
+    let post_string = post_entries.join('&');
+    return post_string;
+});
 let syncDB = function () {
-    return getReservation("idx", "Sending").then(function (reservations) {
+    return getReservation("idx", "Senden").then(function (reservations) {
         return Promise.all(
             reservations.map(function (reservation) {
-                let reservationUrl = createReservationUrl(reservation);
-                return fetch(reservationUrl).then((response => {
-                    return response;
-                })).then((text => {
-                    console.log("Die Anfrage wurde erfolgreich absolviert.", text);
-                    console.log(text.status);
-                    if (Status == 200) {
-                        ProgressiveKITT.addMessage('[Service Worker] Ihre Reservierung wurder vermerkt, sobald sie bestätigt wurde, werden Sie informiert. Vielen Dank!',
-                            {hideAfter: 7000});
-                    }
-                })).catch(function (err) {
-                    console.log("Etwas ist schief gelaufen", err);
-                });
-
-
-                /*.then(function (response) {
-                    console.log(response.json())
-                    return response.json();
-                })*/
+                let reservationUrl = createReservationJSON(reservation);
+                return fetch("/reservation-app/reserve.php",
+                    {
+                        method: 'post',
+                        headers: {
+                            'Accept': 'application/x-www-form-urlencoded',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: reservationUrl
+                    })
+                    .then(function (response) {
+                        console.log(response);
+                        //ID der Reservierung wird angenommen und in der IDB der Status geändert, das die Datei im Backend angekommen ist
+                        let newRes = updateObjectStore("reservation-store", reservation.valueOf().id, reservation);
+                        console.log(newRes);
+                        return newRes;
+                    }).then(function (response) {
+                        //Wenn das Sync Event ausgeführt wurde, wird der Nutzer informiert, dass seine Bestellung beim Restaurant angekommen ist und Bearbeitet wird.
+                        return self.registration.showNotification("Reservierung Gesendet", {
+                            body: "Reservierung mit der ID " + response.srcElement.result + " wurde an das Restaurant gesendet.",
+                            icon: "/images/logo.png",
+                            badge: "/images/logo.png",
+                            tag: "reservation-confirmation-" + reservation.id,
+                            actions: [
+                                {action: "details", title: "Zeige Reservierung", icon: "/images/logo.png"},
+                                {action: "confirm", title: "OK", icon: "/images/logo.png"},
+                            ],
+                            vibrate: [500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500]
+                        });
+                    }).catch(function (error) {
+                        console.error(error);
+                    });
             })
         );
     });
 };
-
 self.addEventListener('sync', (event => {
     if (event.tag == 'syncDB') {
         event.waitUntil(syncDB(),
             console.log("ALLE DATEN WURDEN AUF DEN SERVER ÜBERTRAGEN")
         );
-
-        /**
-         * @todo Event einfügen, dass triggert, wenn eine Reservierung ausgeführt wird.
-         * @todo Muss Daten von der IndexedDB übernehmen und weiterverarbeiten --> Wenn getätigt Nutzer informieren.*/
     }
 }));
 
-
 /**
  * @todo Push Notification --> Rechercher, ob es nötig ist einen Key zu nutzen oder ob es dabei nur um Sicherheit geht.
- * @todo Nutzer informieren, wenn die REservierung in die Datenbank eingetragen wurden. Eventuell einen Datenbankeintrag immer eine 0 mitgeben und wenn der "Admin" den Wert in der Datenbank zu einer 1 ändert wird mittels Background Sync der Nutzer benachrichtig, dass seine Reservierung angenommen wurde.
  */
 self.addEventListener('push', function (event) {
     console.log('[Service Worker] Push Erhalten.');
@@ -137,26 +152,18 @@ self.addEventListener('push', function (event) {
     event.waitUntil(notificationPromise);
 });
 
-/*
-function showNotification(event) {
-    return new Promise(resolve => {
-        const {body, title, tag} = JSON.parse(event.data.text());
 
-        self.registration
-            .getNotifications({tag})
-            .then(existingNotifications => {
+self.addEventListener("notificationclick", function (event) {
+    event.notification.close();
+    if (event.action === "details") {
+        event.waitUntil(
+            self.clients.matchAll().then(function (activeClients) {
+                if (activeClients.length > 0) {
+                    activeClients[0].navigate("/hauptnavigation/reservierung.html");
+                } else {
+                    self.clients.openWindow("/hauptnavigation/reservierung.html");
+                }
             })
-            .then(() => {
-                const icon = `/path/to/icon`;
-                return self.registration
-                    .showNotification(title, {body, tag, icon})
-            })
-            .then(resolve)
-    })
-}
-
-self.addEventListener("push", event => {
-    event.waitUntil(
-        showNotification(event)
-    );
-});*/
+        );
+    }
+});

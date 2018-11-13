@@ -4,7 +4,7 @@ let swRegistration = null;
 let isSubscribed = false;
 
 if ('serviceWorker' in navigator && 'PushManager' in window && 'SyncManager' in window) {
-    navigator.serviceWorker.register('../service-worker-manual.js')
+    navigator.serviceWorker.register('/service-worker-manual.js')
         .then(registration => navigator.serviceWorker.ready)
         .then(registration => {//register Sync
             swRegistration = registration;
@@ -41,6 +41,7 @@ function byId(pId) {
     return document.getElementById(pId)
 }*/
 
+// SUBSCRIPTION PART
 const applicationServerPublicKey = 'BGk2Dm42FWO-ZznSTDd1mEZN8NBhO1UdSGdyvcD9gi9hA9wKksJpRkVhgmdNyueNXZ3V0WVzeeeXE7smVoUdAI4\n';
 const pushButton = document.querySelector('.js-push-btn');
 
@@ -140,43 +141,38 @@ function subscribeUser() {
         });
 }
 
-function updateSubscriptionOnServer(subscription) {
+function updateSubscriptionOnServer(subscription, method) {
     // TODO: Send subscription to application server
 
-    const subscriptionJson = document.querySelector('.js-subscription-json');
-    const subscriptionDetails =
-        document.querySelector('.js-subscription-details');
+    const key = subscription.getKey('p256dh');
+    const token = subscription.getKey('auth');
+    const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
+
+    console.log(key, token)
     console.log(JSON.stringify(subscription));
 
-    /*    if (subscription) {
-            subscriptionJson.textContent = JSON.stringify(subscription);
-            subscriptionDetails.classList.remove('is-invisible');
-        } else {
-            subscriptionDetails.classList.add('is-invisible');
-        }*/
+
+    return fetch('/reservation-app/push_subscription.php', {
+        method,
+        body: JSON.stringify({
+            endpoint: subscription.endpoint,
+            publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+            authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
+            contentEncoding,
+        }),
+    }).then(() => subscription);
+    /*
+        const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
+
+        return fetch('push_subscription.php', {
+            method,
+            body: JSON.stringify({
+                endpoint: subscription.endpoint,
+                publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+                authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
+                contentEncoding,
+            }),
+        }).then(() => subscription);*/
 }
 
-/*
-const PERMISSION = Notification.requestPermission();
-const PERMISSION_SUCCESS_MSG = "Danke für das aktivieren!";
 
-if (!("Notification" in window)) {
-    console.log("This browser does not support desktop notification");
-}
-// Let's check whether notification permissions have alredy been granted
-else if (PERMISSION === "granted") {
-    // If it's okay let's create a notification
-    PERMISSION_SUCCESS_MSG;
-}
-
-// Otherwise, we need to ask the user for permission
-else if (Notification.permission !== 'denied' || Notification.permission === "default") {
-    Notification.requestPermission(function (permission) {
-        // If the user accepts, let's create a notification
-        if (permission === "granted") {
-            PERMISSION_SUCCESS_MSG;
-        }
-    });
-// At last, if the user has denied notifications, and you
-// want to be respectful there is no need to bother them any more.
-}*/

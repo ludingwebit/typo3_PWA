@@ -62,6 +62,10 @@ plugin.tx_news {
     }
 }
 
+plugin.tx_gomapsext.settings.apiKey = AIzaSyBvQNb0hkcnBkfpVL1--9Pyd48MwjXAG18
+
+
+
 # Default PAGE object:
 page = PAGE
 page {
@@ -72,6 +76,7 @@ page {
     meta.language = de
     meta.description = Dies ist die Beschreibung
     meta.viewport = width=device-width, initial-scale=1
+    meta.theme = darkcyan
     #CSS-datein einfügen
 
     headerData.100 = COA
@@ -91,6 +96,7 @@ page {
 
     includeJS {
         jquery0 = fileadmin/javascript/jquery.3.3.1.min.js
+        jquery0.forceOnTop = 1
         main0 = fileadmin/javascript/UIKit/progressive-ui-kitt.js
     }
 

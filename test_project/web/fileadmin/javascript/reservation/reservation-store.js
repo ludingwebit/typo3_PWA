@@ -39,7 +39,6 @@ let openDatabase = function () {
 let openObjectStore = function (db, storeName, transactionMode) {
     return db.transaction(storeName, transactionMode).objectStore(storeName);
 };
-
 let addToObjectStore = function (storeName, object) {
     return new Promise(function (resolve, reject) {
         openDatabase().then(function (db) {
@@ -50,21 +49,31 @@ let addToObjectStore = function (storeName, object) {
         });
     });
 };
-let updateObjectStore = ((storeName, id, object) => {
-    openObjectStore(storeName, (objectStore => {
-        objectStore.openCursor().onsuccess = (event => {
-            let cursor = event.target.result;
-            if (!cursor) {
-                return;
-            }
-            if (cursor.value.id === id) {
-                cursor.update(object);
-                return;
-            }
-            cursor.continue();
-        })
-    }), "readwrite");
-})
+//Aktualisiert den Eintrag in der IndexedDB nach erfolgreichem absenden in die Datenbank
+let updateObjectStore = function (storeName, id, object) {
+    return new Promise(function (resolve, reject) {
+        openDatabase().then(function (db) {
+            openObjectStore(db, storeName, "readwrite")
+                .openCursor().onsuccess = function (event) {
+                let cursor = event.target.result;
+                if (!cursor) {
+                    //Hole die Reservierung aus der Datenbank
+                    /*                    let dbObject = getReservationsFromServer()
+                                        openObjectStore(db, storeName, "readwrite").add(dbObject);*/
+                    reject("Reservierung war nicht im lokalen Speicher, wurde aber hinzugefügt.");
+                }
+                if (cursor.value.id === id) {
+                    object.status = "Angekommen";
+                    cursor.update(object).onsuccess = resolve;
+                    return object;
+                }
+                cursor.continue();
+            };
+        }).catch(function (errorMessage) {
+            reject(errorMessage);
+        });
+    });
+};
 let getReservation = function (indexName, indexValue) {
     return new Promise(function (resolve) {
         openDatabase().then(function (db) {
@@ -89,4 +98,20 @@ let getReservation = function (indexName, indexValue) {
             }
         });
     });
+}
+let syncObjectStore = function (storeName, reservationObj) {
+    return new Promise(function (resolve) {
+        openDatabase().then(function (db) {
+            openObjectStore(db, storeName, "readwrite")
+                .openCursor().onsuccess = function (event) {
+                let cursor = event.target.result;
+                if (!cursor) {
+                    resolve(openObjectStore(db, storeName, "readwrite").add(reservationObj));
+                }
+                else {
+                    resolve("Alles Synchron");
+                }
+            }
+        })
+    })
 }

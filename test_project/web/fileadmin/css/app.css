@@ -464,23 +464,7 @@ div#settings-desktop a {
     padding: 10px;
 }
 
-/* Map Widget */
-#map-container {
-    border-top: 4px solid #242424;
-    height: 550px;
-    transform: inherit !important;
-}
 
-#map-container.offline-map {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-position: center;
-    /*
-    background-image: url('../images/map-offline.jpg');
-    */
-}
 
 #reservation-widget {
     display: flex;
@@ -536,6 +520,16 @@ form#form-reservation{
 }
 #form-reservation .btn-group, #form-reservation nav * {
     padding: 0px;
+}
+
+/* Map Widget */
+.tx-maps2.offline-map {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+    background-image: url('/fileadmin/images/trailer1.jpg');
 }
 /* ---------------------------------------------------
     Change Style of mini.css

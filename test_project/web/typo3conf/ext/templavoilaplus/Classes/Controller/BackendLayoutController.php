@@ -20,7 +20,12 @@ use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+use TYPO3\CMS\Core\Database\Query\Restriction\BackendWorkspaceRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 
 use Ppi\TemplaVoilaPlus\Utility\TemplaVoilaUtility;
 
@@ -33,7 +38,7 @@ use Ppi\TemplaVoilaPlus\Utility\TemplaVoilaUtility;
  */
 
 $GLOBALS['LANG']->includeLLFile(
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('templavoilaplus') . 'Resources/Private/Language/BackendLayout.xlf'
+    ExtensionManagementUtility::extPath('templavoilaplus') . 'Resources/Private/Language/BackendLayout.xlf'
 );
 
 /**
@@ -408,12 +413,12 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         $this->blindIcons = isset($this->modTSconfig['properties']['blindIcons']) ? GeneralUtility::trimExplode(',', $this->modTSconfig['properties']['blindIcons'], true) : array();
 
         // Fill array allAvailableLanguages and currently selected language (from language selector or from outside)
-        $this->allAvailableLanguages = $this->getAvailableLanguages(0, true, true, true);
+        $this->allAvailableLanguages = TemplaVoilaUtility::getAvailableLanguages(0, true, true, $this->modSharedTSconfig);
         $this->currentLanguageKey = $this->allAvailableLanguages[$this->MOD_SETTINGS['language']]['ISOcode'];
         $this->currentLanguageUid = $this->allAvailableLanguages[$this->MOD_SETTINGS['language']]['uid'];
 
         // If no translations exist for this page, set the current language to default (as there won't be a language selector)
-        $this->translatedLanguagesArr = $this->getAvailableLanguages($this->id);
+        $this->translatedLanguagesArr = TemplaVoilaUtility::getAvailableLanguages($this->id, true, false, $this->modSharedTSconfig);
         if (count($this->translatedLanguagesArr) == 1) { // Only default language exists
             $this->currentLanguageKey = 'DEF';
         }
@@ -469,13 +474,6 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
             BackendUtility::getModTSconfig($this->id, 'mod.' . $this->moduleName),
             $this->modTSconfig
         );
-
-        // Prepare array of sys_language uids for available translations:
-        $this->translatedLanguagesArr = $this->getAvailableLanguages($this->id);
-        $translatedLanguagesUids = array();
-        foreach ($this->translatedLanguagesArr as $languageRecord) {
-            $translatedLanguagesUids[$languageRecord['uid']] = $languageRecord['title'];
-        }
 
         $this->MOD_MENU = array(
             'tt_content_showHidden' => 1,
@@ -588,7 +586,7 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
                 // https://forge.typo3.org/issues/77589
                 $styleSheetFile = 'EXT:' . $this->extKey . '/Resources/Public/StyleSheet/mod1_default.css';
             } else {
-                $styleSheetFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($this->extKey) . 'Resources/Public/StyleSheet/mod1_default.css';
+                $styleSheetFile = ExtensionManagementUtility::extRelPath($this->extKey) . 'Resources/Public/StyleSheet/mod1_default.css';
             }
 
             if (isset($this->modTSconfig['properties']['stylesheet'])) {
@@ -604,8 +602,8 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
                         // So we do not need this anymore
                         if (substr($file, 0, 4) == 'EXT:') {
                             list($extKey, $local) = explode('/', substr($file, 4), 2);
-                            if (strcmp($extKey, '') && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey) && strcmp($local, '')) {
-                                $file = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($extKey) . $local;
+                            if (strcmp($extKey, '') && ExtensionManagementUtility::isLoaded($extKey) && strcmp($local, '')) {
+                                $file = ExtensionManagementUtility::extRelPath($extKey) . $local;
                             }
                         }
                     }
@@ -700,7 +698,7 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
             } else {
                 $this->addJsLibrary(
                     'templavoilaplus_mod1',
-                    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($this->extKey) . 'Resources/Public/JavaScript/templavoila.js'
+                    ExtensionManagementUtility::extRelPath($this->extKey) . 'Resources/Public/JavaScript/templavoila.js'
                 );
             }
 
@@ -714,10 +712,10 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
                             if (substr($filename, 0, 4) == 'EXT:') {
                                 list($extKey, $local) = explode('/', substr($filename, 4), 2);
                                 if (strcmp($extKey, '')
-                                    && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey)
+                                    && ExtensionManagementUtility::isLoaded($extKey)
                                     && strcmp($local, '')
                                 ) {
-                                    $filename = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($extKey) . $local;
+                                    $filename = ExtensionManagementUtility::extRelPath($extKey) . $local;
                                 }
                             }
                         }
@@ -1015,7 +1013,7 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
                         ]
                     )
                 );
-                $clickUrl = 'jumpToUrl(\'' . trim(json_encode(rawurldecode($url), JSON_HEX_APOS | JSON_HEX_QUOT), '"') . '\');return false;';
+                $clickUrl = 'jumpToUrl(' . GeneralUtility::quoteJSvalue($url) . ');return false;';
         }
         return $this->buildButtonFromUrl($clickUrl, $title, $icon, '', $buttonType, $extraClass, $rel);
     }
@@ -1720,10 +1718,9 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
             //replace lang markers
             $beTemplate = preg_replace_callback(
                 "/###(LLL:[\w-\/:]+?\.xml\:[\w-\.]+?)###/",
-                create_function(
-                    '$matches',
-                    'return $GLOBALS["LANG"]->sL($matches[1], 1);'
-                ),
+                function($matches) {
+                    return $GLOBALS["LANG"]->sL($matches[1], 1);
+                },
                 $beTemplate
             );
 
@@ -2845,14 +2842,14 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
      * All commands will trigger a redirect by sending a location header after they work is done.
      *
      * Currently supported commands: 'createNewRecord', 'unlinkRecord', 'deleteRecord','pasteRecord',
-     * 'makeLocalRecord', 'localizeElement', 'createNewPageTranslation' and 'editPageLanguageOverlay'
+     * 'makeLocalRecord', 'localizeElement' and 'editPageLanguageOverlay'
      *
      * @return void
      * @access protected
      */
     public function handleIncomingCommands()
     {
-        $possibleCommands = array('createNewRecord', 'unlinkRecord', 'deleteRecord', 'pasteRecord', 'makeLocalRecord', 'localizeElement', 'createNewPageTranslation', 'editPageLanguageOverlay');
+        $possibleCommands = array('createNewRecord', 'unlinkRecord', 'deleteRecord', 'pasteRecord', 'makeLocalRecord', 'localizeElement', 'editPageLanguageOverlay');
 
         $hooks = $this->hooks_prepareObjectsArray('handleIncomingCommands');
 
@@ -2930,45 +2927,13 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
                         $this->apiObj->localizeElement($sourcePointer, $commandParameters);
                         break;
 
-                    case 'createNewPageTranslation':
-                        // Create parameters and finally run the classic page module for creating a new page translation
-                        $redirectLocation = BackendUtility::getModuleUrl('record_edit', [
-                                'edit' => ['pages_language_overlay' => [(int)GeneralUtility::_GP('pid') => 'new']],
-                                'overrideVals' => [
-                                    'pages_language_overlay' => [
-                                        'doktype' => (int)GeneralUtility::_GP('doktype'),
-                                        'sys_language_uid' => (int)$commandParameters,
-                                    ]
-                                ],
-                                'returnUrl' => $redirectLocation
-                            ]);
-                        break;
-
                     case 'editPageLanguageOverlay':
                         // Look for pages language overlay record for language:
                         $sys_language_uid = (int)$commandParameters;
                         $params = null;
+
                         if ($sys_language_uid != 0) {
-                            // Edit overlay record
-                            list($pLOrecord) = TemplaVoilaUtility::getDatabaseConnection()->exec_SELECTgetRows(
-                                '*',
-                                'pages_language_overlay',
-                                'pid=' . (int)$this->id . ' AND sys_language_uid=' . $sys_language_uid .
-                                BackendUtility::deleteClause('pages_language_overlay') .
-                                BackendUtility::versioningPlaceholderClause('pages_language_overlay')
-                            );
-                            if ($pLOrecord) {
-                                BackendUtility::workspaceOL('pages_language_overlay', $pLOrecord);
-                                if (is_array($pLOrecord)) {
-                                    $params = [
-                                        'edit' => [
-                                            'pages_language_overlay' => [
-                                                $pLOrecord['uid'] => 'edit',
-                                            ]
-                                        ]
-                                    ];
-                                }
-                            }
+                            $params = $this->getEditParams($this->id, $sys_language_uid);
                         } else {
                             // Edit default language (page properties)
                             // No workspace overlay because we already on this page
@@ -2980,6 +2945,7 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
                                 ]
                             ];
                         }
+
                         if ($params) {
                             $params['returnUrl'] = $this->getBaseUrl();
                             $redirectLocation = BackendUtility::getModuleUrl('record_edit', $params);
@@ -3000,118 +2966,81 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         }
     }
 
+    /**
+     * @TODO with 8.0 this should go elsewhere and not laying around inside controller.
+     * Do not depend on this function.
+     */
+    protected function getEditParams($id, $sys_language_uid)
+    {
+        $table = 'pages_language_overlay';
+        $params = false;
+        if (version_compare(TYPO3_version, '9.0.0', '>=')) {
+            $table = 'pages';
+            // Since 9.0 we do not have pages_language_overlay anymore
+            $queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable('pages');
+            $queryBuilder->getRestrictions()
+                ->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
+                ->add(GeneralUtility::makeInstance(BackendWorkspaceRestriction::class));
+
+            $languagePageRecord = $queryBuilder
+                ->select('*')
+                ->from('pages')
+                ->where(
+                    $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sys_language_uid, \PDO::PARAM_INT)),
+                    $queryBuilder->expr()->eq('l10n_parent', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT))
+                )
+                ->execute()
+                ->fetch();
+        } elseif (version_compare(TYPO3_version, '8.2.0', '>=')) {
+            // Since 8.2 we have Doctrine
+            $queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable('pages_language_overlay');
+            $queryBuilder->getRestrictions()
+                ->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
+                ->add(GeneralUtility::makeInstance(BackendWorkspaceRestriction::class));
+
+            $languagePageRecord = $queryBuilder
+                ->select('*')
+                ->from('pages_language_overlay')
+                ->where(
+                    $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter($sys_language_uid, \PDO::PARAM_INT)),
+                    $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT))
+                )
+                ->execute()
+                ->fetch();
+        } else {
+            list($languagePageRecord) = TemplaVoilaUtility::getDatabaseConnection()->exec_SELECTgetRows(
+                '*',
+                'pages_language_overlay',
+                'pid=' . (int)$id . ' AND sys_language_uid=' . $sys_language_uid .
+                BackendUtility::deleteClause('pages_language_overlay') .
+                BackendUtility::versioningPlaceholderClause('pages_language_overlay')
+            );
+        }
+
+        if ($languagePageRecord) {
+            BackendUtility::workspaceOL($table, $languagePageRecord);
+        }
+
+        if (is_array($languagePageRecord)) {
+            $params = [
+                'edit' => [
+                    $table => [
+                        $languagePageRecord['uid'] => 'edit',
+                    ]
+                ]
+            ];
+        }
+
+        return $params;
+    }
+
     /***********************************************
      *
      * Miscelleaneous helper functions (protected)
      *
      ***********************************************/
-
-    /**
-     * Returns an array of available languages (to use for FlexForms)
-     *
-     * @param integer $id If zero, the query will select all sys_language records from root level. If set to another value, the query will select all sys_language records that has a pages_language_overlay record on that page (and is not hidden, unless you are admin user)
-     * @param boolean $onlyIsoCoded If set, only languages which are paired with a static_info_table / static_language record will be returned.
-     * @param boolean $setDefault If set, an array entry for a default language is set.
-     * @param boolean $setMulti If set, an array entry for "multiple languages" is added (uid -1)
-     *
-     * @return array
-     * @access protected
-     */
-    public function getAvailableLanguages($id = 0, $onlyIsoCoded = true, $setDefault = true, $setMulti = false)
-    {
-        $output = array();
-        $excludeHidden = TemplaVoilaUtility::getBackendUser()->isAdmin() ? '1=1' : 'sys_language.hidden=0';
-
-        if ($id) {
-            $excludeHidden .= ' AND pages_language_overlay.deleted=0';
-            $res = TemplaVoilaUtility::getDatabaseConnection()->exec_SELECTquery(
-                'DISTINCT sys_language.*, pages_language_overlay.hidden as PLO_hidden, pages_language_overlay.title as PLO_title',
-                'pages_language_overlay,sys_language',
-                'pages_language_overlay.sys_language_uid=sys_language.uid AND pages_language_overlay.pid=' . (int)$id . ' AND ' . $excludeHidden,
-                '',
-                'sys_language.title'
-            );
-        } else {
-            $res = TemplaVoilaUtility::getDatabaseConnection()->exec_SELECTquery(
-                'sys_language.*',
-                'sys_language',
-                $excludeHidden,
-                '',
-                'sys_language.title'
-            );
-        }
-
-        if ($setDefault) {
-            $output[0] = array(
-                'uid' => 0,
-                'title' => strlen($this->modSharedTSconfig['properties']['defaultLanguageLabel']) ? $this->modSharedTSconfig['properties']['defaultLanguageLabel'] : TemplaVoilaUtility::getLanguageService()->getLL('defaultLanguage'),
-                'ISOcode' => 'DEF',
-                'flagIcon' => strlen($this->modSharedTSconfig['properties']['defaultLanguageFlag']) ? $this->modSharedTSconfig['properties']['defaultLanguageFlag'] : null
-            );
-        }
-
-        if ($setMulti) {
-            $output[-1] = array(
-                'uid' => -1,
-                'title' => TemplaVoilaUtility::getLanguageService()->getLL('multipleLanguages'),
-                'ISOcode' => 'DEF',
-                'flagIcon' => 'multiple',
-            );
-        }
-
-        while (true == ($row = TemplaVoilaUtility::getDatabaseConnection()->sql_fetch_assoc($res))) {
-            BackendUtility::workspaceOL('sys_language', $row);
-            if ($id) {
-                $table = 'pages_language_overlay';
-                $enableFields = BackendUtility::BEenableFields($table);
-                if (trim($enableFields) == 'AND') {
-                    $enableFields = '';
-                }
-                $enableFields .= BackendUtility::deleteClause($table);
-                /**
-                 * @todo: check if enable fields should be used in the query
-                 */
-
-                // Selecting overlay record:
-                $resP = TemplaVoilaUtility::getDatabaseConnection()->exec_SELECTquery(
-                    '*',
-                    'pages_language_overlay',
-                    'pid=' . (int)$id . ' AND sys_language_uid=' . (int)$row['uid'],
-                    '',
-                    '',
-                    '1'
-                );
-                $pageRow = TemplaVoilaUtility::getDatabaseConnection()->sql_fetch_assoc($resP);
-                TemplaVoilaUtility::getDatabaseConnection()->sql_free_result($resP);
-                BackendUtility::workspaceOL('pages_language_overlay', $pageRow);
-                $row['PLO_hidden'] = $pageRow['hidden'];
-                $row['PLO_title'] = $pageRow['title'];
-            }
-            $output[$row['uid']] = $row;
-
-            if ($row['static_lang_isocode']) {
-                $staticLangRow = BackendUtility::getRecord('static_languages', $row['static_lang_isocode'], 'lg_iso_2');
-                if ($staticLangRow['lg_iso_2']) {
-                    $output[$row['uid']]['ISOcode'] = $staticLangRow['lg_iso_2'];
-                }
-            }
-            if (strlen($row['flag'])) {
-                $output[$row['uid']]['flagIcon'] = $row['flag'];
-            }
-
-            if ($onlyIsoCoded && !isset($output[$row['uid']]['ISOcode'])) {
-                unset($output[$row['uid']]);
-            }
-
-            $disableLanguages = GeneralUtility::trimExplode(',', $this->modSharedTSconfig['properties']['disableLanguages'], 1);
-            foreach ($disableLanguages as $language) {
-                // $language is the uid of a sys_language
-                unset($output[$language]);
-            }
-        }
-
-        return $output;
-    }
 
     /**
      * Returns an array of registered instantiated classes for a certain hook.
@@ -3219,6 +3148,11 @@ class BackendLayoutController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
     public function getModuleTemplate()
     {
         return $this->moduleTemplate;
+    }
+
+    public function getModuleName()
+    {
+        return $this->moduleName;
     }
 
     public function getIconFactory()
