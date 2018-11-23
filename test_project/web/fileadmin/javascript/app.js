@@ -2,8 +2,10 @@
 'use strict';
 let swRegistration = null;
 let isSubscribed = false;
-
-if ('serviceWorker' in navigator && 'PushManager' in window && 'SyncManager' in window) {
+const post = "POST";
+const put = "PUT";
+const del = "DELETE";
+if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker-manual.js')
         .then(registration => navigator.serviceWorker.ready)
         .then(registration => {//register Sync
@@ -17,9 +19,21 @@ if ('serviceWorker' in navigator && 'PushManager' in window && 'SyncManager' in 
         }).catch(error => {
         console.log("Service Worker Error", error);
     })
-} else {
-    console.warn("Push Benachrichtigungen werden nicht unterstützt!")
-    pushButton.textContent = "Benachrichtigungen werden nicht unterstützt."
+    if ('PushManager' in window) {
+        console.log("Push Benachrichtigungen werden unterstützt!")
+
+    }
+    else {
+        console.warn("Push Benachrichtigungen werden nicht unterstützt!")
+        pushButton.textContent = "Benachrichtigungen werden nicht unterstützt."
+    }
+
+    if ('SyncManager' in window) {
+        console.log("Background Sync wird unterstützt.")
+    } else {
+        console.warn("Background Sync wird nicht unterstützt!")
+
+    }
 }
 
 // Nutzer wird über Konnektivität informiert
@@ -42,7 +56,7 @@ function byId(pId) {
 }*/
 
 // SUBSCRIPTION PART
-const applicationServerPublicKey = 'BGk2Dm42FWO-ZznSTDd1mEZN8NBhO1UdSGdyvcD9gi9hA9wKksJpRkVhgmdNyueNXZ3V0WVzeeeXE7smVoUdAI4\n';
+const applicationServerPublicKey = 'BCmti7ScwxxVAlB7WAyxoOXtV7J8vVCXwEDIFXjKvD-ma-yJx_eHJLdADyyzzTKRGb395bSAtxlh4wuDycO3Ih4';
 const pushButton = document.querySelector('.js-push-btn');
 
 function urlB64ToUint8Array(base64String) {
@@ -74,9 +88,10 @@ function initializeUI() {
     swRegistration.pushManager.getSubscription()
         .then(function (subscription) {
             isSubscribed = !(subscription === null);
-            updateSubscriptionOnServer(subscription);
             if (isSubscribed) {
-                console.log('User IS subscribed.');
+                console.log('User IS subscribed.', subscription);
+                updateSubscriptionOnServer(subscription, post);
+
             } else {
                 console.log('User is NOT subscribed.');
             }
@@ -89,7 +104,6 @@ function updateBtn() {
     if (Notification.permission === 'denied') {
         pushButton.textContent = 'Push Benachrichtigung sind geblockt';
         pushButton.disabled = true;
-        updateSubscriptionOnServer(null);
         return;
     }
     if (isSubscribed) {
@@ -111,8 +125,6 @@ function unsubscribeUser() {
             console.log('Error unsubscribing', error);
         })
         .then(function () {
-            updateSubscriptionOnServer(null);
-
             console.log('User is unsubscribed.');
             isSubscribed = false;
 
@@ -120,59 +132,74 @@ function unsubscribeUser() {
         });
 }
 
-function subscribeUser() {
-    const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
-    swRegistration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: applicationServerKey
-    })
-        .then(function (subscription) {
-            console.log('User is subscribed.');
-
-            updateSubscriptionOnServer(subscription);
-
+let subscribeUser = function () {
+    return new Promise(function (resolve, reject) {
+        const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+        swRegistration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: applicationServerKey,
+        }).then(function (subscription) {
+            console.log('User is subscribed.', subscription);
             isSubscribed = true;
-
+            updateSubscriptionOnServer(subscription, post)
             updateBtn();
+            resolve("Es ist gelungen");
+        }).catch(err => {
+            reject(err);
         })
-        .catch(function (err) {
-            console.log('Failed to subscribe the user: ', err);
-            updateBtn();
-        });
+
+    })
+
+
 }
+
+/*let subscription = createSubscription + id
+    .then(function (subscription) {
+        console.log("ID", userres_id);
+        console.log('User is subscribed.', subscription);
+        updateSubscriptionOnServer(subscription, "POST", id);
+
+        isSubscribed = true;
+
+        updateBtn();
+    })
+    .catch(function (err) {
+        console.log('Failed to subscribe the user: ', err);
+        updateBtn();
+    });
+}*/
 
 function updateSubscriptionOnServer(subscription, method) {
     // TODO: Send subscription to application server
-
     const key = subscription.getKey('p256dh');
     const token = subscription.getKey('auth');
     const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
 
-    console.log(key, token)
-    console.log(JSON.stringify(subscription));
-
-
     return fetch('/reservation-app/push_subscription.php', {
         method,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
             endpoint: subscription.endpoint,
             publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
             authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
-            contentEncoding,
+            contentEncoding
         }),
-    }).then(() => subscription);
-    /*
-        const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
-
-        return fetch('push_subscription.php', {
-            method,
-            body: JSON.stringify({
-                endpoint: subscription.endpoint,
-                publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
-                authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
-                contentEncoding,
-            }),
-        }).then(() => subscription);*/
-}
+    })
+    /*.then(() => {
+            getLastReservationId().then(id => {
+                return fetch('/reservation-app/push_subscription.php', {
+                    method: "PUT",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: id
+                })
+            });
+        })*/
+};
 
 
