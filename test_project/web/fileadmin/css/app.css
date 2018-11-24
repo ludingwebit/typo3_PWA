@@ -529,7 +529,7 @@ form#form-reservation{
     -o-background-size: cover;
     background-size: cover;
     background-position: center;
-    background-image: url('/fileadmin/images/trailer1.jpg');
+    background-image: url("/fileadmin/images/trailer1.jpg");
 }
 /* ---------------------------------------------------
     Change Style of mini.css

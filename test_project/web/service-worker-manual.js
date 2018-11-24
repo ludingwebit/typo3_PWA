@@ -52,7 +52,11 @@ self.addEventListener("fetch", function (event) {
                 });
             })
         );
-    }
+    }/* else if (requestURL.href("https://maps.googleapis.com/maps/api/js/ViewportInfoService") === 0) {
+        return caches.match("/fileadmin/javascript/offline-map.js")
+
+    }*/
+
 });
 
 self.addEventListener('activate', function (event) {
@@ -99,7 +103,7 @@ let syncDB = function () {
                             'Accept': 'application/x-www-form-urlencoded',
                             'Content-Type': 'application/x-www-form-urlencoded'
                         },
-                        body: reservationUrl
+                        body: reservationUrl,
                     })
                     .then(function (response) {
                         console.log(response);

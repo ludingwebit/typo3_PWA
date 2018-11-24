@@ -19,13 +19,23 @@ $(document).ready(function () {
             addToObjectStore("reservation-store", reservationDetails);
             console.log("Hinzufügen von ", restName, restDate, restMail, "/", restTime, "/", restGuest);
             showNewReserverationNotification();
-            swRegistration.sync.register('syncDB').then(() => {
-                console.log("SyncDB ist als Event-Trigger jetzt registriert.")
-            });
+
+
+            if (!swRegistration.sync) {
+                ProgressiveKITT.addMessage('Background Sync funktioniert nicht. Senden sie nur wenn sie Online sind.', {hideAfter: 8000})
+            } else {
+                swRegistration.sync.register('syncDB').then(() => {
+                    console.log("SyncDB ist als Event-Trigger jetzt registriert.")
+                })
+            }
+
+
             ProgressiveKITT.addMessage('Lassen Sie uns benachrichtigen, wenn ihre Bestellung angenommen/abgelehnt wurde.',
-                {hideAfter: 7000});
+                {hideAfter: 5000});
             subscribeUser();
-            location.reload();
+            setTimeout(function () {
+                location.reload();
+            }, 5000);
 
         }
     });
@@ -96,15 +106,7 @@ let showNewReserverationNotification = function () {
 };
 
 
-/*let checkReservationStatus = function () {
-    var ajax_call = function () {
-        //your jQuery ajax code
-    };
-
-    var interval = 1000 * 60 * X; // where X is your every X minutes
-
-    setInterval(ajax_call, interval);
-}*/
+//Daten werden vom Server runtergeladen, wenn die lokale Datenbank leer ist
 let getReservationsFromServer = function () {
     return new Promise(function (resolve, reject) {
         return fetch("/reservation-app/confirm.php")
@@ -113,39 +115,30 @@ let getReservationsFromServer = function () {
                 return jsonArr
             }).then(function (reservations) {
                 reservations.map(function (reservation) {
-/*
-                    console.log("[DATENBANK] ", reservation);
-*/
                     resolve(syncObjectStore("reservation-store", reservation));
                 })
             }).catch(function (err) {
                 reject(err);
             })
-        /*            }).then(function (recieve) {
-                        openDatabase().then(function (db) {
-                                let objectStore = openObjectStore(db, "reservation-store", "readwrite");
-                                objectStore.openCursor().onsuccess = function (event) {
-                                    let cursor = event.target.result;
-
-                                    for (let i = 0; i < recieve.length; i++) {
-
-                                        if (!cursor) {
-                                            objectStore.add(recieve[i]);
-                                        } else {
-                                            if (cursor.value.id === recieve[i].id && cursor.value.status !== recieve[i].status) {
-                                                cursor.update(recieve[i]).onsuccess = resolve;
-                                            } else {
-                                                reject("[INDEXEDDB]: An dem Elemnt hat sich in der Datenbank nichts geändert.");
-                                            }
-                                        }
-                                    }
-                                }
-
-                                resolve(recieve);
-                            }
-                        )
-                    }).catch(function (err) {
-                        console.log(err);
-                    })*/
     })
 }
+//Versuch Reservierungs-ID mit an die Subscription zu hängen
+/*
+let getLastReservationId = function () {
+    return new Promise(function (resolve) {
+        openDatabase().then(function (db) {
+            let objectStore = openObjectStore(db, "reservation-store", 'readonly');
+            let index = objectStore.index('idx');
+            let openCursorRequest = index.openCursor(null, 'prev');
+            let lastID = null;
+            openCursorRequest.onsuccess = function (event) {
+                if (event.target.result) {
+                    lastID = event.target.result.value; //the object with max revision
+                    console.log(lastID.id);
+                }
+                resolve(lastID.id);
+
+            };
+        });
+    });
+}*/
