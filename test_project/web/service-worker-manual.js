@@ -96,7 +96,6 @@ let syncDB = function () {
         return Promise.all(
             reservations.map(function (reservation) {
                 let reservationUrl = createReservationJSON(reservation);
-                console.log(JSON.)
                 return fetch("/reservation-app/reserve.php",
                     {
                         method: 'post',
@@ -104,7 +103,7 @@ let syncDB = function () {
                             'Accept': 'application/x-www-form-urlencoded',
                             'Content-Type': 'application/x-www-form-urlencoded'
                         },
-                        body: reservationUrl
+                        body: reservationUrl,
                     })
                     .then(function (response) {
                         console.log(response);

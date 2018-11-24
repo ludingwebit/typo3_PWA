@@ -153,22 +153,6 @@ let subscribeUser = function () {
 
 }
 
-/*let subscription = createSubscription + id
-    .then(function (subscription) {
-        console.log("ID", userres_id);
-        console.log('User is subscribed.', subscription);
-        updateSubscriptionOnServer(subscription, "POST", id);
-
-        isSubscribed = true;
-
-        updateBtn();
-    })
-    .catch(function (err) {
-        console.log('Failed to subscribe the user: ', err);
-        updateBtn();
-    });
-}*/
-
 function updateSubscriptionOnServer(subscription, method) {
     // TODO: Send subscription to application server
     const key = subscription.getKey('p256dh');
@@ -188,18 +172,26 @@ function updateSubscriptionOnServer(subscription, method) {
             contentEncoding
         }),
     })
-    /*.then(() => {
-            getLastReservationId().then(id => {
-                return fetch('/reservation-app/push_subscription.php', {
-                    method: "PUT",
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: id
-                })
-            });
-        })*/
 };
+/*function updateSubscriptionOnServer(subscription, method) {
+    // TODO: Send subscription to application server
+    const key = subscription.getKey('p256dh');
+    const token = subscription.getKey('auth');
+    const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
+
+    return fetch('/reservation-app/push_subscription.php', {
+        method,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            endpoint: subscription.endpoint,
+            publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+            authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
+            contentEncoding
+        }),
+    })
+};*/
 
 
