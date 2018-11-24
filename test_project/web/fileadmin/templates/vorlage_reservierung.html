@@ -1,0 +1,95 @@
+<header>
+    <div>
+        <nav id="top-bar">
+            <div class="frame row">
+                <div class="col-sm">
+                    <h2 id="brand-name">{brandName -> f:format.raw()}</h2>
+                </div>
+                <div id="settings-mobile" class="material-dropdown">
+                    <figure></figure>
+                    <figure class="middle"></figure>
+                    <p class="cross">x</p>
+                    <figure></figure>
+                    <ul class="dropdown">
+                        <li><a href="#">Einstellungen</a></li>
+                        <li><a href="#">Aktualisieren</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav style="transition: all 0.3s ease 0s;" id="mobile-bottom-bar" class="mobile-bottom-bar">
+            <div class="sidebar-header">
+                {logo -> f:format.raw()}
+                {_all -> f_debug()}
+            </div>
+            <div>
+                {menuPrimaryMobile -> f:format.raw()}
+                {temp.langmenu -> f:format.raw()}
+
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main id="content" class="container">
+    <div class="row">
+            <f:form action="...">
+
+            </f:form>
+        </div>
+    </div>
+
+    <form action="/reservation-app/reserve.php" method="post" id="form-reservation">
+        <div class="input-group">
+            <label for="form-reservation--name">Name</label>
+            <input id="form-reservation--name" name="form-reservation--name" class="form-control" type="text" >
+        </div>
+        <div class="input-group ">
+            <label for="form-reservation--date">Reservierung Datum:</label>
+            <input class="form-control" type="date" id="form-reservation--date"
+                   name="form-reservation--date"
+                   value="">
+        </div>
+        <div class="input-group ">
+            <label for="form-reservation--time">Zeit:</label>
+            <input class="form-control" type="time" id="form-reservation--time" name="form-reservation--time"
+                   min="11:00" max="22:00" required/>
+            <span class="hours">&Ouml;ffnungszeit von 11:00AM to 22:00PM</span>
+
+        </div>
+        <div class="input-group ">
+            <label for="form-reservation--guests">G&auml;ste:</label>
+            <input class="form-control" type="number" value="2" min="1" max="10" id="form-reservation--guests"
+                   name="fform-reservation--guests">
+        </div>
+        <div class="input-group">
+            <label for="form-reservation--email">Email:</label>
+            <input  id="form-reservation--email" type="email" name="form-reservation--email">
+        </div>
+        <div class="btn-group">
+            <button id="reservation-submit" type="submit" name="action" value="send"  class="btn btn-default btn-lg">Send</button>
+        </div>
+    </form>
+</main>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h4>{labelNews}</h4>
+                <aside class="row">
+                    <div class="col-md-4 date-wrapper">
+                        {labelToday -> f:format.raw()}
+                        <div class="date">{now}</div>
+                    </div>
+                    <div class="col-md-8 news-wrapper">
+                        {footerNews -> f:format.raw()}
+                    </div>
+                </aside>
+            </div>
+            <div class="col-md-4">
+                <h4>{labelMore}</h4>
+                <nav>{menuSecondary -> f:format.raw()}</nav>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -11,6 +11,9 @@ return [
         'core' => [
             'packagePath' => 'typo3/sysext/core/',
         ],
+        'scheduler' => [
+            'packagePath' => 'typo3/sysext/scheduler/',
+        ],
         'extbase' => [
             'packagePath' => 'typo3/sysext/extbase/',
         ],
@@ -22,6 +25,9 @@ return [
         ],
         'frontend' => [
             'packagePath' => 'typo3/sysext/frontend/',
+        ],
+        'css_styled_content' => [
+            'packagePath' => 'typo3/sysext/css_styled_content/',
         ],
         'fluid_styled_content' => [
             'packagePath' => 'typo3/sysext/fluid_styled_content/',
@@ -37,6 +43,9 @@ return [
         ],
         'lang' => [
             'packagePath' => 'typo3/sysext/lang/',
+        ],
+        'reports' => [
+            'packagePath' => 'typo3/sysext/reports/',
         ],
         'setup' => [
             'packagePath' => 'typo3/sysext/setup/',
@@ -98,12 +107,6 @@ return [
         'recordlist' => [
             'packagePath' => 'typo3/sysext/recordlist/',
         ],
-        'reports' => [
-            'packagePath' => 'typo3/sysext/reports/',
-        ],
-        'scheduler' => [
-            'packagePath' => 'typo3/sysext/scheduler/',
-        ],
         'sv' => [
             'packagePath' => 'typo3/sysext/sv/',
         ],
@@ -121,6 +124,12 @@ return [
         ],
         'realurl' => [
             'packagePath' => 'typo3conf/ext/realurl/',
+        ],
+        'news' => [
+            'packagePath' => 'typo3conf/ext/news/',
+        ],
+        'maps2' => [
+            'packagePath' => 'typo3conf/ext/maps2/',
         ],
     ],
     'version' => 5,
