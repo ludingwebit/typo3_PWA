@@ -1,0 +1,28 @@
+{
+    "name": "ludingwebit/rest-reserve-sub-ext",
+    "type": "typo3-cms-extension",
+    "description": "Regelt das Hochladen der Reservierungen und Subscription an die Datenbank",
+    "authors": [
+        {
+            "name": "Paul Luding",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^8.7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ludingwebit\\RestReserveSubExt\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ludingwebit\\RestReserveSubExt\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "rest_reserve_sub_ext": "self.version",
+        "typo3-ter/rest-reserve-sub-ext": "self.version"
+    }
+}
