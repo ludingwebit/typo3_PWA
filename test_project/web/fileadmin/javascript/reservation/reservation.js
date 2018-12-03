@@ -2,6 +2,8 @@ $(document).ready(function () {
     populateReservations();
     getReservationsFromServer()
     let form = $("#form-reservation");
+
+
     form.submit(function (event) {
         event.preventDefault();
         let restDate = $("#form-reservation--date").val();

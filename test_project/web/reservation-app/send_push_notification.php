@@ -24,7 +24,7 @@ $sql_query = "SELECT * FROM be_subscription ";
 $mysqli_result = mysqli_query($link, $sql_query);
 /*$result = json_encode($mysqli_result->fetch_assoc(),JSON_UNESCAPED_SLASHES);*/
 $result = $mysqli_result->fetch_assoc();
-/*echo '<pre>'; print_r(json_decode($result,true)); echo '</pre>';*/
+echo '<pre>'; print_r(json_encode($result,true)); echo '</pre>';
 
 
 
