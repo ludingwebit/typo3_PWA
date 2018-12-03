@@ -1,28 +1,37 @@
 {
-	"repositories": [
-		{ "type": "composer", "url": "https://composer.typo3.org/" }
-	],
-	"name": "typo3/cms-base-distribution",
-	"description" : "TYPO3 CMS Base Distribution",
-	"license": "GPL-2.0+",
-	"require": {
-		"typo3/cms": "^8.7",
-		"helhum/typo3-console": "^4.4",
-		"dmitryd/typo3-realurl": "^2.4",
-		"typo3-ter/news": "^7.0",
-		"georgringer/news": "^7.0",
-		"templavoilaplus/templavoilaplus": "^7.2",
-		"clickstorm/go_maps_ext": "^2.5",
-		"jweiland/maps2": "^4.1",
-		"minishlink/web-push": "^4.0"
-	},
-	"extra": {
-		"typo3/cms": {
-			"cms-package-dir": "{$vendor-dir}/typo3/cms",
-			"web-dir": "web"
-		},
-		"helhum/typo3-console": {
-			"install-extension-dummy": "0"
-		}
-	}
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://composer.typo3.org/"
+    }
+  ],
+  "name": "typo3/cms-base-distribution",
+  "description": "TYPO3 CMS Base Distribution",
+  "license": "GPL-2.0+",
+  "require": {
+    "typo3/cms": "^8.7",
+    "helhum/typo3-console": "^4.4",
+    "dmitryd/typo3-realurl": "^2.4",
+    "typo3-ter/news": "^7.0",
+    "georgringer/news": "^7.0",
+    "templavoilaplus/templavoilaplus": "^7.2",
+    "clickstorm/go_maps_ext": "^2.5",
+    "jweiland/maps2": "^4.1",
+    "minishlink/web-push": "^4.0",
+    "friendsoftypo3/extension-builder": "^8.10"
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": "web"
+    },
+    "helhum/typo3-console": {
+      "install-extension-dummy": "0"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Ludingwebit\\RestReserveSubExt\\": "typo3conf/ext/rest_reserve_sub_ext/Classes"
+    }
+  }
 }
