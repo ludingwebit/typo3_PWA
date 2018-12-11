@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-12-10T18:03:01Z" product-name="acme_reservation">
+		<header/>
+		<body>
+			<trans-unit id="endpoint.description">
+				<source>endpoint</source>
+			</trans-unit>
+			<trans-unit id="browser_key.description">
+				<source>browserKey</source>
+			</trans-unit>
+			<trans-unit id="auth_secret.description">
+				<source>authSecret</source>
+			</trans-unit>
+			<trans-unit id="subscribed_at.description">
+				<source>subscribedAt</source>
+			</trans-unit>
+			<trans-unit id="unsubscribed_at.description">
+				<source>unsubscribedAt</source>
+			</trans-unit>
+			<trans-unit id="enabled.description">
+				<source>enabled</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

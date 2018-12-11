@@ -1,3 +1,4 @@
+
 config {
     linkVars = L
     uniqueLinkVars = 1
@@ -103,6 +104,7 @@ page {
     includeJSFooter {
         main1 = fileadmin/javascript/main.js
         main2 = fileadmin/javascript/app.js
+
     }
 
 
@@ -212,7 +214,6 @@ page {
             }
 
             contentForReservation = TEXT
-            contentForReservation.value = Hallo
             contentForReservation.wrap = <div id="status" class="center-block"> | </div>
 
             menuBreadcrumb = HMENU
@@ -330,5 +331,3 @@ lib.contentElement {
 
     page.10.variables.langage.20.1.NO.stdWrap.override = German || English
 [global]
-
-

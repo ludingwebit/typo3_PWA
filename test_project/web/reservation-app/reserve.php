@@ -31,8 +31,8 @@ $reservations[$id] = $reservation;
 require_once 'db.php';
 
 // Check connection
-if($mysqli === false){
-    die("ERROR: Could not connect. " . $mysqli->connect_error);
+if($link === false){
+    die("ERROR: Could not connect. " . $link->connect_error);
 }
 /* insert data into DB */
 foreach($reservations as $item) {

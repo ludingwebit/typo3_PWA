@@ -3,7 +3,7 @@ $(document).ready(function () {
     getReservationsFromServer()
     let form = $("#form-reservation");
     form.submit(function (event) {
-        event.preventDefault();
+         event.preventDefault();
         let restDate = $("#form-reservation--date").val();
         let restTime = $("#form-reservation--time").val();
         let restName = $("#form-reservation--name").val();
@@ -104,8 +104,6 @@ let showNewReserverationNotification = function () {
         }
     });
 };
-
-
 //Daten werden vom Server runtergeladen, wenn die lokale Datenbank leer ist
 let getReservationsFromServer = function () {
     return new Promise(function (resolve, reject) {

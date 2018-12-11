@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-12-10T18:03:01Z" product-name="acme_reservation">
+		<header/>
+		<body>
+			<trans-unit id="tx_acmereservation_domain_model_subscriber">
+				<source>Subscriber</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_subscriber.endpoint">
+				<source>Endpoint</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_subscriber.browser_key">
+				<source>Browser Key</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_subscriber.auth_secret">
+				<source>Auth Secret</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_subscriber.subscribed_at">
+				<source>Subscribed At</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_subscriber.unsubscribed_at">
+				<source>Unsubscribed At</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_subscriber.enabled">
+				<source>Enabled</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_reservierung">
+				<source>Reservierung</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_reservierung.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_reservierung.datum">
+				<source>Datum</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_reservierung.zeit">
+				<source>Zeit</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_reservierung.anzahl">
+				<source>Anzahl</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_reservierung.email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="tx_acmereservation_domain_model_reservierung.status">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="tx_acme_reservation_reservaciaplugini.name">
+				<source>Reservierung</source>
+			</trans-unit>
+			<trans-unit id="tx_acme_reservation_reservaciaplugini.description">
+				<source>Reservation plugin</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
