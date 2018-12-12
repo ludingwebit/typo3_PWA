@@ -128,8 +128,8 @@ return [
         'news' => [
             'packagePath' => 'typo3conf/ext/news/',
         ],
-        'rest_reserve_sub_ext' => [
-            'packagePath' => 'typo3conf/ext/rest_reserve_sub_ext/',
+        'acme_reservation' => [
+            'packagePath' => 'typo3conf/ext/acme_reservation/',
         ],
     ],
     'version' => 5,

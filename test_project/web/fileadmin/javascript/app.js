@@ -173,6 +173,7 @@ function updateSubscriptionOnServer(subscription, method) {
         }),
     })
 };
+
 /*function updateSubscriptionOnServer(subscription, method) {
     // TODO: Send subscription to application server
     const key = subscription.getKey('p256dh');
@@ -193,5 +194,23 @@ function updateSubscriptionOnServer(subscription, method) {
         }),
     })
 };*/
+function isOnline() {
+    let connectionStatus = document.getElementById('connectionStatus');
 
+    if (navigator.onLine) {
+        /*            connectionStatus.classList.remove("offline");
+                    connectionStatus.innerHTML = 'Verbindung zum Internet besteht!';*/
+        connectionStatus.innerHTML = '<img src="\/fileadmin\/images\/wifi_on.png" width="32px">';
+        return true;
+    } else {
+        //connectionStatus.innerHTML = 'Derzeit keine Verbindung zum Internet!';
+        //connectionStatus.classList.add("offline");
+        connectionStatus.innerHTML = '<img src="\/fileadmin\/images\/wifi_off.png" width="32px">';
+        return false;
+    }
+}
+
+window.addEventListener('online', isOnline);
+window.addEventListener('offline', isOnline);
+isOnline();
 

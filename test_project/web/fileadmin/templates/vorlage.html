@@ -4,20 +4,15 @@
             <div class="frame row">
                 <div class="col-sm">
                     <h2 id="brand-name">{brandName -> f:format.raw()}</h2>
+
+                </div>
+                <div id="settings-desktop" class="material-dropdown">
                     <button disabled class="js-push-btn">
                         Enable Push Messaging
                     </button>
                 </div>
-                <div id="settings-mobile" class="material-dropdown">
-                    <figure></figure>
-                    <figure class="middle"></figure>
-                    <p class="cross">x</p>
-                    <figure></figure>
-                    <ul class="dropdown">
-                        <li><a href="#">Einstellungen</a></li>
-                        <li><a href="#">Aktualisieren</a></li>
-                    </ul>
-                </div>
+                <div id="connectionStatus"></div>
+
             </div>
         </nav>
         <nav style="transition: all 0.3s ease 0s;" id="mobile-bottom-bar" class="mobile-bottom-bar">

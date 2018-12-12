@@ -24,7 +24,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: #424242;
-    -webkit-tap-highlight-color: #424242;
+    -webkit-tap-highlight-color: rgba(66, 66, 66, 0.51);
     min-height: 100%;
     margin: 0;
     padding: 0;
@@ -88,6 +88,8 @@ header{
 
 #brand-name {
     margin: 6px;
+    font-size: 18px;
+    padding-top: 10px;
 }
 
 .navbar {
@@ -104,123 +106,6 @@ header{
     outline: none !important;
     border: none;
 }
-
-.line {
-    width: 100%;
-    height: 1px;
-    border-bottom: 1px dashed #ddd;
-    margin: 40px 0;
-}
-
-.navbar .frame {
-    min-height: 50px;
-}
-
-.material-dropdown {
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-    box-sizing: border-box;
-    padding: 0 16px;
-    top: 12px;
-}
-
-.material-dropdown figure {
-    width: 4px;
-    height: 4px;
-    border-radius: 5px;
-    background: #ffffff;
-    margin: 3px 0;
-}
-
-.dropdown {
-    position: fixed;
-    right: -10px;
-    /* left: -55px; */
-    top: 2.3em;
-    transition: all 0.25s ease-out;
-    transform: scale(0);
-    transform-origin: 100% 0;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
-}
-
-.dropdown li {
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin: -10px 0;
-}
-
-.dropdown li a {
-    width: auto;
-    padding: 1em 18px;
-    display: inline-block;
-    white-space: pre;
-    box-sizing: border-box;
-    margin: 5px 0 0 10px;
-    color: #fff !important;
-}
-
-.dropdown li a:hover {
-    background: #ebebeb;
-}
-
-.dropdown:hover ul {
-    transform: scale(1);
-}
-
-.dropdown.active {
-    transform: scale(1);
-    transition: all 0.25s cubic-bezier(0.5, 1.8, 0.9, 0.8);
-    background: darkcyan;
-    margin: 23px 10px 0px 0px;
-    width: 140px;
-    border: 0;
-}
-
-.middle {
-    transition: all 0.25s cubic-bezier(0.72, 1.2, 0.71, 0.72);
-    transform: scale(1);
-    position: relative;
-    box-shadow: 0 0.1px 0.1px 0 rgba(0, 0, 0, 0.16), 0 0.1px 0.3px 0 rgba(0, 0, 0, 0.12);
-    -webkit-filter: blur(0.1px);
-    filter: blur(0.1px);
-}
-
-.middle.active {
-    transform: scale(4.5);
-    transition: all 0.25s cubic-bezier(0.32, 2.04, 0.85, 0.54);
-    box-shadow: 0 0.1px 0.1px 0 rgba(0, 0, 0, 0.16), 0 0.1px 0.3px 0 rgba(0, 0, 0, 0.12);
-}
-
-.cross {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    margin-top: -1px;
-    color: white;
-    transition: all 0.2s cubic-bezier(0.72, 1.2, 0.71, 0.72);
-    font-size: 22px;
-    user-select: none;
-}
-
-.cross.active {
-    transform: translate(-50%, -50%) scale(1);
-    transition: all 0.15s cubic-bezier(0.32, 2.04, 0.85, 0.54);
-    color: #000;
-    margin: auto;
-    margin-top: -13px;
-}
-
-.cross.active:focus {
-    outline: none;
-}
-
-div#settings-mobile figure {
-    padding: 1px !important;
-}
-
 /* NEWS */
 p.creatDate {
     margin: -10px 0px 0px 10px;
@@ -407,6 +292,17 @@ nav {
     background: #424242;
 }
 
+#connectionStatus{
+    margin: 0px;
+    color: #37d837;
+    padding: 5px 0px 0px 0px;
+}
+#connectionStatus.offline {
+    color: red;
+    font-weight: bold;
+    background-image: url(https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/wlan-connect-wifi-signal-wireless-internet-512.png);
+}
+
 button#sidebarCollapse {
     background: transparent;
     color: #FFF;
@@ -426,17 +322,7 @@ button#sidebarCollapse:focus {
     box-shadow: none;
 }
 
-button#settings-mobile {
-    float: right;
-    background: transparent;
-    color: #FFF;
-    font-size: 20px;
-    line-height: 40px;
-    width: 35px;
-    height: 35px;
-    transition: 0.1s all;
-    transform: scale(1);
-}
+
 
 div#settings-desktop {
     float: right;
@@ -494,16 +380,17 @@ form#form-reservation{
 #form-reservation nav.form-navigation {
     background: #222 !important;
 }
-#form-reservation button.btn.btn-primary:hover {
+#form_Reservieren:hover {
     background: #424242;
 
 }
 
-#form-reservation button.btn.btn-primary {
+#form_Reservieren {
     border: 1px solid;
-    background: #008b8b;
+    background: #308732;
     width: 100%;
     padding: 10px;
+    margin-left: 4px;
 }
 #form-reservation .form-inline{
     display: -webkit-inline-box;
@@ -522,28 +409,31 @@ form#form-reservation{
     padding: 0px;
 }
 
+#form .label {
+    padding: 5px 0 0px 0;
+}
+#form label{
+    font-size: 20px;
+}
 /* Map Widget */
-.tx-maps2.offline-map {
+#map-container {
+    border-top: 4px solid #242424;
+    height: 60vh;
+    transform: inherit !important;
+    margin: 0px 20px 0 20px;
+}
+
+#map-container.offline-map {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     background-position: center;
-    background-image: url("/fileadmin/images/trailer1.jpg");
+    background-image: url('../images/map-offline.jpg');
 }
 /* ---------------------------------------------------
     Change Style of mini.css
 ----------------------------------------------------- */
-
-span.icon-arrow-left:hover {
-    transform: rotateZ(180deg);
-    transition: all 0.3s;
-}
-
-span.icon-arrow-left {
-    background-image: url(icons/arrow-left.svg);
-    transition: 0.3s;
-}
 
 /* Startseite - Home-Icon*/
 span#menu-item-6 {
@@ -551,12 +441,12 @@ span#menu-item-6 {
 }
 
 /* Reservierung - Credit-Icon*/
-span#menu-item-7 {
+span#menu-item-8 {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23fdfdfd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='1' y='4' width='22' height='16' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='1' y1='10' x2='23' y2='10'%3E%3C/line%3E%3C/svg%3E")
 }
 
 /* Anfahrt - Location-Icon*/
-span#menu-item-8 {
+span#menu-item-7 {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23fdfdfd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'%3E%3C/path%3E%3Ccircle cx='12' cy='10' r='3'%3E%3C/circle%3E%3C/svg%3E")
 }
 
@@ -587,15 +477,6 @@ input:not([type]), [type="time"], [type="date"] {
     border-radius: var(--universal-border-radius);
     margin: calc(var(--universal-margin) / 2);
     padding: var(--universal-padding) calc(1.5 * var(--universal-padding));
-}
-span.icon-arrow-left:hover {
-    transform: rotateZ(180deg);
-    transition: all 0.3s;
-}
-
-span.icon-arrow-left {
-    background-image: url(icons/arrow-left.svg);
-    transition: 0.3s;
 }
 
 input:not([type]), [type="time"], [type="date"] {
@@ -629,6 +510,7 @@ input:not([type]), [type="time"], [type="date"] {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+    z-index: 100;
 }
 
 .mobile-bottom-bar span[class^='icon-'] {
@@ -652,6 +534,13 @@ input:not([type]), [type="time"], [type="date"] {
 }
 #top-bar .col-sm {
     display: flex;
+    justify-content: space-between;
+}
+button.js-push-btn {
+    /*
+    height: 40px;
+    */
+    font-size: 10px;
 }
 
 .mobile-bottom-bar .footer-link {
@@ -679,7 +568,7 @@ input:not([type]), [type="time"], [type="date"] {
 }
 
 .mobile-bottom-bar .footer-link:hover {
-    background: #424242;
+    background: rgba(66, 66, 66, 0.51);
 }
 .mobile-bottom-bar .footer-link.active{
     background: rgba(66, 66, 66, 0.51);
@@ -687,6 +576,7 @@ input:not([type]), [type="time"], [type="date"] {
 
 .mobile-bottom-bar .footer-link:focus, .mobile-bottom-bar .footer-link:active {
     color: #0c3e5f;
+    background-color: rgba(66, 66, 66, 0.51);
 }
 
 .mobile-bottom-bar .footer-text {
@@ -788,8 +678,36 @@ input:not([type]), [type="time"], [type="date"] {
         padding-left: 250px;
         background: #222;
     }
+    #brand-name {
+        margin: 0px;
+        font-size: 27px;
+    }
+    #top-bar .col-sm {
+        display: flex;
+        justify-content: normal;
+    }
+    .input-group{
+        display: flex;
+    }
+    #connectionStatus{
+        margin: 5px;
+        color: #37d837;
+        padding: 0px 300px 0 0 !important;
+    }
 }
 
+@media screen and (max-width: 767px){
+    table td:first-child, table th:first-child, table.horizontal td:first-child, table.horizontal th:first-child {
+        border-top: 0;
+        background-color: #000000a6;
+    }
+
+    table tr, table.horizontal tr {
+        display: block;
+        border: .0625rem solid var(--table-border-color);
+        border-radius: var(--universal-border-radius);
+        background: darkcyan;
+    }}
 /* ProgressiveUIKit */
 #progressivekitt-ui{display:block !important;display:-ms-flexbox !important;display:-webkit-flex !important;display:flex !important;display:-ms-flexbox !important;display:-webkit-flex !important;display:flex !important;-ms-flex-direction:row;-webkit-flex-direction:row;flex-direction:row}#progressivekitt-ui.progressivekitt-ui--hidden{display:none !important}#progressivekitt-ui .progressivekitt-message{outline:none;z-index:999;display:block;position:fixed;background-color:#323232;color:#f1f1f1;font-family:"Roboto","Noto",sans-serif;line-height:18px;font-size:14px;-webkit-font-smoothing:antialiased;min-height:48px;padding:16px 24px;box-sizing:border-box;box-shadow:0 2px 5px 0 rgba(0,0,0,0.26);border-radius:2px;left:0;bottom:0;margin:12px;-webkit-transition:-webkit-transform 0.3s, opacity 0.3s;transition:transform 0.3s, opacity 0.3s;opacity:0;-webkit-transform:translateY(100px);transform:translateY(100px);cursor:default}#progressivekitt-ui .progressivekitt-message--shown{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}#progressivekitt-ui .progressivekitt-button{color:#eeff41;text-transform:uppercase;font-weight:600;padding-left:24px;cursor:pointer}
 /*# sourceMappingURL=flat.css.map */
