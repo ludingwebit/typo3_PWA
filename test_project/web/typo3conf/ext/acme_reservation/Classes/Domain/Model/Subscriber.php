@@ -19,49 +19,49 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
      * endpoint
-     *
+     * 
      * @var string
      */
     protected $endpoint = '';
 
     /**
      * browserKey
-     *
+     * 
      * @var string
      */
     protected $browserKey = '';
 
     /**
      * authSecret
-     *
+     * 
      * @var string
      */
     protected $authSecret = '';
 
     /**
      * subscribedAt
-     *
+     * 
      * @var \DateTime
      */
     protected $subscribedAt = null;
 
     /**
      * unsubscribedAt
-     *
+     * 
      * @var \DateTime
      */
     protected $unsubscribedAt = null;
 
     /**
      * enabled
-     *
+     * 
      * @var bool
      */
     protected $enabled = false;
 
     /**
      * Returns the endpoint
-     *
+     * 
      * @return string $endpoint
      */
     public function getEndpoint()
@@ -71,7 +71,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the endpoint
-     *
+     * 
      * @param string $endpoint
      * @return void
      */
@@ -82,7 +82,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the browserKey
-     *
+     * 
      * @return string $browserKey
      */
     public function getBrowserKey()
@@ -92,7 +92,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the browserKey
-     *
+     * 
      * @param string $browserKey
      * @return void
      */
@@ -103,7 +103,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the authSecret
-     *
+     * 
      * @return string $authSecret
      */
     public function getAuthSecret()
@@ -113,7 +113,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the authSecret
-     *
+     * 
      * @param string $authSecret
      * @return void
      */
@@ -124,7 +124,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the subscribedAt
-     *
+     * 
      * @return \DateTime $subscribedAt
      */
     public function getSubscribedAt()
@@ -134,7 +134,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the subscribedAt
-     *
+     * 
      * @param \DateTime $subscribedAt
      * @return void
      */
@@ -145,7 +145,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the unsubscribedAt
-     *
+     * 
      * @return \DateTime $unsubscribedAt
      */
     public function getUnsubscribedAt()
@@ -155,7 +155,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the unsubscribedAt
-     *
+     * 
      * @param \DateTime $unsubscribedAt
      * @return void
      */
@@ -166,7 +166,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the enabled
-     *
+     * 
      * @return bool $enabled
      */
     public function getEnabled()
@@ -176,7 +176,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the enabled
-     *
+     * 
      * @param bool $enabled
      * @return void
      */
@@ -187,7 +187,7 @@ class Subscriber extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the boolean state of enabled
-     *
+     * 
      * @return bool
      */
     public function isEnabled()

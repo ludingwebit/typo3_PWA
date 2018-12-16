@@ -1,4 +1,4 @@
-
+#Config - Allgemein System; RealUrl;
 config {
     linkVars = L
     uniqueLinkVars = 1
@@ -22,29 +22,7 @@ config {
     prefixLocalAnchors >
     absRefPrefix = /
 }
-plugin.tx_fluidform.settings.forms.contactBasic {
-    finisher {
-        # Copy database finisher pre-definition
-        database < plugin.tx_fluidform.presets.finisher.database
-        database {
-            # Activate the database finisher
-            active = 1
-            # Define the Container, where the records should be saved
-            storagePid = 605
-        }
-    }
-
-    finisher {
-        javascript < plugin.tx_fluidform.presets.finisher.javascript
-        javascript.functions {
-            # After successfully sent, but before displaying the success message
-            beforeSuccess (
-                ga('send', 'event', 'Forms', 'Submit', 'Kontaktformular');
-            )
-
-        }
-    }
-}
+#Definiert die Sprache des tx_News Plugins
 plugin.tx_news {
     _LOCAL_LANG {
         default {
@@ -66,7 +44,6 @@ plugin.tx_news {
 plugin.tx_gomapsext.settings.apiKey = AIzaSyBvQNb0hkcnBkfpVL1--9Pyd48MwjXAG18
 
 
-
 # Default PAGE object:
 page = PAGE
 page {
@@ -85,16 +62,14 @@ page {
         10 = TEXT
         10.value = <link rel="manifest" href="/fileadmin/manifest.json"></link>
     }
+    #Stylesheet-datein einfügen
     includeCSS {
         main1 = fileadmin/css/app.css
         main2 = fileadmin/css/mini-dark.min.css
         main2.title = main
         main2.media = all
     }
-
-
     #JS-datein einfügen
-
     includeJS {
         jquery0 = fileadmin/javascript/jquery.3.3.1.min.js
         jquery0.forceOnTop = 1

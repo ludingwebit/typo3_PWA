@@ -4,7 +4,7 @@ return [
         'debug' => true,
         'explicitADmode' => 'explicitAllow',
         'installToolPassword' => '$pbkdf2-sha256$25000$a/K5vDVC779P1FQJ0YZ5eg$nY3shSH1uh1Rv86IKiVfPMFaUgrYfVYeAuK2lmGpgVE',
-        'loginSecurityLevel' => 'normal',
+        'loginSecurityLevel' => 'rsa',
     ],
     'DB' => [
         'Connections' => [
@@ -21,6 +21,7 @@ return [
     ],
     'EXT' => [
         'extConf' => [
+            'acme_reservation' => 'a:0:{}',
             'css_styled_content' => 'a:0:{}',
             'extension_builder' => 'a:3:{s:15:"enableRoundtrip";s:1:"1";s:15:"backupExtension";s:1:"1";s:9:"backupDir";s:35:"uploads/tx_extensionbuilder/backups";}',
             'go_maps_ext' => 'a:3:{s:15:"include_library";s:1:"0";s:16:"include_manually";s:1:"1";s:8:"footerJS";s:1:"1";}',

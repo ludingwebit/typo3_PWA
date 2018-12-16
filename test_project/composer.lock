@@ -1172,21 +1172,21 @@
         },
         {
             "name": "helhum/typo3-console-plugin",
-            "version": "2.0.4",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TYPO3-Console/typo3-console-plugin.git",
-                "reference": "4e0cb102b6471b156a942eb8ca6e607ab28c0b19"
+                "reference": "4a80b494adb97306bb19a14c72c214be79b5b079"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3-Console/typo3-console-plugin/zipball/4e0cb102b6471b156a942eb8ca6e607ab28c0b19",
-                "reference": "4e0cb102b6471b156a942eb8ca6e607ab28c0b19",
+                "url": "https://api.github.com/repos/TYPO3-Console/typo3-console-plugin/zipball/4a80b494adb97306bb19a14c72c214be79b5b079",
+                "reference": "4a80b494adb97306bb19a14c72c214be79b5b079",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0",
-                "php": ">=7.0.0 <7.3",
+                "php": "^7.0",
                 "typo3/cms-composer-installers": "^1.4 || ^2.0"
             },
             "require-dev": {
@@ -1221,7 +1221,7 @@
                 "plugin",
                 "typo3 console"
             ],
-            "time": "2017-12-13T13:52:52+00:00"
+            "time": "2018-12-09T12:06:13+00:00"
         },
         {
             "name": "jweiland/maps2",
@@ -1754,7 +1754,7 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.4.19",
+            "version": "v3.4.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
@@ -1823,7 +1823,7 @@
         },
         {
             "name": "symfony/debug",
-            "version": "v4.2.0",
+            "version": "v4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -1879,7 +1879,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v4.2.0",
+            "version": "v4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -2045,7 +2045,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.19",
+            "version": "v3.4.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -2094,7 +2094,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v4.2.0",
+            "version": "v4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -2269,16 +2269,16 @@
         },
         {
             "name": "typo3/cms",
-            "version": "v8.7.20",
+            "version": "v8.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TYPO3/TYPO3.CMS.git",
-                "reference": "0912c2e6f6310761d2ff9ec202efb19fd9be563d"
+                "reference": "8ad01b6ece274eb1a11049e1120663af5895103f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3/TYPO3.CMS/zipball/0912c2e6f6310761d2ff9ec202efb19fd9be563d",
-                "reference": "0912c2e6f6310761d2ff9ec202efb19fd9be563d",
+                "url": "https://api.github.com/repos/TYPO3/TYPO3.CMS/zipball/8ad01b6ece274eb1a11049e1120663af5895103f",
+                "reference": "8ad01b6ece274eb1a11049e1120663af5895103f",
                 "shasum": ""
             },
             "require": {
@@ -2471,7 +2471,7 @@
                 "extbase",
                 "typo3"
             ],
-            "time": "2018-10-30T10:39:51+00:00"
+            "time": "2018-12-14T07:43:50+00:00"
         },
         {
             "name": "typo3/cms-cli",
@@ -2509,21 +2509,21 @@
         },
         {
             "name": "typo3/cms-composer-installers",
-            "version": "v1.5.2",
+            "version": "v1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TYPO3/CmsComposerInstallers.git",
-                "reference": "a5c340cafe69629869f046f4e2790fb87bfb9ded"
+                "reference": "aad8b6b56b45e2f9fc4542e1e64677da4ee8c5fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3/CmsComposerInstallers/zipball/a5c340cafe69629869f046f4e2790fb87bfb9ded",
-                "reference": "a5c340cafe69629869f046f4e2790fb87bfb9ded",
+                "url": "https://api.github.com/repos/TYPO3/CmsComposerInstallers/zipball/aad8b6b56b45e2f9fc4542e1e64677da4ee8c5fa",
+                "reference": "aad8b6b56b45e2f9fc4542e1e64677da4ee8c5fa",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0.0",
-                "php": ">=7.0.0 <7.3"
+                "php": ">=7.0.0 <7.4"
             },
             "conflict": {
                 "composer/installers": "<1.0.24 || >1.0.24"
@@ -2574,7 +2574,7 @@
                 "installer",
                 "typo3"
             ],
-            "time": "2018-04-09T08:16:52+00:00"
+            "time": "2018-12-15T22:14:50+00:00"
         },
         {
             "name": "typo3/phar-stream-wrapper",

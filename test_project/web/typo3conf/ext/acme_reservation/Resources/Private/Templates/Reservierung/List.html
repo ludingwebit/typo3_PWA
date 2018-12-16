@@ -17,7 +17,42 @@
 
 		<f:flashMessages />
 
+		<table  class="tx_acmereservation" >
+			<tr>
+				<th><f:translate key="tx_acmereservation_domain_model_reservierung.name" /></th>
+				<th><f:translate key="tx_acmereservation_domain_model_reservierung.datum" /></th>
+				<th><f:translate key="tx_acmereservation_domain_model_reservierung.zeit" /></th>
+				<th><f:translate key="tx_acmereservation_domain_model_reservierung.anzahl" /></th>
+				<th><f:translate key="tx_acmereservation_domain_model_reservierung.email" /></th>
+				<th><f:translate key="tx_acmereservation_domain_model_reservierung.status" /></th>
+				<th> </th>
+				<th> </th>
+			</tr>
 
-		<f:link.action action="new">New Reservierung</f:link.action>
+			<f:for each="{reservierungs}" as="reservierung">
+				<tr>
+					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.name}</f:link.action></td>
+					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.datum -> f:format.date()}</f:link.action></td>
+					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.zeit}</f:link.action></td>
+					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.anzahl}</f:link.action></td>
+					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.email}</f:link.action></td>
+					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.status}</f:link.action></td>
+					<td><f:link.action action="edit" arguments="{reservierung : reservierung}">Edit</f:link.action></td>
+					<td><f:link.action action="delete" arguments="{reservierung : reservierung}">Delete</f:link.action></td>
+				</tr>
+			</f:for>
+		</table>
+
+
+		<h1>New Reservierung</h1>
+
+		<f:flashMessages />
+
+		<f:render partial="FormErrors" />
+
+		<f:form action="create" method="post" name="newReservierung" id="form-reservation" object="{newReservierung}">
+			<f:render partial="Reservierung/FormFields" />
+			<f:form.submit value="Reservierung" />
+		</f:form>
 	</f:section>
 </html>

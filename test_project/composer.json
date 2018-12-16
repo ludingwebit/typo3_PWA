@@ -31,7 +31,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Ludingwebit\\RestReserveSubExt\\": "typo3conf/ext/rest_reserve_sub_ext/Classes"
+      "WebitDe\\AcmeReservation\\": "web/typo3conf/ext/acme_reservation/Classes"
     }
   }
 }

@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rysbekov
- * Date: 11.12.18
- * Time: 10:57
- */
 
 namespace WebitDe\AcmeReservation\Controller;
 
-
+/**
+ * @var MainController
+ */
 class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     public function indexAction(){

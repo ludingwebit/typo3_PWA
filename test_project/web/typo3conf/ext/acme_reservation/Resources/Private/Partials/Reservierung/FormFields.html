@@ -1,26 +1,30 @@
 <html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <label for="name">
-	<f:translate key="tx_acmereservation_domain_model_reservierung.name" />
-</label><br />
-	<f:form.textfield property="name" id="form_name" /><br />
+    <f:translate key="tx_acmereservation_domain_model_reservierung.name"/>
+</label><br/>
+<f:form.textfield id="form_name" property="name"/>
+<br/>
 <label for="datum">
-	<f:translate key="tx_acmereservation_domain_model_reservierung.datum" />
-</label><br />
-	<f:form.textfield property="datum" id ="form_datum" value="{reservierung.datum->f:format.date()}" /><br />
+    <f:translate format="d.m.Y" key="tx_acmereservation_domain_model_reservierung.datum"/>
+</label><br/>
+<f:form.textfield type="date" id="form_datum" property="datum" value="{reservierung.datum->f:format.date()}"/>
+<br/>
 <label for="zeit">
-	<f:translate key="tx_acmereservation_domain_model_reservierung.zeit" />
-</label><br />
-	<f:form.textfield property="zeit" id="form_zeit" value="{reservierung.zeit->f:format.date()}" /><br />
+    <f:translate key="tx_acmereservation_domain_model_reservierung.zeit"/>
+</label><br/>
+<f:form.textfield type="time" id="form_zeit" property="zeit" value="{reservierung.zeit->f:format.date()}"/>
+<br/>
 <label for="anzahl">
-	<f:translate key="tx_acmereservation_domain_model_reservierung.anzahl" />
-</label><br />
-	<f:form.textfield property="anzahl" id="form_anzahl" /><br />
+    <f:translate key="tx_acmereservation_domain_model_reservierung.anzahl"/>
+</label><br/>
+<f:form.textfield id="form_anzahl" property="anzahl"/>
+<br/>
 <label for="email">
-	<f:translate key="tx_acmereservation_domain_model_reservierung.email" />
-</label><br />
-	<f:form.textfield property="email" id="form_email" /><br />
+    <f:translate key="tx_acmereservation_domain_model_reservierung.email"/>
+</label><br/>
+<f:form.textfield type="email" id="form_email" property="email"/>
+<br/>
 <label for="status">
-	<f:translate key="tx_acmereservation_domain_model_reservierung.status" />
-</label><br />
-	<f:form.textfield property="status" /><br />
+    <f:translate key="tx_acmereservation_domain_model_reservierung.status"/>
+</label><br/>
 </html>

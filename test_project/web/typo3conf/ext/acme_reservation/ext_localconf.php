@@ -1,25 +1,28 @@
 <?php
 defined('TYPO3_MODE') || die('Access denied.');
-
 call_user_func(
-    function()
-    {
+    function () {
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'WebitDe.AcmeReservation',
             'Reservaciaplugini',
-            [
-                'Main' => 'index, newSubscriber, newReservierung, create, edit, update, delete',
-            ],
+            array(
+                'Reservierung' => 'list, show, new, create, edit, update, delete',
+                'Subscriber' => 'list, show, new, create, edit, update, delete',
+
+            ),
+
             // non-cacheable actions
             [
-                'Main' => 'newSubscriber, newReservierung, update, delete',
+                'Reservierung' => 'create, update, delete',
+                'Subscriber' => 'create, update, delete',
             ]
         );
 
-    // wizards
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        'mod {
+
+        // wizards
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+            'mod {
             wizards.newContentElement.wizardItems.plugins {
                 elements {
                     reservaciaplugini {
@@ -35,14 +38,16 @@ call_user_func(
                 show = *
             }
        }'
-    );
-		$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-		
-			$iconRegistry->registerIcon(
-				'acme_reservation-plugin-reservaciaplugini',
-				\TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-				['source' => 'EXT:acme_reservation/Resources/Public/Icons/user_plugin_reservaciaplugini.svg']
-			);
-		
+        );
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Imaging\IconRegistry::class
+        );
+
+        $iconRegistry->registerIcon(
+            'acme_reservation-plugin-reservaciaplugini',
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            ['source' => 'EXT:acme_reservation/Resources/Public/Icons/user_plugin_reservaciaplugini.svg']
+        );
+
     }
 );

@@ -1,19 +1,8 @@
 <?php
 namespace WebitDe\AcmeReservation\Controller;
 
-/***
- *
- * This file is part of the "Acme Reservation" Extension for TYPO3 CMS.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- *  (c) 2018
- *
- ***/
-
 /**
- * SubscriberController
+ * @var SubscriberController
  */
 class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
@@ -24,11 +13,9 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function listAction()
     {
-
-        $subscribers = array('word1'=>'Foo', 'word2'=>'World!');
-
+        $subscribers = ['word1' => 'Foo', 'word2' => 'World!'];
         //$subscribers = $this->subscriberRepository->findAll();
-        $subscribers = array('word1'=>'Hallo', 'word2'=>'World!');
+        $subscribers = ['word1' => 'Hallo', 'word2' => 'World!'];
         $this->view->render('list');
     }
 
@@ -53,7 +40,8 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
     }
 
-    public function newReservierungAction(){
+    public function newReservierungAction()
+    {
         $this->redirect('create', ReservierungController::class);
     }
 
@@ -65,7 +53,11 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function createAction(\WebitDe\AcmeReservation\Domain\Model\Subscriber $newSubscriber)
     {
-        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage(
+            'The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html',
+            '',
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
+        );
         $this->subscriberRepository->add($newSubscriber);
         $this->redirect('list');
     }
@@ -90,7 +82,11 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function updateAction(\WebitDe\AcmeReservation\Domain\Model\Subscriber $subscriber)
     {
-        $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage(
+            'The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html',
+            '',
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
+        );
         $this->subscriberRepository->update($subscriber);
         $this->redirect('list');
     }
@@ -103,7 +99,11 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function deleteAction(\WebitDe\AcmeReservation\Domain\Model\Subscriber $subscriber)
     {
-        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage(
+            'The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html',
+            '',
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
+        );
         $this->subscriberRepository->remove($subscriber);
         $this->redirect('list');
     }
