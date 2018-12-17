@@ -31,7 +31,7 @@
   },
   "autoload": {
     "psr-4": {
-      "WebitDe\\AcmeReservation\\": "typo3conf/ext/acme_reservation/Classes"
+      "WebitDe\\AcmeReservation\\": "web/typo3conf/ext/acme_reservation/Classes"
     }
   }
 }

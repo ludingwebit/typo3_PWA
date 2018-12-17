@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "WebitDe\\AcmeReservation\\": "Classes"
+            "WebitDe\\AcmeReservation\\": "Classes/"
         }
     },
     "autoload-dev": {

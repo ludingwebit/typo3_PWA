@@ -19,9 +19,9 @@
 
     <f:render partial="FormErrors" />
 
-    <f:form action="create"  name="newReservierung" object="{newReservierung}">
+    <f:form action="create" method="post" name="form" id="form-reservation" object="{newReservierung}">
     <f:render partial="Reservierung/FormFields" />
-    <f:form.submit value="Create new" />
+      <f:form.submit value="Reservierung" />
     </f:form>
   </f:section>
 </html>

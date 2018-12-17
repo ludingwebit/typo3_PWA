@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2018-12-10T18:03:01Z" product-name="acme_reservation">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-12-15T13:29:27Z" product-name="acme_reservation">
 		<header/>
 		<body>
 			<trans-unit id="name.description">

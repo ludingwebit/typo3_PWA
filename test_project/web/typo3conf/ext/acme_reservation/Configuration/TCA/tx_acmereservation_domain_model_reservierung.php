@@ -128,12 +128,12 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:acme_reservation/Resources/Private/Language/locallang_db.xlf:tx_acmereservation_domain_model_reservierung.datum',
             'config' => [
-                'dbType' => 'datetime',
+                'dbType' => 'date',
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'size' => 12,
-                'eval' => 'datetime',
-                'default' => null,
+                'size' => 7,
+                'eval' => 'date',
+                'default' => "0000-00-00",
             ],
         ],
         'zeit' => [

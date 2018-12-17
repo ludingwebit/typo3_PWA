@@ -2269,16 +2269,16 @@
         },
         {
             "name": "typo3/cms",
-            "version": "v8.7.21",
+            "version": "v8.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TYPO3/TYPO3.CMS.git",
-                "reference": "cccc7a31e46e9a3200aafd4c25bde77cc7501d63"
+                "reference": "8ad01b6ece274eb1a11049e1120663af5895103f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3/TYPO3.CMS/zipball/cccc7a31e46e9a3200aafd4c25bde77cc7501d63",
-                "reference": "cccc7a31e46e9a3200aafd4c25bde77cc7501d63",
+                "url": "https://api.github.com/repos/TYPO3/TYPO3.CMS/zipball/8ad01b6ece274eb1a11049e1120663af5895103f",
+                "reference": "8ad01b6ece274eb1a11049e1120663af5895103f",
                 "shasum": ""
             },
             "require": {
@@ -2471,7 +2471,7 @@
                 "extbase",
                 "typo3"
             ],
-            "time": "2018-12-11T12:40:12+00:00"
+            "time": "2018-12-14T07:43:50+00:00"
         },
         {
             "name": "typo3/cms-cli",
@@ -2509,21 +2509,21 @@
         },
         {
             "name": "typo3/cms-composer-installers",
-            "version": "v1.5.2",
+            "version": "v1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TYPO3/CmsComposerInstallers.git",
-                "reference": "a5c340cafe69629869f046f4e2790fb87bfb9ded"
+                "reference": "aad8b6b56b45e2f9fc4542e1e64677da4ee8c5fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3/CmsComposerInstallers/zipball/a5c340cafe69629869f046f4e2790fb87bfb9ded",
-                "reference": "a5c340cafe69629869f046f4e2790fb87bfb9ded",
+                "url": "https://api.github.com/repos/TYPO3/CmsComposerInstallers/zipball/aad8b6b56b45e2f9fc4542e1e64677da4ee8c5fa",
+                "reference": "aad8b6b56b45e2f9fc4542e1e64677da4ee8c5fa",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0.0",
-                "php": ">=7.0.0 <7.3"
+                "php": ">=7.0.0 <7.4"
             },
             "conflict": {
                 "composer/installers": "<1.0.24 || >1.0.24"
@@ -2574,7 +2574,7 @@
                 "installer",
                 "typo3"
             ],
-            "time": "2018-04-09T08:16:52+00:00"
+            "time": "2018-12-15T22:14:50+00:00"
         },
         {
             "name": "typo3/phar-stream-wrapper",
