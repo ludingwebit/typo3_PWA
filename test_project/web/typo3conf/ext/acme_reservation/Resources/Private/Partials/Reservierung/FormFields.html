@@ -5,9 +5,9 @@
 <f:form.textfield id="form_name" property="name"/>
 <br/>
 <label for="datum">
-    <f:translate format="d.m.Y" key="tx_acmereservation_domain_model_reservierung.datum"/>
+    <f:translate key="tx_acmereservation_domain_model_reservierung.datum"/>
 </label><br/>
-<f:form.textfield type="date" id="form_datum" property="datum" value="{reservierung.datum->f:format.date()}"/>
+<f:form.textfield placeholder="dd.mm.yyyy" type="date" id="form_datum" property="datum" value="{reservierung.datum->f:format.date()}"/>
 <br/>
 <label for="zeit">
     <f:translate key="tx_acmereservation_domain_model_reservierung.zeit"/>
@@ -27,4 +27,5 @@
 <label for="status">
     <f:translate key="tx_acmereservation_domain_model_reservierung.status"/>
 </label><br/>
+
 </html>

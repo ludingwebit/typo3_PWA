@@ -27,16 +27,16 @@ class Reservierung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * datum
      * 
-     * @var \DateTimeInterface
+     * @var string
      */
-    protected $datum = null;
+    protected $datum = '';
 
     /**
      * zeit
      * 
-     * @var \DateTimeInterface
+     * @var string
      */
-    protected $zeit = 0;
+    protected $zeit = '';
 
     /**
      * anzahl
@@ -83,9 +83,9 @@ class Reservierung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the datum
      * 
-     * @return \DateTimeInterface $datum
+     * @return string $datum
      */
-    public function getDatum(): ?\DateTimeInterface
+    public function getDatum()
     {
         return $this->datum;
     }
@@ -93,10 +93,10 @@ class Reservierung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the datum
      * 
-     * @param \DateTimeInterface $datum
+     * @param string $datum
      * @return void
      */
-    public function setDatum(\DateTimeInterface $datum): self
+    public function setDatum($datum)
     {
         $this->datum = $datum;
     }
@@ -104,8 +104,8 @@ class Reservierung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the zeit
      *
-     * @param \DateTimeInterface $zeit
-     * @return \DateTimeInterface $zeit
+     * @param string $zeit
+     * @return string $zeit
      */
     public function getZeit()
     {
@@ -115,10 +115,10 @@ class Reservierung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the zeit
      *
-     * @param \DateTimeInterface $zeit
+     * @param string $zeit
      * @return void
      */
-    public function setZeit(\DateTimeInterface $zeit): self
+    public function setZeit($zeit)
     {
         $this->zeit = $zeit;
     }

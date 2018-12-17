@@ -3,7 +3,6 @@ namespace WebitDe\AcmeReservation\Controller;
 
 use WebitDe\AcmeReservation\Domain\Model\Reservierung;
 
-
 /**
  * @var ReservierungController
  */
@@ -11,7 +10,7 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 {
     /**
      * action list
-     * 
+     *
      * @return void
      */
     public function listAction()
@@ -23,7 +22,7 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action show
-     * 
+     *
      * @param Reservierung $reservierung
      * @return void
      */
@@ -34,7 +33,7 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action new
-     * 
+     *
      * @return void
      */
     public function newAction()
@@ -43,21 +42,27 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     }
 
     /**
+     * @var \WebitDe\AcmeReservation\Repository\ReservierungRepository
+     * @inject
+     */
+    protected $ReservierungRepository;
+    /**
      * action create
-     * 
+     *
      * @param Reservierung $newReservierung
      * @return void
      */
     public function createAction(Reservierung $newReservierung)
     {
-        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
-        $this->reservierungRepository->add($newReservierung);
-        $this->redirect('list');
+                $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class)->persistAll();
+                $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+                $this->ReservierungRepository->add($newReservierung);
+                $this->redirect('list');
     }
 
     /**
      * action edit
-     * 
+     *
      * @param Reservierung $reservierung
      * @ignorevalidation $reservierung
      * @return void
@@ -69,7 +74,7 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action update
-     * 
+     *
      * @param Reservierung $reservierung
      * @return void
      */
@@ -82,7 +87,7 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action delete
-     * 
+     *
      * @param Reservierung $reservierung
      * @return void
      */
