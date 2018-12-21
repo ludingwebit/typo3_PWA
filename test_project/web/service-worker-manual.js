@@ -14,7 +14,8 @@ let CACHED_URLS = [
     '/hauptnavigation/speisekarte.html',
     '/hauptnavigation/reservierung.html'
 ]
-let googleMapsAPIJS = "https://maps.googleapis.com/maps/api/js?key=";
+let googleMapsAPIJS = "https://maps.googleapis.com/maps/api/js?key=" +
+    "AIzaSyBvQNb0hkcnBkfpVL1--9Pyd48MwjXAG18&callback=initMap";
 
 self.addEventListener('install', function (event) {
     console.log('[Service Worker] Installation wird gestartet');
@@ -43,8 +44,7 @@ self.addEventListener("fetch", function (event) {
         );
     } else if (
         CACHED_URLS.includes(requestURL.href) ||
-        CACHED_URLS.includes(requestURL.pathname)
-    ) {
+        CACHED_URLS.includes(requestURL.pathname)) {
         event.respondWith(
             caches.open(CACHE_NAME).then(function (cache) {
                 return cache.match(event.request).then(function (response) {
@@ -52,10 +52,21 @@ self.addEventListener("fetch", function (event) {
                 });
             })
         );
-    }/* else if (requestURL.href("https://maps.googleapis.com/maps/api/js/ViewportInfoService") === 0) {
-        return caches.match("/fileadmin/javascript/offline-map.js")
+    } else if (requestURL.href === "https://maps.googleapis.com/maps/api/js/") {
+        console.log("We have to handle the Maps now");
+        event.respondWith(
+            fetch(
+                googleMapsAPIJS + "&" + Date.now(),
+                {mode: "no-cors", cache: "no-store"}
+            ).catch(function () {
+                return caches.match("/fileadmin/js/offline-map.js");
+            })
+        );
+    }
+    /* else if (requestURL.href("https://maps.googleapis.com/maps/api/js/ViewportInfoService") === 0) {
+            return caches.match("/fileadmin/javascript/offline-map.js")
 
-    }*/
+        }*/
 
 });
 

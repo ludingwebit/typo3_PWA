@@ -1,6 +1,6 @@
 <?php
 
-$TYPO3_CONF_VARS['FE']['addRootLineFields'].= ',tx_realurl_pathsegment';
+$TYPO3_CONF_VARS['FE']['addRootLineFields'] .= ',tx_realurl_pathsegment';
 
 $TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT'] = array(
 
@@ -18,7 +18,7 @@ $TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT'] = array(
 
         'rootpage_id' => 3,
 
-        'firstHitPathCache'=>1
+        'firstHitPathCache' => 1
 
     ),
 
@@ -36,239 +36,109 @@ $TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT'] = array(
 
     ),
 
-    'preVars' => array(
-
-        array(
-
+    'preVars' => [
+        [
             'GETvar' => 'L',
-
-            'valueMap' => array(
-
+            'valueMap' => [
                 'en' => '1',
-
-            ),
-
+            ],
             'noMatch' => 'bypass',
-
-        ),
-
-        array(
-
-            'GETvar' => 'no_cache',
-
-            'valueMap' => array(
-
-                'nc' => 1,
-
-            ),
-
-            'noMatch' => 'bypass',
-
-        ),
-
-    ),
-
-    'fixedPostVars' => array(
-
-        'newsDetailConfiguration' => array(
-
-            array(
-
+        ],
+    ],
+    'fixedPostVars' => [
+        'newsDetailConfiguration' => [
+            [
                 'GETvar' => 'tx_news_pi1[action]',
-
-                'valueMap' => array(
-
-                    'detail' => '',
-
-                ),
-
+                'valueMap' => [
+                    '' => 'detail',
+                ],
                 'noMatch' => 'bypass'
-
-            ),
-
-            array(
-
+            ],
+            [
                 'GETvar' => 'tx_news_pi1[controller]',
-
-                'valueMap' => array(
-
-                    'News' => '',
-
-                ),
-
+                'valueMap' => [
+                    '' => 'detail',
+                ],
                 'noMatch' => 'bypass'
-
-            ),
-
-            array(
-
+            ],
+            [
                 'GETvar' => 'tx_news_pi1[news]',
-
-                'lookUpTable' => array(
-
+                'lookUpTable' => [
                     'table' => 'tx_news_domain_model_news',
-
                     'id_field' => 'uid',
-
-                    'alias_field' => 'title',
-
+                    'alias_field' => 'IF(path_segment!="",path_segment,title)',
                     'addWhereClause' => ' AND NOT deleted',
-
                     'useUniqueCache' => 1,
-
-                    'useUniqueCache_conf' => array(
-
-                        'strtolower' => 1,
-
-                        'spaceCharacter' => '-'
-
-                    ),
-
                     'languageGetVar' => 'L',
-
                     'languageExceptionUids' => '',
-
                     'languageField' => 'sys_language_uid',
-
                     'transOrigPointerField' => 'l10n_parent',
-
-                    'autoUpdate' => 1,
-
                     'expireDays' => 180,
-
-                )
-
-            )
-
-        ),
-
-        'newsCategoryConfiguration' => array(
-
-            array(
-
+                    'enable404forInvalidAlias' => true
+                ]
+            ]
+        ],
+        'newsCategoryConfiguration' => [
+            [
                 'GETvar' => 'tx_news_pi1[overwriteDemand][categories]',
-
-                'lookUpTable' => array(
-
+                'lookUpTable' => [
                     'table' => 'sys_category',
-
                     'id_field' => 'uid',
-
                     'alias_field' => 'title',
-
                     'addWhereClause' => ' AND NOT deleted',
-
                     'useUniqueCache' => 1,
-
-                    'useUniqueCache_conf' => array(
-
-                        'strtolower' => 1,
-
-                        'spaceCharacter' => '-'
-
-                    )
-
-                )
-
-            )
-
-        ),
-
-        'newsTagConfiguration' => array(
-
-            array(
-
+                    'enable404forInvalidAlias' => true
+                ]
+            ]
+        ],
+        'newsTagConfiguration' => [
+            [
                 'GETvar' => 'tx_news_pi1[overwriteDemand][tags]',
-
-                'lookUpTable' => array(
-
+                'lookUpTable' => [
                     'table' => 'tx_news_domain_model_tag',
-
                     'id_field' => 'uid',
-
                     'alias_field' => 'title',
-
                     'addWhereClause' => ' AND NOT deleted',
-
                     'useUniqueCache' => 1,
-
-                    'useUniqueCache_conf' => array(
-
-                        'strtolower' => 1,
-
-                        'spaceCharacter' => '-'
-
-                    )
-
-                )
-
-            )
-
-        ),
-
-        '15' => 'newsDetailConfiguration',
-
-        '347' => 'newsDetailConfiguration', // For additional detail pages, add their uid as well
-
+                    'enable404forInvalidAlias' => true
+                ]
+            ]
+        ],
+        '70' => 'newsDetailConfiguration',
+        '701' => 'newsDetailConfiguration', // For additional detail pages, add their uid as well
         '71' => 'newsTagConfiguration',
-
         '72' => 'newsCategoryConfiguration',
+    ],
 
-    ),
-
-    'postVarSets' => array(
-
-        '_DEFAULT' => array(
-
-            'controller' => array(
-
-                array(
-
+    'postVarSets' => [
+        '_DEFAULT' => [
+            'controller' => [
+                [
                     'GETvar' => 'tx_news_pi1[action]',
-
                     'noMatch' => 'bypass'
-
-                ),
-
-                array(
-
+                ],
+                [
                     'GETvar' => 'tx_news_pi1[controller]',
-
                     'noMatch' => 'bypass'
+                ]
+            ],
 
-                )
-
-            ),
-
-            'dateFilter' => array(
-
-                array(
-
+            'dateFilter' => [
+                [
                     'GETvar' => 'tx_news_pi1[overwriteDemand][year]',
-
-                ),
-
-                array(
-
+                ],
+                [
                     'GETvar' => 'tx_news_pi1[overwriteDemand][month]',
-
-                ),
-
-            ),
-
-            'page' => array(
-
-                array(
-
+                ],
+            ],
+            'page' => [
+                [
                     'GETvar' => 'tx_news_pi1[@widget_0][currentPage]',
+                ],
+            ],
+        ],
+    ],
 
-                ),
-
-            ),
-
-        ),
-
-    ),
 
 // configure filenames for different pagetypes
 

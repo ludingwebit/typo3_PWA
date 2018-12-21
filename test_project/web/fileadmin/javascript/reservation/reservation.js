@@ -2,13 +2,13 @@ $(document).ready(function () {
     populateReservations();
     getReservationsFromServer()
     let form = $("#form-reservation");
-    form.submit(function (event) {
+/*    form.submit(function (event) {
          event.preventDefault();
-        let restDate = $("#form-reservation--date").val();
-        let restTime = $("#form-reservation--time").val();
-        let restName = $("#form-reservation--name").val();
-        let restMail = $("#form-reservation--email").val();
-        let restGuest = $("#form-reservation--guests").val();
+        let restDate = $("#form_datum").val();
+        let restTime = $("#form_zeit").val();
+        let restName = $("#form_name").val();
+        let restMail = $("#form_email").val();
+        let restGuest = $("#form_anzahl").val();
         let id = Date.now().toString().substring(3, 11);
 
         if (!restDate || !restTime || !restGuest || !restName || !restMail) {
@@ -38,7 +38,7 @@ $(document).ready(function () {
             }, 5000);
 
         }
-    });
+    });*/
 });
 let createResObject = function (id, restName, restDate, restTime, restGuest, restMail) {
     let reservationDetails = {

@@ -2,7 +2,6 @@
 namespace WebitDe\AcmeReservation\Controller;
 
 use WebitDe\AcmeReservation\Domain\Model\Reservierung;
-
 /**
  * @var ReservierungController
  */
@@ -42,7 +41,7 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     }
 
     /**
-     * @var \WebitDe\AcmeReservation\Repository\ReservierungRepository
+     * @var \WebitDe\AcmeReservation\Domain\Repository\ReservierungRepository
      * @inject
      */
     protected $ReservierungRepository;
@@ -54,7 +53,8 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function createAction(Reservierung $newReservierung)
     {
-                $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class)->persistAll();
+        /**ToDo: Action implementieren. Einfügen der Formulardaten in die Datenbank ( Beispiel SBG nehmen)**/
+
                 $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
                 $this->ReservierungRepository->add($newReservierung);
                 $this->redirect('list');

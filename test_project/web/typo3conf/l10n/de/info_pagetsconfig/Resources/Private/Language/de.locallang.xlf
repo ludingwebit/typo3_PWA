@@ -48,7 +48,7 @@
 				<target state="translated">Alles</target>
 			</trans-unit>
 			<trans-unit id="tsconf_parts_1" approved="yes">
-				<source>Module key ('mod') with overruling user settings</source>
+				<source>Module  ('mod') with overruling user settings</source>
 				<target state="translated">Modulschlüssel ("mod") mit Überschreibungen der Benutzereinstellungen</target>
 			</trans-unit>
 			<trans-unit id="tsconf_parts_1a" approved="yes">

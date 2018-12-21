@@ -13,10 +13,6 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function listAction()
     {
-        $subscribers = ['word1' => 'Foo', 'word2' => 'World!'];
-        //$subscribers = $this->subscriberRepository->findAll();
-        $subscribers = ['word1' => 'Hallo', 'word2' => 'World!'];
-        $this->view->render('list');
     }
 
     /**
@@ -53,6 +49,7 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function createAction(\WebitDe\AcmeReservation\Domain\Model\Subscriber $newSubscriber)
     {
+        /**ToDo: Elemente in die MySQL Datenbank schreiben werden vom Javascript generiert und müssen automatisch per Ajax geschrieben werden.**/
         $this->addFlashMessage(
             'The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html',
             '',

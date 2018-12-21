@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "clickstorm/go_maps_ext",
-            "version": "2.5.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mhirdes/go_maps_ext.git",
-                "reference": "37399c9da17374504e78cfc35132c2ae5c127600"
+                "reference": "43036a428a945f1cfb965524fc8d3fc89041d895"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mhirdes/go_maps_ext/zipball/37399c9da17374504e78cfc35132c2ae5c127600",
-                "reference": "37399c9da17374504e78cfc35132c2ae5c127600",
+                "url": "https://api.github.com/repos/mhirdes/go_maps_ext/zipball/43036a428a945f1cfb965524fc8d3fc89041d895",
+                "reference": "43036a428a945f1cfb965524fc8d3fc89041d895",
                 "shasum": ""
             },
             "require": {
@@ -57,7 +57,7 @@
                 "route",
                 "style"
             ],
-            "time": "2018-07-06T08:32:58+00:00"
+            "time": "2018-12-21T14:26:04+00:00"
         },
         {
             "name": "cogpowered/finediff",
@@ -1225,16 +1225,16 @@
         },
         {
             "name": "jweiland/maps2",
-            "version": "4.2.3",
+            "version": "4.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jweiland-net/maps2.git",
-                "reference": "5503dd3b845593d5b130f61b42fb8ec79adc7761"
+                "reference": "722605d02e46d1f0758fdb1bf1422b3889a7ff90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jweiland-net/maps2/zipball/5503dd3b845593d5b130f61b42fb8ec79adc7761",
-                "reference": "5503dd3b845593d5b130f61b42fb8ec79adc7761",
+                "url": "https://api.github.com/repos/jweiland-net/maps2/zipball/722605d02e46d1f0758fdb1bf1422b3889a7ff90",
+                "reference": "722605d02e46d1f0758fdb1bf1422b3889a7ff90",
                 "shasum": ""
             },
             "require": {
@@ -1278,7 +1278,7 @@
                 "maps2",
                 "typo3"
             ],
-            "time": "2018-11-21T10:35:49+00:00"
+            "time": "2018-12-20T14:54:04+00:00"
         },
         {
             "name": "minishlink/web-push",
