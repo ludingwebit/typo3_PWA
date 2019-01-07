@@ -34,19 +34,12 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @param Reservierung $newReservierung
      * @return void
      */
-    public function createAction(Request $request)
+    public function createAction(Reservierung $newReservation)
     {
-        $newReservierung = new Reservierung();
-        $isSw = (bool)$request->headers->get($this->getParameter('headerSW'));
 
         /**ToDo: Action implementieren. Einfügen der Formulardaten in die Datenbank ( Beispiel SBG nehmen)**/
-        $this->addFlashMessage(
-            'The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html',
-            '',
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
-        );
-
         # Update auf das Repository anwenden
+        $newReservierung->setStatus("Angekommen");
         $this->ReservierungRepository->add($newReservierung);
 
         # Den Vorschlaghammer instanzieren / aus der Kiste kramen
@@ -56,12 +49,8 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
         # Mit dem Vorschlaghammer in die Datenbank speichern / Nägel mit Köpfen machen
         $persistenceManager->persistAll();
-        $newReservierung->setStatus("Angekommen");
-        if ($isSw) {
-            return new Response('ok');
-        }
-        echo "wenn dieser Controller funktioniert gibt es eine Rückgabe";   // gibt '16' aus.
-        return "hans peter ist der bester";
+        return $this->redirect('list');
+
     }
 
 
@@ -73,11 +62,6 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function updateAction(Reservierung $reservierung)
     {
-        $this->addFlashMessage(
-            'The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html',
-            '',
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
-        );
         $this->reservierungRepository->update($reservierung);
         $this->redirect('list');
     }

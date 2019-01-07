@@ -85,10 +85,12 @@
             id="form-reservation"
             object="{newReservierung}">
         <f:render partial="Reservierung/FormFields"/>
-        <!--<f:form.submit value="Reservierung" />-->
         <div class="row">
             <div class="col-md-12">
+<!--
                 <button id="form_Reservieren" class="btn" type="submit">Reservierung tätigen</button>
+-->
+                <f:form.submit value="Reservierung" id="form_Reservieren" class="btn" type="submit"/>
             </div>
         </div>
     </f:form>

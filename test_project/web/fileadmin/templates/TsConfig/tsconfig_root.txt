@@ -122,8 +122,8 @@ page {
             logo = IMAGE
             logo {
                 file = fileadmin/images/logo.png
-                file.width = 160m
-                file.height = 130m
+                width = 160m
+                height = 130m
                 params = class="logo"
             }
 
