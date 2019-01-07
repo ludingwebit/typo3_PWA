@@ -2,47 +2,59 @@
 'use strict';
 let swRegistration = null;
 let isSubscribed = false;
-const post = "POST";
-const put = "PUT";
-const del = "DELETE";
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker-manual.js')
-        .then(registration => navigator.serviceWorker.ready)
-        .then(registration => {//register Sync
-            swRegistration = registration;
-            initializeUI();
-            /*            document.getElementById('reservation-submit').addEventListener('click', () => {
-                            registration.sync.register('syncDB').then(() => {
-                                console.log("SyncDB ist als Event-Trigger registriert.");
-                            })
-                        })*///initialize Push
-        }).catch(error => {
-        console.log("Service Worker Error", error);
-    })
-    if ('PushManager' in window) {
-        console.log("Push Benachrichtigungen werden unterstützt!")
 
-    }
-    else {
-        console.warn("Push Benachrichtigungen werden nicht unterstützt!")
-        pushButton.textContent = "Benachrichtigungen werden nicht unterstützt."
-    }
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js").then(function (registration) {
+        console.log("Service Worker wurde registriert mit dem Scope:", registration.scope);
+        console.log("Service Worker Registriert")
+        swRegistration = registration;
+        //Init Button für Subscription
+        initializeUI();
+        if ('PushManager' in window) {
+            console.log("Push Benachrichtigungen werden unterstützt!")
 
-    if ('SyncManager' in window) {
-        console.log("Background Sync wird unterstützt.")
-    } else {
-        console.warn("Background Sync wird nicht unterstützt!")
+        } else {
+            console.warn("Push Benachrichtigungen werden nicht unterstützt!")
+            pushButton.textContent = "Benachrichtigungen werden nicht unterstützt."
+        }
 
+        if ('SyncManager' in window) {
+            console.log("Background Sync wird unterstützt.")
+        } else {
+            console.warn("Background Sync wird nicht unterstützt!")
+
+        }
+    }).catch(function (err) {
+        console.log("Service Worker Registrierung fehlgeschlagen:", err);
+    });
+
+    let reservForm = document.getElementById('form-reservation');
+    //Formular Input
+    let restDate = document.getElementById("form_datum");
+    let restTime = document.getElementById("form_zeit");
+    let restName = document.getElementById("form_name");
+    let restMail = document.getElementById("form_email");
+    let restGuest = document.getElementById("form_anzahl");
+    if (reservForm) {//Formular
+        reservForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            fetch(reservForm.getAttribute('action'), {
+                method: reservForm.getAttribute('method'),
+                body: new FormData(reservForm)
+            }).then(function (response) {
+                return response;
+            }).then(function () {
+                // removeLoading();
+                restDate.value = '';
+                restTime.value = '';
+                restName.value = '';
+                restMail.value = '';
+                restGuest.value = '';
+            });
+        });
     }
 }
 
-// Nutzer wird über Konnektivität informiert
-self.addEventListener('online', () => {
-    ProgressiveKITT.addMessage('Sie sind Online.', {hideAfter: 5000})
-})
-self.addEventListener('offline', () => {
-    ProgressiveKITT.addAlert('Sie sind Offline.', "Okay.")
-})
 
 // Sorgt dafür, dass das Reservierungsdatum immer das tägliche anzeigt
 /*Date.prototype.toDateInputValue = function () {
@@ -153,47 +165,39 @@ let subscribeUser = function () {
 
 }
 
-function updateSubscriptionOnServer(subscription, method) {
-    // TODO: Send subscription to application server
-    const key = subscription.getKey('p256dh');
-    const token = subscription.getKey('auth');
-    const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
+//Beispiel des Formulars
+/*
+$("form.jqControll").submit(function (event) {
+    event.preventDefault();
+    let form = $(this);
+    let action = form.attr("action"),
+        method = form.attr("method"),
+        data = form.serialize();
 
-    return fetch('/reservation-app/push_subscription.php', {
-        method,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            endpoint: subscription.endpoint,
-            publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
-            authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
-            contentEncoding
-        }),
-    })
-};
+    $.ajax({
+        url: action,
+        type: method,
+        data: data
+    }).done(function (data) {
+        $('form').remove();
+        console.log("Geglückt");
+        $('.formresult').html('<p>Vielen Dank für Deinen Kommentar. Dieser wird geprüft und in Kürze freigeschaltet.</p>')
+    }).fail(function () {
+        $('form').remove();
+        console.log("FAIL!");
+        $('.formresult').html('<p>Upps, es ist ein Fehler aufgetreten. Dein Kommentar konnte nicht gespeichert werden</p>')
+    }).always(function () {
 
-/*function updateSubscriptionOnServer(subscription, method) {
-    // TODO: Send subscription to application server
-    const key = subscription.getKey('p256dh');
-    const token = subscription.getKey('auth');
-    const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
+    });
+});*/
+// Nutzer wird über Konnektivität informiert
+self.addEventListener('online', () => {
+    ProgressiveKITT.addMessage('Sie sind Online.', {hideAfter: 5000})
+});
+self.addEventListener('offline', () => {
+    ProgressiveKITT.addAlert('Sie sind Offline.', "Okay.")
+});
 
-    return fetch('/reservation-app/push_subscription.php', {
-        method,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            endpoint: subscription.endpoint,
-            publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
-            authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
-            contentEncoding
-        }),
-    })
-};*/
 function isOnline() {
     let connectionStatus = document.getElementById('connectionStatus');
 

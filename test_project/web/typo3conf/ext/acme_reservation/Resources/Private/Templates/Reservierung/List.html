@@ -1,58 +1,111 @@
-<html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-	<f:layout name="Default" />
+<html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:t="https://typo3.org/ns/Helhum/TyposcriptRendering/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default"/>
+<f:section name="content">
+    <h1>Liste der Reservierungen</h1>
 
-	This Template is responsible for creating a table of domain objects.
+    <f:flashMessages/>
 
-	If you modify this template, do not forget to change the overwrite settings
-	in /Configuration/ExtensionBuilder/settings.yaml:
-	  Resources:
-		Private:
-		  Templates:
-			List.html: keep
+    <table class="tx_acmereservation">
+        <tr>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.name"/>
+            </th>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.datum"/>
+            </th>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.zeit"/>
+            </th>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.anzahl"/>
+            </th>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.email"/>
+            </th>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.status"/>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
 
-	Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+        <f:for each="{reservierungs}" as="reservierung">
+            <tr>
+                <td>
+                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.name}
+                    </f:link.action>
+                </td>
+                <td>
+                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.datum ->
+                        f:format.date()}
+                    </f:link.action>
+                </td>
+                <td>
+                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.zeit}
+                    </f:link.action>
+                </td>
+                <td>
+                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.anzahl}
+                    </f:link.action>
+                </td>
+                <td>
+                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.email}
+                    </f:link.action>
+                </td>
+                <td>
+                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.status}
+                    </f:link.action>
+                </td>
+                <td>
+                    <f:link.action action="edit" arguments="{reservierung : reservierung}">Edit</f:link.action>
+                </td>
+                <td>
+                    <f:link.action action="delete" arguments="{reservierung : reservierung}">Delete</f:link.action>
+                </td>
+            </tr>
+        </f:for>
+    </table>
 
-	<f:section name="content">
-		<h1>Listing for Reservierung</h1>
 
-		<f:flashMessages />
+    <h1>Reservierung tätigen (List.html)</h1>
 
-		<table  class="tx_acmereservation" >
-			<tr>
-				<th><f:translate key="tx_acmereservation_domain_model_reservierung.name" /></th>
-				<th><f:translate key="tx_acmereservation_domain_model_reservierung.datum" /></th>
-				<th><f:translate key="tx_acmereservation_domain_model_reservierung.zeit" /></th>
-				<th><f:translate key="tx_acmereservation_domain_model_reservierung.anzahl" /></th>
-				<th><f:translate key="tx_acmereservation_domain_model_reservierung.email" /></th>
-				<th><f:translate key="tx_acmereservation_domain_model_reservierung.status" /></th>
-				<th> </th>
-				<th> </th>
-			</tr>
+    <f:flashMessages/>
 
-			<f:for each="{reservierungs}" as="reservierung">
-				<tr>
-					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.name}</f:link.action></td>
-					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.datum -> f:format.date()}</f:link.action></td>
-					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.zeit}</f:link.action></td>
-					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.anzahl}</f:link.action></td>
-					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.email}</f:link.action></td>
-					<td><f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.status}</f:link.action></td>
-					<td><f:link.action action="edit" arguments="{reservierung : reservierung}">Edit</f:link.action></td>
-					<td><f:link.action action="delete" arguments="{reservierung : reservierung}">Delete</f:link.action></td>
-				</tr>
-			</f:for>
-		</table>
+    <f:render partial="FormErrors"/>
+
+    <f:form action="create"
+            controller="Reservierung"
+            extensionName="AcmeReservation"
+            pluginName="Reservaciaplugini"
+            name="newReservierung"
+            method="POST"
+            pageType="99"
+            class="jqControll"
+            id="form-reservation"
+            object="{newReservierung}">
+        <f:render partial="Reservierung/FormFields"/>
+        <!--<f:form.submit value="Reservierung" />-->
+        <div class="row">
+            <div class="col-md-12">
+                <button id="form_Reservieren" class="btn" type="submit">Reservierung tätigen</button>
+            </div>
+        </div>
+    </f:form>
 
 
-		<h1>New Reservierung</h1>
+    <!--Beispiel zum testen des Szenarios-->
+    <!--
+        <f:link.action
+                action="list"
+                pageType="99"
+                onclick="return false"
+                class="jqClick"
+        >
 
-		<f:flashMessages />
+            Mein linktext
 
-		<f:render partial="FormErrors" />
-
-		<f:form action="create" method="post" name="newReservierung" id="form-reservation" object="{newReservierung}">
-			<f:render partial="Reservierung/FormFields" />
-			<f:form.submit value="Reservierung" />
-		</f:form>
-	</f:section>
+        </f:link.action>-->
+    <!-- Ende Beispiel -->
+</f:section>
 </html>

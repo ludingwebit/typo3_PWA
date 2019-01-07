@@ -4,7 +4,7 @@ return [
         'debug' => true,
         'explicitADmode' => 'explicitAllow',
         'installToolPassword' => '$pbkdf2-sha256$25000$a/K5vDVC779P1FQJ0YZ5eg$nY3shSH1uh1Rv86IKiVfPMFaUgrYfVYeAuK2lmGpgVE',
-        'loginSecurityLevel' => 'rsa',
+        'loginSecurityLevel' => 'normal',
     ],
     'DB' => [
         'Connections' => [

@@ -10,7 +10,7 @@ plugin.tx_acmereservation_reservaciaplugini {
 
     persistence {
         # cat=plugin.tx_acmereservation_reservaciaplugini//a; type=string; label=Default storage PID
-        storagePid =
+        storagePid = 8
     }
 
     settings {
@@ -19,7 +19,7 @@ plugin.tx_acmereservation_reservaciaplugini {
         # cat=plugin.tx_app//b; type=string; label=typeNum OTHERNAME for AJAX
         typeNumSe = 1421771407
         # cat=plugin.tx_app//a; type=string; label=pageUid for AJAX
-        pageUid = 1337 // Use your page id where the plugin is set
+        pageUid = 8 // Use your page id where the plugin is set
     }
 }
 

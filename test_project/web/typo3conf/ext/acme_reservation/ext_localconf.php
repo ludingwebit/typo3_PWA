@@ -7,15 +7,15 @@ call_user_func(
             'WebitDe.AcmeReservation',
             'Reservaciaplugini',
             array(
-                'Reservierung' => 'list, show, new, create, edit, update, delete',
-                'Subscriber' => 'list, show, new, create, edit, update, delete',
+                'Reservierung' => 'list, create, update',
+                'Subscriber' => 'create, delete',
 
             ),
 
             // non-cacheable actions
             [
                 'Reservierung' => 'create, update, delete',
-                'Subscriber' => 'create, update, delete',
+                'Subscriber' => 'create, delete',
             ]
         );
 

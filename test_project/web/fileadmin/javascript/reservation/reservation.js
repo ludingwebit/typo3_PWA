@@ -1,44 +1,6 @@
 $(document).ready(function () {
     populateReservations();
     getReservationsFromServer()
-    let form = $("#form-reservation");
-/*    form.submit(function (event) {
-         event.preventDefault();
-        let restDate = $("#form_datum").val();
-        let restTime = $("#form_zeit").val();
-        let restName = $("#form_name").val();
-        let restMail = $("#form_email").val();
-        let restGuest = $("#form_anzahl").val();
-        let id = Date.now().toString().substring(3, 11);
-
-        if (!restDate || !restTime || !restGuest || !restName || !restMail) {
-            ProgressiveKITT.addMessage('Fullfill request', {hideAfter: 7000})
-            return false;
-        } else {
-            let reservationDetails = createResObject(id, restName, restDate, restTime, restGuest, restMail);
-            addToObjectStore("reservation-store", reservationDetails);
-            console.log("Hinzufügen von ", restName, restDate, restMail, "/", restTime, "/", restGuest);
-            showNewReserverationNotification();
-
-
-            if (!swRegistration.sync) {
-                ProgressiveKITT.addMessage('Background Sync funktioniert nicht. Senden sie nur wenn sie Online sind.', {hideAfter: 8000})
-            } else {
-                swRegistration.sync.register('syncDB').then(() => {
-                    console.log("SyncDB ist als Event-Trigger jetzt registriert.")
-                })
-            }
-
-
-            ProgressiveKITT.addMessage('Lassen Sie uns benachrichtigen, wenn ihre Bestellung angenommen/abgelehnt wurde.',
-                {hideAfter: 5000});
-            subscribeUser();
-            setTimeout(function () {
-                location.reload();
-            }, 5000);
-
-        }
-    });*/
 });
 let createResObject = function (id, restName, restDate, restTime, restGuest, restMail) {
     let reservationDetails = {
