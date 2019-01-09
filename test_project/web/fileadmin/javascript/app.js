@@ -153,7 +153,7 @@ let subscribeUser = function () {
         }).then(function (subscription) {
             console.log('User is subscribed.', subscription);
             isSubscribed = true;
-            updateSubscriptionOnServer(subscription, post)
+            registerSubscription(subscription, "POST")
             updateBtn();
             resolve("Es ist gelungen");
         }).catch(err => {
@@ -164,6 +164,121 @@ let subscribeUser = function () {
 
 
 }
+
+function registerSubscription(subscription, method) {
+    // TODO: Send subscription to application server
+
+    const endpoint = subscription.endpoint;
+    const rawKey = subscription.getKey('p256dh');
+    const rawToken = subscription.getKey('auth');
+    const key = rawKey ? btoa(String.fromCharCode.apply(null, new Uint8Array(rawKey))) : null;
+    const token = rawToken ? btoa(String.fromCharCode.apply(null, new Uint8Array(rawToken))) : null;
+    console.log(subscription.toJSON());
+    console.log(rawKey, token);
+    return fetch('/notification/register', {
+        method,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            endpoint: endpoint,
+            key: key,
+            authSecret: token,
+        }),
+    }).then(function (response) {
+        if (response && response.ok) {
+            console.log("Subscription wurde erfolgreich in die DAtenbank geschrieben")
+            new Notification("Thank you for enabling notification", {
+                body: "We won't spam you , we promise",
+                tag: "success",
+                icon: "https://cdn1.iconfinder.com/data/icons/twitter-ui-colored/48/JD-24-128.png"
+            })
+        } else {
+            requestSubSync();
+            return Promise.reject(false);
+        }
+    })
+
+};
+
+function unregisterSubscription(subscription, method) {
+    // TODO: Send subscription to application server
+    const key = subscription.getKey('p256dh');
+    const token = subscription.getKey('auth');
+    const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
+
+    return fetch('/notification/unregister', {
+        method,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            endpoint: subscription.endpoint,
+            publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+            authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
+        }),
+    }).then(response=>{
+        if (response && response.ok) {
+            //ToDo: Füge eine Notification hinzu, die dem Nutzer signalisiert, dass er nicht mehr Registriert ist
+            console.log("Subscription wurde erfolgreich in die DAtenbank geschrieben")
+        } else {
+            requestUnSubSync();
+            return Promise.reject(false);
+        }
+    })
+};
+
+function requestSubSync() {
+    if (!self.registration || !self.registration.sync) {
+        console.log('Sync wird nicht unterstützt!');
+        return;
+    } else {
+        self.registration.sync.register('syncSubscription').then(function () {
+            console.log("SyncDB ist als Event-Trigger jetzt registriert.")
+        });
+    }
+};
+
+function requestUnSubSync() {
+    if (!self.registration || !self.registration.sync) {
+        console.log('Sync wird nicht unterstützt!');
+        return;
+    } else {
+        self.registration.sync.register('syncUnSubscription').then(function () {
+            console.log("SyncDB ist als Event-Trigger jetzt registriert.")
+        });
+    }
+};
+
+
+// Nutzer wird über Konnektivität informiert
+self.addEventListener('online', () => {
+    ProgressiveKITT.addMessage('Sie sind Online.', {hideAfter: 5000})
+});
+self.addEventListener('offline', () => {
+    ProgressiveKITT.addAlert('Sie sind Offline.', "Okay.")
+});
+function isOnline() {
+    let connectionStatus = document.getElementById('connectionStatus');
+
+    if (navigator.onLine) {
+        /*            connectionStatus.classList.remove("offline");
+                    connectionStatus.innerHTML = 'Verbindung zum Internet besteht!';*/
+        connectionStatus.innerHTML = '<img src="\/fileadmin\/images\/wifi_on.png" width="32px">';
+        return true;
+    } else {
+        //connectionStatus.innerHTML = 'Derzeit keine Verbindung zum Internet!';
+        //connectionStatus.classList.add("offline");
+        connectionStatus.innerHTML = '<img src="\/fileadmin\/images\/wifi_off.png" width="32px">';
+        return false;
+    }
+}
+window.addEventListener('online', isOnline);
+window.addEventListener('offline', isOnline);
+isOnline();
+
 
 //Beispiel des Formulars
 /*
@@ -190,31 +305,3 @@ $("form.jqControll").submit(function (event) {
 
     });
 });*/
-// Nutzer wird über Konnektivität informiert
-self.addEventListener('online', () => {
-    ProgressiveKITT.addMessage('Sie sind Online.', {hideAfter: 5000})
-});
-self.addEventListener('offline', () => {
-    ProgressiveKITT.addAlert('Sie sind Offline.', "Okay.")
-});
-
-function isOnline() {
-    let connectionStatus = document.getElementById('connectionStatus');
-
-    if (navigator.onLine) {
-        /*            connectionStatus.classList.remove("offline");
-                    connectionStatus.innerHTML = 'Verbindung zum Internet besteht!';*/
-        connectionStatus.innerHTML = '<img src="\/fileadmin\/images\/wifi_on.png" width="32px">';
-        return true;
-    } else {
-        //connectionStatus.innerHTML = 'Derzeit keine Verbindung zum Internet!';
-        //connectionStatus.classList.add("offline");
-        connectionStatus.innerHTML = '<img src="\/fileadmin\/images\/wifi_off.png" width="32px">';
-        return false;
-    }
-}
-
-window.addEventListener('online', isOnline);
-window.addEventListener('offline', isOnline);
-isOnline();
-

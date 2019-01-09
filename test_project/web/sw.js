@@ -163,7 +163,6 @@ self.addEventListener('sync', (event => {
 }));
 
 /!**
- * @todo Push Notification --> Rechercher, ob es nötig ist einen Key zu nutzen oder ob es dabei nur um Sicherheit geht.
  *!/
 self.addEventListener('push', function (event) {
     console.log('[Service Worker] Push Erhalten.');
@@ -248,7 +247,6 @@ let addToObjectStore = function (storeName, object) {
         });
     });
 };
-
 // Request background sync
 function requestReserveSync() {
     if (!self.registration || !self.registration.sync) {
@@ -261,7 +259,6 @@ function requestReserveSync() {
     }
 
 };
-
 // Get number of requests currenlty cached, as a Promise
 function getNbCachedRequests() {
     return new Promise(function (resolve) {
@@ -299,9 +296,11 @@ function getFirstCached() {
         });
     });
 };
-
-// Add serialized request to cache
-function addCached(serialized) {
+/**
+ * @desc Serialisiert die Anfrage und schreibt diese in die IDB.
+ * @param serialized
+ * @returns {Promise}
+ */function addCached(serialized) {
     return new Promise(function (resolve, reject) {
         openDatabase().then(function (db) {
             openObjectStore(db, DB_COLLECTION, "readwrite")
@@ -317,14 +316,18 @@ function addCached(serialized) {
         });
     });
 };
-
-// Deserialize request
-function deserialize(serialized) {
+/**
+ * @desc Die serialisierte Anfrage wird zurück in die Ausgangsform transformiert
+ * @param serialized
+ * @returns {*}
+ */function deserialize(serialized) {
     return Promise.resolve(new Request(serialized.url, serialized));
 };
-
-// Send cached requests, one by one
-function sendCached(isSync) {
+/**
+ * @desc Sendet die Einträge, welche in der IDB liegen nacheinander an den Server
+ * @param isSync
+ * @returns {*}
+ */function sendCached(isSync) {
     return getNbCachedRequests()
         .then(function (nb) {
             if (!nb) {
@@ -369,14 +372,17 @@ function sendCached(isSync) {
                 });
         });
 };
-
-// Serialize a request, adding a X-FROM-SW header
+/**
+ * @desc Anfrage Serialisieren, X-FROM-SW Header hinzufügen, Wandle POST so um, dass er verarbeitet werden kann
+ * @param request
+ * @returns {*}
+ */
 function serialize(request) {
     var headers = {};
     for (let entry of request.headers.entries()) {
         headers[entry[0]] = entry[1];
     }
-    headers['{{ headerSW }}'] = true;
+    headers['X-FROM-SW'] = true;
 
     var serialized = {
         url: request.url,
@@ -403,7 +409,7 @@ self.addEventListener('fetch', function (event) {
         let requestURL = new URL(event.request.url);
         //Fange POST Methode ab, um Controller Action manuell auszuführen
         if (event.request.method == 'POST' && requestURL.pathname.indexOf("/reservierung.html") !== -1) {
-            // This is a form sending, handle it by adding it to cache and then try to send it asynchronously
+            // Formular senden, wird in den Cache geschrieben und asynchron gesendet
             event.respondWith(new Response(
                 JSON.stringify({
                     caching: true
@@ -418,6 +424,7 @@ self.addEventListener('fetch', function (event) {
                             sendCached();
                         });
                 });
+        //Sollte das initialisieren der Maps API fehlschlagen, wird eine JS-Datei geladen
         } else if (requestURL.href === googleMapsAPIJS) {
             console.log("We have to handle the Maps now");
             event.respondWith(
@@ -429,7 +436,7 @@ self.addEventListener('fetch', function (event) {
                 })
             );
         } else {
-            // Any other request, try cache first then network
+            // Jede andere Anfrage -- Cache First, dann Netzwerk
             event.respondWith(
                 caches.match(event.request)
                     .then(function (response) {
@@ -443,8 +450,7 @@ self.addEventListener('fetch', function (event) {
         }
     }
 );
-
-
+//Erwarte Background Sync Events
 self.addEventListener('sync', function (event) {
     console.log('sync', event);
     if (event.tag == 'syncCached' || event.tag == 'test-tag-from-devtools') {
@@ -457,7 +463,7 @@ self.addEventListener('sync', function (event) {
         event.waitUntil(unregisterSubscription(true));
     }
 });
-/// listen to push event , aka push messages and display them
+//Erwarte Push-Benachrichtigung vom Server und reagiere darauf.
 self.addEventListener('push', function (event) {
 
     var payload = event.data ? event.data.text() : 'no payload';
