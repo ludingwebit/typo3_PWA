@@ -14,33 +14,6 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function listAction()
     {
     }
-
-    /**
-     * action show
-     *
-     * @param \WebitDe\AcmeReservation\Domain\Model\Subscriber $subscriber
-     * @return void
-     */
-    public function showAction(\WebitDe\AcmeReservation\Domain\Model\Subscriber $subscriber)
-    {
-        $this->view->assign('subscriber', $subscriber);
-    }
-
-    /**
-     * action new
-     *
-     * @return void
-     */
-    public function newAction()
-    {
-
-    }
-
-    public function newReservierungAction()
-    {
-        $this->redirect('create', ReservierungController::class);
-    }
-
     /**
      * action create
      *
@@ -59,34 +32,6 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->redirect('list');
     }
 
-    /**
-     * action edit
-     *
-     * @param \WebitDe\AcmeReservation\Domain\Model\Subscriber $subscriber
-     * @ignorevalidation $subscriber
-     * @return void
-     */
-    public function editAction(\WebitDe\AcmeReservation\Domain\Model\Subscriber $subscriber)
-    {
-        $this->view->assign('subscriber', $subscriber);
-    }
-
-    /**
-     * action update
-     *
-     * @param \WebitDe\AcmeReservation\Domain\Model\Subscriber $subscriber
-     * @return void
-     */
-    public function updateAction(\WebitDe\AcmeReservation\Domain\Model\Subscriber $subscriber)
-    {
-        $this->addFlashMessage(
-            'The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html',
-            '',
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
-        );
-        $this->subscriberRepository->update($subscriber);
-        $this->redirect('list');
-    }
 
     /**
      * action delete

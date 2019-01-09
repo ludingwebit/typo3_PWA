@@ -33,7 +33,6 @@ plugin.tx_acmereservation_reservaciaplugini {
         pageUid = {$plugin.tx_acmereservation_reservaciaplugini.settings.pageUid}
     }
 }
-
 # these classes are only used in auto-generated templates
 plugin.tx_acmereservation._CSS_DEFAULT_STYLE (
     textarea.f3-form-error {
