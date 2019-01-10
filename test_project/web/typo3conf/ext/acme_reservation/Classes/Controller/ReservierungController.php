@@ -10,17 +10,7 @@ use TYPO3\CMS\Core\Http\Response;
  */
 class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-    /**
-     * action list
-     *
-     * @return void
-     */
-    public function listAction()
-    {
-//        $reservierungs = $this->reservierungRepository->findAll();
-//        $this->view->assign('reservierungs', $reservierungs);
-        $this->view->render('list');
-    }
+
 
     /**
      * @var \WebitDe\AcmeReservation\Domain\Repository\ReservierungRepository
@@ -29,27 +19,40 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     protected $ReservierungRepository;
 
     /**
+     * action list
+     *
+     * @return void
+     */
+    public function listAction()
+    {
+        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings $querySettings */
+        $querySettings = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings');
+        $querySettings->setRespectStoragePage(false);
+        $this->ReservierungRepository->setDefaultQuerySettings($querySettings);
+//        $reservierungs = $this->reservierungRepository->findAll();
+//        $this->view->assign('reservierungs', $reservierungs);
+        $this->view->render('list');
+    }
+
+    /**
      * action create
      *
-     * @param Reservierung $newReservierung
+     * @param Reservierung $newReservation
      * @return void
      */
     public function createAction(Reservierung $newReservation)
     {
-
-        /**ToDo: Action implementieren. Einfügen der Formulardaten in die Datenbank ( Beispiel SBG nehmen)**/
         # Update auf das Repository anwenden
-        $newReservierung->setStatus("Angekommen");
-        $this->ReservierungRepository->add($newReservierung);
+        $this->ReservierungRepository->add($newReservation);
 
         # Den Vorschlaghammer instanzieren / aus der Kiste kramen
         $persistenceManager = $this->objectManager->get(
-            "TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager"
+            \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class
         );
 
         # Mit dem Vorschlaghammer in die Datenbank speichern / Nägel mit Köpfen machen
         $persistenceManager->persistAll();
-        return $this->redirect('list');
+        $this->view->render('list');
 
     }
 
@@ -62,6 +65,11 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function updateAction(Reservierung $reservierung)
     {
+        $this->addFlashMessage(
+            'The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html',
+            '',
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
+        );
         $this->reservierungRepository->update($reservierung);
         $this->redirect('list');
     }
