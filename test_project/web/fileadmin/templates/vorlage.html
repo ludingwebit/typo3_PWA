@@ -1,4 +1,5 @@
-<header xmlns:f="http://www.w3.org/1999/XSL/Transform">
+<header xmlns:f="http://www.w3.org/1999/XSL/Transform"
+        xmlns:t="https://typo3.org/ns/Helhum/TyposcriptRendering/ViewHelpers">
     <div>
         <nav id="top-bar">
             <div class="frame row">
@@ -7,7 +8,12 @@
 
                 </div>
                 <div id="settings-desktop" class="material-dropdown">
-                    <button disabled class="js-push-btn">
+                    <button disabled class="js-push-btn"
+                            data-url="{t:uri.ajaxAction(action: 'create',
+                                               controller: 'Subscriber',
+                                               extensionName:'AcmeReservation',
+                                               pluginName:'Reservaciaplugini',
+                                               format:'json')->f:format.htmlentities()}">
                         Enable Push Messaging
                     </button>
                 </div>
@@ -15,6 +21,7 @@
 
             </div>
         </nav>
+        <!--suppress BuyFluidPluginNoteInspection -->
         <nav style="transition: all 0.3s ease 0s;" id="mobile-bottom-bar" class="mobile-bottom-bar">
             <div class="sidebar-header">
                 {logo -> f:format.raw()}

@@ -7,13 +7,11 @@ namespace WebitDe\AcmeReservation\Controller;
 class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     /**
-     * action list
-     *
-     * @return void
+     * @var \WebitDe\AcmeReservation\Domain\Repository\SubscriptionRepository
+     * @inject
      */
-    public function listAction()
-    {
-    }
+    protected $SubscriptionRepository;
+
     /**
      * action create
      *
