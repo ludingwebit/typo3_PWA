@@ -1,5 +1,6 @@
-<header xmlns:f="http://www.w3.org/1999/XSL/Transform"
-        xmlns:t="https://typo3.org/ns/Helhum/TyposcriptRendering/ViewHelpers">
+{namespace t=Helhum\TyposcriptRendering\ViewHelpers}
+
+<header>
     <div>
         <nav id="top-bar">
             <div class="frame row">
@@ -7,9 +8,11 @@
                     <h2 id="brand-name">{brandName -> f:format.raw()}</h2>
 
                 </div>
+
                 <div id="settings-desktop" class="material-dropdown">
                     <button disabled class="js-push-btn"
                             data-url="{t:uri.ajaxAction(action: 'create',
+                                               arguments: '{newSubscriber: newSubscriber}',
                                                controller: 'Subscriber',
                                                extensionName:'AcmeReservation',
                                                pluginName:'Reservaciaplugini',

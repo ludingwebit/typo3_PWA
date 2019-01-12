@@ -35,7 +35,7 @@ class SubscriberControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $subscriberRepository = $this->getMockBuilder(\::class)
+        $subscriberRepository = $this->getMockBuilder(SubscriberControllerTest::class)
             ->setMethods(['findAll'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -70,7 +70,7 @@ class SubscriberControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $subscriber = new \WebitDe\AcmeReservation\Domain\Model\Subscriber();
 
-        $subscriberRepository = $this->getMockBuilder(\::class)
+        $subscriberRepository = $this->getMockBuilder(SubscriberControllerTest::class)
             ->setMethods(['add'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -102,7 +102,7 @@ class SubscriberControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $subscriber = new \WebitDe\AcmeReservation\Domain\Model\Subscriber();
 
-        $subscriberRepository = $this->getMockBuilder(\::class)
+        $subscriberRepository = $this->getMockBuilder(SubscriberControllerTest::class)
             ->setMethods(['update'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -120,7 +120,7 @@ class SubscriberControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     {
         $subscriber = new \WebitDe\AcmeReservation\Domain\Model\Subscriber();
 
-        $subscriberRepository = $this->getMockBuilder(\::class)
+        $subscriberRepository = $this->getMockBuilder(SubscriberControllerTest::class)
             ->setMethods(['remove'])
             ->disableOriginalConstructor()
             ->getMock();

@@ -18,7 +18,8 @@
     "clickstorm/go_maps_ext": "^2.5",
     "jweiland/maps2": "^4.1",
     "minishlink/web-push": "^4.0",
-    "friendsoftypo3/extension-builder": "^8.10"
+    "friendsoftypo3/extension-builder": "^8.10",
+    "helhum/typoscript-rendering": "^2.1"
   },
   "extra": {
     "typo3/cms": {

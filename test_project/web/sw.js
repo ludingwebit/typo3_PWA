@@ -5,17 +5,16 @@ let DB_NAME = "ReservierungTypo3-DB";
 let DB_COLLECTION = "ReservierungTypo3-requests"
 let CACHE_NAME = 'pwa-typo3-v1';
 let CACHED_URLS = [
-    '/fileadmin/css/app.css',
-    '/fileadmin/css/mini-dark.min.css',
     '/fileadmin/javascript/app.js',
     '/fileadmin/javascript/offline-map.js',
-    '/fileadmin/images/map-offline.jpg',
+    '/fileadmin/css/app.css',
+    '/fileadmin/css/mini-dark.min.css',
     '/hauptnavigation/homepage.html',
     '/hauptnavigation/anfahrt.html',
     '/hauptnavigation/kontakt.html',
     '/hauptnavigation/speisekarte.html',
     '/hauptnavigation/reservierung.html'
-]
+];
 let googleMapsAPIJS = "https://maps.googleapis.com/maps/api/js?key=" +
     "AIzaSyBvQNb0hkcnBkfpVL1--9Pyd48MwjXAG18&callback=initMap";
 
@@ -247,6 +246,7 @@ let addToObjectStore = function (storeName, object) {
         });
     });
 };
+
 // Request background sync
 function requestReserveSync() {
     if (!self.registration || !self.registration.sync) {
@@ -259,6 +259,7 @@ function requestReserveSync() {
     }
 
 };
+
 // Get number of requests currenlty cached, as a Promise
 function getNbCachedRequests() {
     return new Promise(function (resolve) {
@@ -296,11 +297,13 @@ function getFirstCached() {
         });
     });
 };
+
 /**
  * @desc Serialisiert die Anfrage und schreibt diese in die IDB.
  * @param serialized
  * @returns {Promise}
- */function addCached(serialized) {
+ */
+function addCached(serialized) {
     return new Promise(function (resolve, reject) {
         openDatabase().then(function (db) {
             openObjectStore(db, DB_COLLECTION, "readwrite")
@@ -316,18 +319,22 @@ function getFirstCached() {
         });
     });
 };
+
 /**
  * @desc Die serialisierte Anfrage wird zurück in die Ausgangsform transformiert
  * @param serialized
  * @returns {*}
- */function deserialize(serialized) {
+ */
+function deserialize(serialized) {
     return Promise.resolve(new Request(serialized.url, serialized));
 };
+
 /**
  * @desc Sendet die Einträge, welche in der IDB liegen nacheinander an den Server
  * @param isSync
  * @returns {*}
- */function sendCached(isSync) {
+ */
+function sendCached(isSync) {
     return getNbCachedRequests()
         .then(function (nb) {
             if (!nb) {
@@ -372,19 +379,20 @@ function getFirstCached() {
                 });
         });
 };
+
 /**
  * @desc Anfrage Serialisieren, X-FROM-SW Header hinzufügen, Wandle POST so um, dass er verarbeitet werden kann
  * @param request
  * @returns {*}
  */
 function serialize(request) {
-    var headers = {};
+    let headers = {};
     for (let entry of request.headers.entries()) {
         headers[entry[0]] = entry[1];
     }
     headers['X-FROM-SW'] = true;
 
-    var serialized = {
+    let serialized = {
         url: request.url,
         headers: headers,
         method: request.method,
@@ -408,7 +416,7 @@ function serialize(request) {
 self.addEventListener('fetch', function (event) {
         let requestURL = new URL(event.request.url);
         //Fange POST Methode ab, um Controller Action manuell auszuführen
-        if (event.request.method == 'POST' && requestURL.pathname.indexOf("/reservierung.html") !== -1) {
+        if (event.request.method == 'POST' ) {
             // Formular senden, wird in den Cache geschrieben und asynchron gesendet
             event.respondWith(new Response(
                 JSON.stringify({
@@ -424,7 +432,7 @@ self.addEventListener('fetch', function (event) {
                             sendCached();
                         });
                 });
-        //Sollte das initialisieren der Maps API fehlschlagen, wird eine JS-Datei geladen
+            //Sollte das initialisieren der Maps API fehlschlagen, wird eine JS-Datei geladen
         } else if (requestURL.href === googleMapsAPIJS) {
             console.log("We have to handle the Maps now");
             event.respondWith(
@@ -466,14 +474,14 @@ self.addEventListener('sync', function (event) {
 //Erwarte Push-Benachrichtigung vom Server und reagiere darauf.
 self.addEventListener('push', function (event) {
 
-    var payload = event.data ? event.data.text() : 'no payload';
+    let payload = event.data ? event.data.text() : 'no payload';
     console.log('Received a push message', payload);
     payload = JSON.parse(payload);
 
-    var title = payload.title;
-    var body = payload.body;
-    var icon = payload.icon;
-    var tag = payload.tag;
+    let title = payload.title;
+    let body = payload.body;
+    let icon = payload.icon;
+    let tag = payload.tag;
 
     event.waitUntil(
         self.registration.showNotification(title, {

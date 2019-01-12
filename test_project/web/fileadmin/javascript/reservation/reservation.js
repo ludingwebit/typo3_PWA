@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    populateReservations();
-    getReservationsFromServer()
+/*    populateReservations();
+    getReservationsFromServer()*/
 });
 let createResObject = function (id, restName, restDate, restTime, restGuest, restMail) {
     let reservationDetails = {

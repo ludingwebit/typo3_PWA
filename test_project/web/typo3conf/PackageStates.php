@@ -137,6 +137,9 @@ return [
         'maps2' => [
             'packagePath' => 'typo3conf/ext/maps2/',
         ],
+        'typoscript_rendering' => [
+            'packagePath' => 'typo3conf/ext/typoscript_rendering/',
+        ],
     ],
     'version' => 5,
 ];
