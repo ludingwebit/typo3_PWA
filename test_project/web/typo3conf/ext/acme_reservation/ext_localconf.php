@@ -14,7 +14,7 @@ call_user_func(
 
             // non-cacheable actions
             [
-                'Reservierung' => 'create, update, delete',
+                'Reservierung' => 'list, create, delete',
                 'Subscriber' => 'create, delete',
             ]
         );

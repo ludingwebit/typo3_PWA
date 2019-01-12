@@ -66,14 +66,9 @@
             </tr>
         </f:for>
     </table>
-
-
     <h1>Reservierung tätigen (List.html)</h1>
-
     <f:flashMessages/>
-
     <f:render partial="FormErrors"/>
-
     <f:form action="create"
             controller="Reservierung"
             extensionName="AcmeReservation"
@@ -86,10 +81,10 @@
         <f:render partial="Reservierung/FormFields"/>
         <div class="row">
             <div class="col-md-12">
-<!--
                 <button id="form_Reservieren" class="btn" type="submit">Reservierung tätigen</button>
+<!--
+                <f:form.submit value="Reservierung" id="form_Reservieren" class="btn"/>
 -->
-                <f:form.submit value="Reservierung" id="form_Reservieren" class="btn" type="submit"/>
             </div>
         </div>
     </f:form>

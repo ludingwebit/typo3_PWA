@@ -70,7 +70,8 @@ function byId(pId) {
 // SUBSCRIPTION PART
 const applicationServerPublicKey = 'BCmti7ScwxxVAlB7WAyxoOXtV7J8vVCXwEDIFXjKvD-ma-yJx_eHJLdADyyzzTKRGb395bSAtxlh4wuDycO3Ih4';
 const pushButton = document.querySelector('.js-push-btn');
-
+let subUrl = pushButton.getAttribute("data-url");
+console.log(subUrl);
 function urlB64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
@@ -102,7 +103,9 @@ function initializeUI() {
             isSubscribed = !(subscription === null);
             if (isSubscribed) {
                 console.log('User IS subscribed.', subscription);
+/*
                 updateSubscriptionOnServer(subscription, post);
+*/
 
             } else {
                 console.log('User is NOT subscribed.');
@@ -153,7 +156,9 @@ let subscribeUser = function () {
         }).then(function (subscription) {
             console.log('User is subscribed.', subscription);
             isSubscribed = true;
-            registerSubscription(subscription, "POST")
+            let subUrl = pushButton.getAttribute("data-url");
+            console.log(subUrl);
+            registerSubscription(subUrl, subscription, "POST")
             updateBtn();
             resolve("Es ist gelungen");
         }).catch(err => {
@@ -165,7 +170,7 @@ let subscribeUser = function () {
 
 }
 
-function registerSubscription(subscription, method) {
+function registerSubscription(subUrl, subscription, method) {
     // TODO: Send subscription to application server
 
     const endpoint = subscription.endpoint;
@@ -175,7 +180,7 @@ function registerSubscription(subscription, method) {
     const token = rawToken ? btoa(String.fromCharCode.apply(null, new Uint8Array(rawToken))) : null;
     console.log(subscription.toJSON());
     console.log(rawKey, token);
-    return fetch('/notification/register', {
+    return fetch(subUrl, {
         method,
         headers: {
             'Accept': 'application/json',
@@ -188,7 +193,7 @@ function registerSubscription(subscription, method) {
         }),
     }).then(function (response) {
         if (response && response.ok) {
-            console.log("Subscription wurde erfolgreich in die DAtenbank geschrieben")
+            console.log("Subscription wurde erfolgreich in die Datenbank geschrieben")
             new Notification("Thank you for enabling notification", {
                 body: "We won't spam you , we promise",
                 tag: "success",
@@ -236,7 +241,7 @@ function requestSubSync() {
         return;
     } else {
         self.registration.sync.register('syncSubscription').then(function () {
-            console.log("SyncDB ist als Event-Trigger jetzt registriert.")
+            console.log("SubscribeSync ist als Event-Trigger jetzt registriert.")
         });
     }
 };
@@ -247,7 +252,7 @@ function requestUnSubSync() {
         return;
     } else {
         self.registration.sync.register('syncUnSubscription').then(function () {
-            console.log("SyncDB ist als Event-Trigger jetzt registriert.")
+            console.log("UnsubscribeSync ist als Event-Trigger jetzt registriert.")
         });
     }
 };

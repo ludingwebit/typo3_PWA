@@ -1,6 +1,8 @@
 <?php
 namespace WebitDe\AcmeReservation\Controller;
 
+use WebitDe\AcmeReservation\Domain\Model\Subscriber;
+
 /**
  * @var SubscriberController
  */
@@ -15,18 +17,19 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     /**
      * action create
      *
-     * @param \WebitDe\AcmeReservation\Domain\Model\Subscriber $newSubscriber
+     * @param Subscriber $newSubscriber
      * @return void
      */
-    public function createAction(\WebitDe\AcmeReservation\Domain\Model\Subscriber $newSubscriber)
+    public function createAction(Subscriber $newSubscriber)
     {
-        /**ToDo: Elemente in die MySQL Datenbank schreiben werden vom Javascript generiert und müssen automatisch per Ajax geschrieben werden.**/
-        $this->addFlashMessage(
-            'The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html',
-            '',
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
-        );
+        xdebug_break();
         $this->subscriberRepository->add($newSubscriber);
+        # Den Vorschlaghammer instanzieren / aus der Kiste kramen
+        $persistenceManager = $this->objectManager->get(
+            \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class
+        );
+        # Mit dem Vorschlaghammer in die Datenbank speichern / Nägel mit Köpfen machen
+        $persistenceManager->persistAll();
         $this->redirect('list');
     }
 
