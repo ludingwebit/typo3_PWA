@@ -72,6 +72,7 @@ const applicationServerPublicKey = 'BCmti7ScwxxVAlB7WAyxoOXtV7J8vVCXwEDIFXjKvD-m
 const pushButton = document.querySelector('.js-push-btn');
 let subUrl = pushButton.getAttribute("data-url");
 console.log(subUrl);
+
 function urlB64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
@@ -103,9 +104,9 @@ function initializeUI() {
             isSubscribed = !(subscription === null);
             if (isSubscribed) {
                 console.log('User IS subscribed.', subscription);
-/*
-                updateSubscriptionOnServer(subscription, post);
-*/
+                /*
+                                updateSubscriptionOnServer(subscription, post);
+                */
 
             } else {
                 console.log('User is NOT subscribed.');
@@ -181,11 +182,7 @@ function registerSubscription(subUrl, subscription, method) {
     console.log(subscription.toJSON());
     console.log(rawKey, token);
     return fetch(subUrl, {
-        method,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
+        method: method,
         body: JSON.stringify({
             endpoint: endpoint,
             key: key,
@@ -224,7 +221,7 @@ function unregisterSubscription(subscription, method) {
             publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
             authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
         }),
-    }).then(response=>{
+    }).then(response => {
         if (response && response.ok) {
             //ToDo: Füge eine Notification hinzu, die dem Nutzer signalisiert, dass er nicht mehr Registriert ist
             console.log("Subscription wurde erfolgreich in die DAtenbank geschrieben")
@@ -265,6 +262,7 @@ self.addEventListener('online', () => {
 self.addEventListener('offline', () => {
     ProgressiveKITT.addAlert('Sie sind Offline.', "Okay.")
 });
+
 function isOnline() {
     let connectionStatus = document.getElementById('connectionStatus');
 
@@ -280,6 +278,7 @@ function isOnline() {
         return false;
     }
 }
+
 window.addEventListener('online', isOnline);
 window.addEventListener('offline', isOnline);
 isOnline();

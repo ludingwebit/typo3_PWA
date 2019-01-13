@@ -26,6 +26,7 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function listAction()
     {
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings $querySettings */
+
         $querySettings = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings');
         $querySettings->setRespectStoragePage(false);
         $this->ReservierungRepository->setDefaultQuerySettings($querySettings);
@@ -43,13 +44,12 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function createAction(Reservierung $newReservation)
     {
         # Update auf das Repository anwenden
+        $newReservation->setStatus("Angekommen");
         $this->ReservierungRepository->add($newReservation);
-
         # Den Vorschlaghammer instanzieren / aus der Kiste kramen
         $persistenceManager = $this->objectManager->get(
             \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class
         );
-
         # Mit dem Vorschlaghammer in die Datenbank speichern / Nägel mit Köpfen machen
         $persistenceManager->persistAll();
         $this->view->render('list');

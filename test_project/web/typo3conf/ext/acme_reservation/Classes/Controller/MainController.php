@@ -16,28 +16,25 @@ class MainController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected $ReservierungRepository;
     /**
-     * @var \WebitDe\AcmeReservation\Domain\Repository\SubscriptionRepository
+     * @var \WebitDe\AcmeReservation\Domain\Repository\SubscriberRepository
      * @inject
      */
-    protected $SubscriptionRepository;
+    protected $SubscriberRepository;
 
     public function deleteSubscriberAction(\WebitDe\AcmeReservation\Domain\Model\Subscriber $subscriber)
     {
         $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
-        $this->subscriberRepository->remove($subscriber);
+        $this->SubscriberRepository->remove($subscriber);
         $this->redirect('list');
     }
 
     public function createSubscriberAction(\WebitDe\AcmeReservation\Domain\Model\Subscriber $newSubscriber)
     {
         $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
-        $this->subscriberRepository->add($newSubscriber);
+        $this->SubscriberRepository->add($newSubscriber);
     }
 
-    /**
-     * @var \WebitDe\AcmeReservation\Domain\Repository\ReservierungRepository
-     * @inject
-     */
+
     public function createReservierungAction(\WebitDe\AcmeReservation\Domain\Model\Reservierung $newReservation)
     {
         # Update auf das Repository anwenden
