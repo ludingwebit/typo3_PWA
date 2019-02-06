@@ -1,9 +1,0 @@
-{
-    "name": "webit-de/reservation-app",
-    "type": "project",
-    "require": {
-        "guzzlehttp/guzzle": "^6.3",
-        "minishlink/web-push": "^4.0"
-    },
-    "license": "GPL-2.0-or-later"
-}
