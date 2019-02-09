@@ -1,0 +1,46 @@
+{
+  "short_name": "TYPO3 PWA",
+  "name": "Diplomarbeit TYPO3 Protoyp Projekt webit!",
+  "description": "TYPO3 Prototyp zum testen der PWA Funktionen.",
+  "icons": [
+    {
+      "src": "/fileadmin/images/manifest/icon_32.png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "/fileadmin/images/manifest/icon_64.png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "/fileadmin/images/manifest/icon_128.png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/fileadmin/images/manifest/icon_144.png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/fileadmin/images/manifest/icon_152.png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "/fileadmin/images/manifest/icon_192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/fileadmin/images/manifest/icon_256.png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/fileadmin/images/manifest/icon_512.png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/hauptnavigation/homepage.html",
+  "display": "fullscreen",
+  "gcm_sender_id": "705443868777",
+  "background_color": "#2196f3",
+  "theme_color": "#2196f3",
+  "lang": "de",
+  "orientation": "portrait-primary"
+}

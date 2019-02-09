@@ -1,0 +1,31 @@
+/* default styles for extension "tx_acmereservation" */
+    textarea.f3-form-error {
+        background-color:#FF9F9F;
+        border: 1px #FF0000 solid;
+    }
+
+    input.f3-form-error {
+        background-color:#FF9F9F;
+        border: 1px #FF0000 solid;
+    }
+
+    .tx-acme-reservation table {
+        border-collapse:separate;
+        border-spacing:10px;
+    }
+
+    .tx-acme-reservation table th {
+        font-weight:bold;
+    }
+
+    .tx-acme-reservation table td {
+        vertical-align:top;
+    }
+
+    .typo3-messages .message-error {
+        color:red;
+    }
+
+    .typo3-messages .message-ok {
+        color:green;
+    }

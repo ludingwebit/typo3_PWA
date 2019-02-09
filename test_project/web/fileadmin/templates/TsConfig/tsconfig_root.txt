@@ -1,0 +1,290 @@
+#Config - Allgemein System; RealUrl;
+config {
+    linkVars = L
+    uniqueLinkVars = 1
+    sys_language_uid = 0
+    language = de
+    locale_all = de_DE.UTF-8
+    contentObjectExceptionHandler = 0
+    #prefixLocalAnchors = all
+    #simulateStaticDocuments = 0
+    #baseURL >
+    #tx_realurl_enable = 1
+
+    ### activate RealUrl
+    simulateStaticDocuments = 0
+    tx_realurl_enable = 1
+    baseURL = {$baseurl}
+    prefixLocalAnchors = all
+    typolinkCheckRootline = 1
+    ### remove baseurl, use absolute links instead
+    baseURL >
+    prefixLocalAnchors >
+    absRefPrefix = /
+}
+
+#Definiert die Sprache des tx_News Plugins
+plugin.tx_news {
+    _LOCAL_LANG {
+        default {
+
+        }
+
+        de {
+            more-link = Weiterlesen...
+            back-link = Zurück zur News-Übersicht
+            list_nonewsfound = Z. Zt. Keine Meldungen / News vorhanden.
+            related-news = Ähnliche Meldungen / News
+            related-files = Dateien zu diesem Artikel
+            related-links = Links zu diesem Artikel
+            author = Erstellt von %s
+            dateFormat = %d/%m/%Y
+        }
+    }
+}
+
+plugin.tx_gomapsext.settings.apiKey = AIzaSyBvQNb0hkcnBkfpVL1--9Pyd48MwjXAG18
+
+
+# Default PAGE object:
+page = PAGE
+page {
+    # Allgemeine Seiteneigenschaften setzen
+    config.doctype = html5
+    # Metatags angeben
+    meta.author = Paul Luding
+    meta.language = de
+    meta.description = Dies ist die Beschreibung
+    meta.viewport = width=device-width, initial-scale=1
+    meta.theme = darkcyan
+    #CSS-datein einfügen
+
+    headerData.100 = COA
+    headerData.100 {
+        10 = TEXT
+        10.value = <link rel="manifest" href="/fileadmin/manifest.json"></link><link rel="icon" type="image/png" href="/fileadmin/images/favicon.png" sizes="32x32"><link rel="mask-icon" href="/fileadmin/images/safari-pinned-tab.svg" color="#96bef9">
+    }
+
+    #Stylesheet-datein einfügen
+    includeCSS {
+        main1 = fileadmin/css/app.css
+        main2 = fileadmin/css/mini-dark.min.css
+        main2.title = main
+        main2.media = all
+    }
+
+    #JS-datein einfügen
+    includeJS {
+        jquery0 = fileadmin/javascript/jquery.3.3.1.min.js
+        jquery0.forceOnTop = 1
+        main0 = fileadmin/javascript/UIKit/progressive-ui-kitt.js
+    }
+
+    includeJSFooter {
+        main1 = fileadmin/javascript/main.js
+        main2 = fileadmin/javascript/app.js
+
+    }
+
+
+    # Designvorlage integrieren
+    10 = FLUIDTEMPLATE
+    10 {
+        file.cObject = CASE
+        file.cObject {
+            key {
+                data = levelfield: -1, backend_layout_next_level, slide
+                override.data = TSFE:page|backend_layout
+            }
+
+            1 = TEXT
+            1.value = fileadmin/templates/vorlage.html
+
+            partialRootPath {
+                10 = fileadmin/templates/content/partials
+            }
+
+            default < .1
+        }
+
+        variables {
+
+            brandLineFirst = TEXT
+            brandLineFirst.value = Restaurant webit!
+            brandLineFirst.lang.en = Restaurant webit!
+
+            brandLineSecond = TEXT
+            brandLineSecond.value = Luding, Paul
+
+            brandName = TEXT
+            brandName.value = Restaurant webit!
+            brandName.params = class="brand-name"
+            logo = IMAGE
+            logo {
+                file = fileadmin/images/logo.png
+                params = class="logo"
+            }
+
+            now = TEXT
+            now {
+                data = date:U
+                strftime = %d.%m.%Y
+            }
+
+            labelToday = COA_INT
+            labelToday {
+                10 = TEXT
+                10.value = Guten Morgen
+                10.lang.en = Good Morning
+                10.wrap = |!&nbsp;
+
+                20 = TEXT
+                20.value = Heute ist der
+                20.lang.en = Today is
+            }
+
+            labelMore = TEXT
+            labelMore.value = Mehr
+            labelMore.lang.en = More
+
+            #Inhalt der Hauptspalte ausgeben
+            contentMain = CONTENT
+            contentMain {
+                table = tt_content
+                select.orderBy = sorting
+                select.where = colPos=0
+                select.languageField = sys_language_uid
+            }
+
+            contentMargin = COA
+            contentMargin {
+                10 < styles.content.get
+                10.select.where = colPos=2
+
+
+                20 < styles.content.get
+                20.select.where = colPos=2
+                20.select.pidInList = 21
+            }
+
+            #Den Inhalt des Trailers auslesen
+            contentTrailer < styles.content.get
+            contentTrailer.select.where = colPos=5
+            contentUserlist = lib.userlist
+            contentUserlist = CONTENT
+            contentUserlist {
+                table = fe_users
+
+                select.orderBy = username
+
+
+                renderObj = TEXT
+                renderObj {
+                    field = username
+                    wrap = <br />
+                }
+            }
+
+            contentForReservation = TEXT
+            contentForReservation.wrap = <div id="status" class="center-block"> | </div>
+
+            menuPrimaryMobile = HMENU
+            menuPrimaryMobile {
+                special = directory
+                special.value = 5
+
+                1 = TMENU
+                1 {
+                    NO = 1
+                    NO {
+                        ATagParams = class="footer-link"
+                        stdWrap.wrap.insertData = 1
+                        stdWrap.wrap = <span id="menu-item-{field:uid}"><p>|</p></span>
+                    }
+
+                    CUR < .NO
+                    CUR.ATagParams = class="footer-link active"
+                    CUR.DoNotLink = 1
+                }
+
+
+                #Den Sprachwechsler darstellen
+                #                temp.langmenu = HMENU
+                #                temp.langmenu {
+                #                    special = language
+                #                    special.value = 0,1
+                #                    1 = GMENU
+                #                    1 {
+                #                        NO = 1
+                #                        NO {
+                #                            XY = [10.w]+15, [10.h]+5
+                #                            backColor = #123456
+                #                            transparentBackground = 1
+                #                            10 = IMAGE
+                #                            10.file = GIFBUILDER
+                #                            10.file {
+                #                                backColor = white
+                #                                XY = [10.w]+2, [10.h]+2
+                #                                10 = IMAGE
+                #                                10.file = typo3/gfx/flags/gb.gif  || typo3/gfx/flags/de.gif
+                #                                10.offset = 1,1
+                #                            }
+                #                        }
+                #
+                #                        ACT < .NO
+                #                        ACT {
+                #                            # aktuelle Sprache wird hervorgehoben
+                #                            2 = BOX
+                #                            2.dimensions = 6,6,[10.w]-4,[10.h]-6
+                #                            2.color = #666666
+                #
+                #                            3 = EFFECT
+                #                            3.value = blur=25
+                #
+                #                            #10.file.20 = EFFECT
+                #                            #10.file.20.value = wave = 1,20
+                #                        }
+                #
+                #                        USERDEF1 < .NO
+                #                        USERDEF1 {
+                #                            # nicht verfuegbare Sprachen werden ausgegraut und nicht verlinkt:
+                #                            10.file.20 = EFFECT
+                #                            10.file.20.value = gray
+                #                            noLink = 1
+                #                        }
+                #                    }
+                #                }
+            }
+        }
+    }
+}
+
+lib.contentElement {
+    partialRootPath {
+        10 = fileadmin/templates/content/partials
+    }
+}
+
+#Zeitabhängiger Begrüßungstext
+[hour = >10]
+    page.10.variables.labelToday.10.value = Guten Tag
+    page.10.variables.labelToday.10.value.lang.en = Good day
+[hour = >18]
+    page.10.variables.labelToday.10.value = Guten Abend
+    page.10.variables.labelToday.10.value.lang.en = Good Evening
+
+    #Mehrsprachigkeit
+[globalVar = GP:L=1]
+    config {
+        sys_language_uid = 1
+        language = en
+        locale_all = en_UK
+    }
+
+    page.10.variables.language {
+        value = Deutsch
+        typolink.additionalParams = &L=0
+    }
+
+    page.10.variables.langage.20.1.NO.stdWrap.override = German || English
+[global]

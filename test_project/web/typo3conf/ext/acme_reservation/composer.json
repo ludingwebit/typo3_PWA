@@ -1,0 +1,23 @@
+{
+    "name": "webitde/acme-reservation",
+    "type": "typo3-cms-extension",
+    "description": "Extension f\u00fcr Reservierung in einem Restaurant",
+    "authors": [],
+    "require": {
+        "typo3/cms-core": "^8.7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "WebitDe\\AcmeReservation\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WebitDe\\AcmeReservation\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "acme_reservation": "self.version",
+        "typo3-ter/acme-reservation": "self.version"
+    }
+}

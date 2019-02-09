@@ -1,0 +1,61 @@
+<html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<div class="row input-group">
+    <div class="col-md-4 label">
+        <label for="name">
+            <f:translate key="tx_acmereservation_domain_model_reservierung.name"/>
+        </label><br/>
+    </div>
+
+    <div class="col-md-8">
+        <f:form.textfield id="form_name" property="name"/>
+    </div>
+</div>
+<div class="row input-group">
+    <div class="col-md-4 label">
+        <label for="datum">
+            <f:translate key="tx_acmereservation_domain_model_reservierung.datum"/>
+        </label>
+    </div>
+
+    <div class="col-md-8">
+        <f:form.textfield placeholder="dd.mm.yyyy" type="date" id="form_datum" property="datum" value="{reservierung.datum->f:format.date()}"/>
+
+    </div>
+</div>
+<div class="row input-group">
+    <div class="col-md-4 label">
+        <label for="zeit">
+            <f:translate key="tx_acmereservation_domain_model_reservierung.zeit"/>
+        </label>
+    </div>
+
+    <div class="col-md-8">
+        <f:form.textfield type="time" id="form_zeit" property="zeit" value="{reservierung.zeit->f:format.date()}"/>
+
+    </div>
+</div>
+
+
+<div class="row input-group">
+    <div class="col-md-4 label">
+        <label for="anzahl">
+            <f:translate key="tx_acmereservation_domain_model_reservierung.anzahl"/>
+        </label>
+    </div>
+
+    <div class="col-md-8">
+        <f:form.textfield id="form_anzahl" property="anzahl"/>
+    </div>
+</div>
+<div class="row input-group">
+    <div class="col-md-4 label">
+        <label for="email">
+            <f:translate key="tx_acmereservation_domain_model_reservierung.email"/>
+        </label>
+    </div>
+
+    <div class="col-md-8">
+        <f:form.textfield type="email" id="form_email" property="email"/>
+    </div>
+</div>
+</html>
