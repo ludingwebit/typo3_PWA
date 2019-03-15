@@ -4,7 +4,7 @@ let swRegistration = null;
 let isSubscribed = false;
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js").then(function (registration) {
+    navigator.serviceWorker.register("/workbox-sw.js").then(function (registration) {
         console.log("Service Worker wurde registriert mit dem Scope:", registration.scope);
         console.log("Service Worker Registriert")
         swRegistration = registration;
@@ -43,9 +43,10 @@ if ("serviceWorker" in navigator) {
                 method: reservForm.getAttribute('method'),
                 body: new FormData(reservForm)
             }).then(function (response) {
-                return response;
-            }).then(function () {
+                //Antwort "caching: true", sollte der Mode=navigate sein, rendert er die json. Der Modus muss cors sein-->Allow-Cross-origin requests.
+                //Da beim Ausführen mittels cors, der Post nicht im HTML angezeigt werden, werden die Elemente gepsiechert.
                 ProgressiveKITT.addAlert('Danke für ihre Reservierung. Selbst wenn sie offline sind wird diese an den Server geschickt.', "Okay.")
+            }).then(function () {
                 // removeLoading();
                 restDate.value = '';
                 restTime.value = '';

@@ -59,19 +59,19 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $subscriber->setEndpoint($data['endpoint']);
         $subscriber->setAuthSecret($data['authSecret']);
         $this->SubscriberRepository->remove($subscriber);
-        $persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
-        $persistenceManager->persistAll();
         $servername = "84.129.199.240";
         $username = "root";
-        $password = "Isgh3adx!";
+        $password = "xDxXDbK9UhYl8scD";
         $dbname = "typo3_db";
         // Create connection
         $hans = $subscriber->getEndpoint();
         $databaseConnect = mysqli_connect($servername, $username, $password, $dbname);
-        $repositoryRemove = "DELETE FROM `tx_acmereservation_domain_model_subscriber` WHERE endpoint = '$hans'";
+        $repositoryRemove = "DELETE FROM `tx_acmereservation_domain_model_subscriber` WHERE `endpoint` = '$hans'";
         $mysql = mysqli_query($databaseConnect, $repositoryRemove);
         mysqli_close($databaseConnect);
-        return new JsonResponse(array("success" => true, $data['endpooint']));
+        $persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
+        $persistenceManager->persistAll();
+        return new JsonResponse(array("success" => true, "Wirklich",$hans ));
 
     }
 }

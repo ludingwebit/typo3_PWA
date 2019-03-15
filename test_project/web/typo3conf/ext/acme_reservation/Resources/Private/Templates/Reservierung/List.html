@@ -2,70 +2,70 @@
       data-namespace-typo3-fluid="true">
 <f:layout name="Default"/>
 <f:section name="content">
-    <h1>Liste der Reservierungen</h1>
+    <!--<h1>Reservierungen</h1>-->
 
     <f:flashMessages/>
 
-    <table class="tx_acmereservation">
-        <tr>
-            <th>
-                <f:translate key="tx_acmereservation_domain_model_reservierung.name"/>
-            </th>
-            <th>
-                <f:translate key="tx_acmereservation_domain_model_reservierung.datum"/>
-            </th>
-            <th>
-                <f:translate key="tx_acmereservation_domain_model_reservierung.zeit"/>
-            </th>
-            <th>
-                <f:translate key="tx_acmereservation_domain_model_reservierung.anzahl"/>
-            </th>
-            <th>
-                <f:translate key="tx_acmereservation_domain_model_reservierung.email"/>
-            </th>
-            <th>
-                <f:translate key="tx_acmereservation_domain_model_reservierung.status"/>
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
+    <!--<table class="tx_acmereservation">-->
+        <!--<tr>-->
+            <!--<th>-->
+                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.name"/>-->
+            <!--</th>-->
+            <!--<th>-->
+                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.datum"/>-->
+            <!--</th>-->
+            <!--<th>-->
+                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.zeit"/>-->
+            <!--</th>-->
+            <!--<th>-->
+                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.anzahl"/>-->
+            <!--</th>-->
+            <!--<th>-->
+                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.email"/>-->
+            <!--</th>-->
+            <!--<th>-->
+                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.status"/>-->
+            <!--</th>-->
+            <!--<th></th>-->
+            <!--<th></th>-->
+        <!--</tr>-->
 
-        <f:for each="{reservierungs}" as="reservierung">
-            <tr>
-                <td>
-                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.name}
-                    </f:link.action>
-                </td>
-                <td>
-                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.datum ->
-                        f:format.date()}
-                    </f:link.action>
-                </td>
-                <td>
-                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.zeit}
-                    </f:link.action>
-                </td>
-                <td>
-                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.anzahl}
-                    </f:link.action>
-                </td>
-                <td>
-                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.email}
-                    </f:link.action>
-                </td>
-                <td>
-                    <f:link.action action="show" arguments="{reservierung : reservierung}"> {reservierung.status}
-                    </f:link.action>
-                </td>
-                <td>
-                    <f:link.action action="edit" arguments="{reservierung : reservierung}">Edit</f:link.action>
-                </td>
-                <td>
-                    <f:link.action action="delete" arguments="{reservierung : reservierung}">Delete</f:link.action>
-                </td>
-            </tr>
-        </f:for>
-    </table>
+        <!--<f:for each="{newReservations}" as="newReservation">-->
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.name}-->
+                    <!--</f:link.action>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.datum ->-->
+                        <!--f:format.date()}-->
+                    <!--</f:link.action>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.zeit}-->
+                    <!--</f:link.action>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.anzahl}-->
+                    <!--</f:link.action>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.email}-->
+                    <!--</f:link.action>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.status}-->
+                    <!--</f:link.action>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<f:link.action action="edit" arguments="{newReservation : newReservation}">Edit</f:link.action>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<f:link.action action="delete" arguments="{newReservation : newReservation}">Delete</f:link.action>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</f:for>-->
+    <!--</table>-->
     <h1>Reservierung tätigen (List.html)</h1>
     <f:flashMessages/>
     <f:render partial="FormErrors"/>
@@ -88,5 +88,21 @@
             </div>
         </div>
     </f:form>
+
+<!--
+    <h1>Reservierung tätigen ohne Ajax (List.html)</h1>
+    <f:flashMessages/>
+    <f:render partial="FormErrors"/>
+    <f:form id="form-reservation" action="create" name="newReservierung" object="{newReservierung}">
+        <f:render partial="Reservierung/FormFields"/>
+        <div class="row">
+            <div class="col-md-12">
+                <button id="form_Reservieren" class="btn" type="submit">Reservierung tätigen</button>
+                &lt;!&ndash;
+                                <f:form.submit value="Reservierung" id="form_Reservieren" class="btn"/>
+                &ndash;&gt;
+            </div>
+        </div>
+    </f:form>-->
 </f:section>
 </html>

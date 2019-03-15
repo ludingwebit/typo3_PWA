@@ -20,10 +20,11 @@ $subscribers = array();
 $webPush = new WebPush($auth);
 $notification = json_encode([
             "icon" => "https://cdn0.iconfinder.com/data/icons/linkedin-ui-colored/48/JD-12-512.png",
-            "title" => "This is only a Test for Push-Notifications",
-            "tag" => "SymfonyPushNotification",
-            "body" => "I hope you can forgive us for disturbing you!",
-            "url" => "https://mediadesign-luding.de"
+            "title" => "Typo3 Notification",
+            "tag" => "TYPO3PushNotification",
+            "body" => "TYPO3 Test Notification Erfolgreich",
+            "url" => "",
+            "vibrate" => "[200, 100, 200]"
         ]);
 //Informationen aus Datenbank holen
 while($r = mysqli_fetch_assoc($query_mysql)) {
@@ -33,7 +34,7 @@ while($r = mysqli_fetch_assoc($query_mysql)) {
 foreach($subscribers as $subscriber){
             $arr = array('endpoint'=>$subscriber['endpoint'], $notification, 'publicKey'=>$subscriber['browser_key'],'authToken' => $subscriber['auth_secret']);
             $subscriber = Subscription::create($arr);
-            $webPush->sendNotification($subscriber, false);
+            $webPush->sendNotification($subscriber, $notification, false);
             print_r("I've sent a notification!");
         }
         $responses = $webPush->flush();
@@ -49,8 +50,9 @@ foreach($subscribers as $subscriber){
         }
 
 
-//echo '<pre>'; print_r($subscription); echo '</pre>';
-
+echo '<pre>'; print_r($subscription); echo '</pre>';
+echo '<pre>'; print_r("HANS"); echo '</pre>';
+//
 //$res = $webPush->sendNotification(
 //    $subscription,
 //    "Hello!",

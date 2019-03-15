@@ -8,6 +8,7 @@
 $method = $_SERVER['REQUEST_METHOD'];
 $fetchRes = json_decode(file_get_contents('php://input'));
 $endpoint = $fetchRes->endpoint;
+echo "SUBSCRIPTION";
 $key = $fetchRes->publicKey;
 $auth = $fetchRes->authToken;
 $contentEncoding = $fetchRes->contentEncoding;

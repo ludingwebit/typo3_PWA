@@ -12,7 +12,7 @@ return [
                 'charset' => 'utf8',
                 'dbname' => 'typo3_db',
                 'driver' => 'mysqli',
-                'host' => '84.129.199.240',
+                'host' => '84.129.192.102',
                 'password' => 'xDxXDbK9UhYl8scD',
                 'port' => 3307,
                 'user' => 'root',
