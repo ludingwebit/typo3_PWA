@@ -1,33 +1,32 @@
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js");
+﻿importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.1/workbox-sw.js');
 console.log("[NETWORK CONNECTION] " + navigator.connection.effectiveType);
-let CACHE_NAME = 'individually-cache-v2';
 let cssCaching = new RegExp('/css/.*\.css');
 let imgCaching = new RegExp('/images/');
 let staticCaching = new RegExp('/javascript/.*\.js');
-let mainCaching = new RegExp('.*\.homepage.html');
+let mainCaching = new RegExp('/hauptnavigation/reservierung.html');
 let DB_VERSION = "1";
 let DB_NAME = "ReservierungTypo3-DB";
 let DB_COLLECTION = "ReservierungTypo3-requests"
 let googleMapsAPIJS = "https://maps.googleapis.com/maps/api/js?key=" +
     "AIzaSyBvQNb0hkcnBkfpVL1--9Pyd48MwjXAG18&callback=initMap";
-
-/*
-let googleMapsAPIembed = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBvQNb0hkcnBkfpVL1--9Pyd48MwjXAG18&q=webit!";
-*/
-// Force development builds
-// workbox.setConfig({debug: true});
+workbox.setConfig({
+    debug: false
+});
+workbox.core.setCacheNameDetails({
+    prefix: 'typo3-',
+});
 workbox.precaching.precacheAndRoute([
     {
         "url": "/hauptnavigation/anfahrt.html",
         "revision": "1"
     },
     {
-        "url": "/hauptnavigation/kontakt.html",
-        "revision": "3"
+        "url": "/hauptnavigation/homepage.html",
+        "revision": "2"
     },
     {
-        "url": "/hauptnavigation/reservierung.html",
-        "revision": "4"
+        "url": "/hauptnavigation/kontakt.html",
+        "revision": "3"
     },
     {
         "url": "/hauptnavigation/speisekarte.html",
@@ -56,13 +55,28 @@ workbox.precaching.precacheAndRoute([
     {
         "url": "/fileadmin/javascript/offline-map.js",
         "revision": "11"
+    },
+    {
+        "url": "/fileadmin/images/wifi_off.png",
+        "revision": "10"
+    },
+    {
+        "url": "/fileadmin/images/wifi_on.png",
+        "revision": "10"
     }
 ]);//Funktioniert Workbox
 if (workbox) {
-    console.log("Yay! Workbox wurde geladen12 🎉")
+    console.log("Yay! Workbox wurde geladen! 🎉")
 } else {
     console.log("Boo! Workbox wurde nicht geladen!")
 }
+
+
+workbox.routing.registerRoute(
+    mainCaching,
+    new workbox.strategies.NetworkFirst()
+);
+
 
 workbox.routing.registerRoute(
     // Cache JS files
@@ -70,12 +84,6 @@ workbox.routing.registerRoute(
     workbox.strategies.cacheFirst({
         cacheName: 'static-cache-v3',
     })
-);
-
-
-workbox.routing.registerRoute(
-    mainCaching,
-    new workbox.strategies.StaleWhileRevalidate()
 );
 
 
@@ -129,7 +137,7 @@ let openDatabase = function () {
                 if (!db.objectStoreNames.contains(DB_COLLECTION)) {
                     reservationsStore = db.createObjectStore(DB_COLLECTION, {autoIncrement: true});
                 } else {
-                    reservationsStore = upgradeTransaction.objectStore("Reservierung");
+                    reservationsStore = upgradeTransaction.objectStore("ReservierungController");
                 }
             };
             request.onsuccess = function (event) {
@@ -291,7 +299,6 @@ function sendCached(isSync) {
 };
 
 
-
 /**
  * @desc Anfrage Serialisieren, X-FROM-SW Header hinzufügen, Wandle POST so um, dass er verarbeitet werden kann
  * @param request
@@ -324,28 +331,29 @@ function serialize(request) {
     }
     return Promise.resolve(serialized);
 };
-
-self.addEventListener('activate', function(event) {
-    event.waitUntil(
-        caches.keys().then(function(cacheNames) {
-            return Promise.all(
-                cacheNames.filter(function(cacheName) {
-                    // Return true if you want to remove this cache,
-                    // but remember that caches are shared across
-                    // the whole origin
-                }).map(function(cacheName) {
-                    return caches.delete(cacheName);
-                })
-            );
-        })
-    );
-});
-
 //Fange fetch-Event ab
 self.addEventListener('fetch', function (event) {
         let requestURL = new URL(event.request.url);
         //Fange POST Methode ab, um Controller Action manuell auszuführen
-        if (event.request.method == 'POST' && requestURL.pathname == "hauptnavigation") {
+        if (event.request.method == 'POST' &&
+            requestURL.search.indexOf("controller%5D=ReservierungController") > -1) {
+            // Formular senden, wird in den Cache geschrieben und asynchron gesendet
+            event.respondWith(new Response(
+                JSON.stringify({
+                    caching: true
+                }), {
+                    headers: {'Content-Type': 'application/json'}
+                }
+            ));
+            serialize(event.request)
+                .then(function (serialized) {
+                    addToObjectStore(DB_COLLECTION, serialized)
+                        .then(function () {
+                            sendCached();
+                        });
+                });
+            //Sollte das initialisieren der Maps API fehlschlagen, wird eine JS-Datei geladen
+        } else if (event.request.method == 'POST' && requestURL.search.indexOf("Subscriber&tx_acmereservation_reservaciaplugini") > -1) {
             // Formular senden, wird in den Cache geschrieben und asynchron gesendet
             event.respondWith(new Response(
                 JSON.stringify({

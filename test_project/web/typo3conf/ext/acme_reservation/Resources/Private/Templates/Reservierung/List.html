@@ -4,69 +4,9 @@
 <f:section name="content">
     <!--<h1>Reservierungen</h1>-->
 
-    <f:flashMessages/>
-
-    <!--<table class="tx_acmereservation">-->
-        <!--<tr>-->
-            <!--<th>-->
-                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.name"/>-->
-            <!--</th>-->
-            <!--<th>-->
-                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.datum"/>-->
-            <!--</th>-->
-            <!--<th>-->
-                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.zeit"/>-->
-            <!--</th>-->
-            <!--<th>-->
-                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.anzahl"/>-->
-            <!--</th>-->
-            <!--<th>-->
-                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.email"/>-->
-            <!--</th>-->
-            <!--<th>-->
-                <!--<f:translate key="tx_acmereservation_domain_model_reservierung.status"/>-->
-            <!--</th>-->
-            <!--<th></th>-->
-            <!--<th></th>-->
-        <!--</tr>-->
-
-        <!--<f:for each="{newReservations}" as="newReservation">-->
-            <!--<tr>-->
-                <!--<td>-->
-                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.name}-->
-                    <!--</f:link.action>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.datum ->-->
-                        <!--f:format.date()}-->
-                    <!--</f:link.action>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.zeit}-->
-                    <!--</f:link.action>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.anzahl}-->
-                    <!--</f:link.action>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.email}-->
-                    <!--</f:link.action>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<f:link.action action="show" arguments="{newReservation : newReservation}"> {newReservation.status}-->
-                    <!--</f:link.action>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<f:link.action action="edit" arguments="{newReservation : newReservation}">Edit</f:link.action>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<f:link.action action="delete" arguments="{newReservation : newReservation}">Delete</f:link.action>-->
-                <!--</td>-->
-            <!--</tr>-->
-        <!--</f:for>-->
-    <!--</table>-->
     <h1>Reservierung tätigen (List.html)</h1>
+
+
     <f:flashMessages/>
     <f:render partial="FormErrors"/>
     <f:form action="create"
@@ -82,27 +22,66 @@
         <div class="row">
             <div class="col-md-12">
                 <button id="form_Reservieren" class="btn" type="submit">Reservierung tätigen</button>
-<!--
-                <f:form.submit value="Reservierung" id="form_Reservieren" class="btn"/>
--->
+                <!--
+                                <f:form.submit value="ReservierungController" id="form_Reservieren" class="btn"/>
+                -->
             </div>
         </div>
     </f:form>
-
-<!--
-    <h1>Reservierung tätigen ohne Ajax (List.html)</h1>
-    <f:flashMessages/>
-    <f:render partial="FormErrors"/>
-    <f:form id="form-reservation" action="create" name="newReservierung" object="{newReservierung}">
-        <f:render partial="Reservierung/FormFields"/>
-        <div class="row">
-            <div class="col-md-12">
-                <button id="form_Reservieren" class="btn" type="submit">Reservierung tätigen</button>
-                &lt;!&ndash;
-                                <f:form.submit value="Reservierung" id="form_Reservieren" class="btn"/>
-                &ndash;&gt;
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div id="res-loader" class="flash">
             </div>
         </div>
-    </f:form>-->
+    </div>
+
+    <h1>Reservierungen Einträge (Server-Datenbank)</h1>
+    <p>Zum Testen ob der Eintrag in der Datenbank au dem Server gelandet ist bitte aktualisieren.</p>
+    <a id="reload" style="display: none;text-align: center;"
+       href="javascript:location.reload();$('#mySpinner').addClass('spinner');"
+       class="button secondary">Tabelle aktualisieren ob neuer Eintrag in Server-DB</a>
+    <div id="message" class="flash"></div>
+    <table class="tx_acmereservation table-res">
+        <tr>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.name"/>
+            </th>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.datum"/>
+            </th>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.zeit"/>
+            </th>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.anzahl"/>
+            </th>
+            <th>
+                <f:translate key="tx_acmereservation_domain_model_reservierung.email"/>
+            </th>
+        </tr>
+
+
+        <f:for each="{newReservations}" as="newReservation">
+            <tr>
+                <td>
+                    {newReservation.name}
+                </td>
+                <td>
+                    {newReservation.datum -> f:format.date()}
+                </td>
+                <td>
+                    {newReservation.zeit}
+                </td>
+                <td>
+                    {newReservation.anzahl}
+
+                </td>
+                <td>
+                    {newReservation.email}
+
+                </td>
+            </tr>
+        </f:for>
+    </table>
 </f:section>
 </html>

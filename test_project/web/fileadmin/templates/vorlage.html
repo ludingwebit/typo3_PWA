@@ -28,7 +28,7 @@
                                                format:'html')->f:format.htmlentities()}">
                         Benachr. Deakt.
                     </button>
-                    <button id="btnAppInstall">Inst.</button>
+                    <button id="btnAppInstall" style="display: none;">Inst.</button>
                 </div>
                 <div id="connectionStatus"></div>
 
@@ -45,6 +45,17 @@
         </nav>
     </div>
 </header>
+<div id="mySpinner" style="  position: fixed;
+  z-index: 999;
+  height: 5em;
+  width: 5em;
+  overflow: visible;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+"></div>
 
 <main id="content" class="container">
     <div class="row">
@@ -72,19 +83,17 @@
         </div>
     </div>
 </main>
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <aside class="row">
-                    <div class="col-md-4 date-wrapper"><h4>Begrüßung</h4>
-                        {labelToday -> f:format.raw()}
-                        <div class="date">{now}</div>
-                    </div>
-                </aside>
-            </div>
-        </div>
-    </div>
-    <script>ProgressiveKITT.setStylesheet("/fileadmin/javascript/UIKit/themes/flat.css");
-    ProgressiveKITT.render();</script>
-</footer>
+<!--<div class="container">-->
+<!--<div class="row">-->
+<!--<div class="col-md-8">-->
+<!--<aside class="row">-->
+<!--<div class="col-md-4 date-wrapper"><h4>Begrüßung</h4>-->
+<!--{labelToday -> f:format.raw()}-->
+<!--<div class="date">{now}</div>-->
+<!--</div>-->
+<!--</aside>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<script>ProgressiveKITT.setStylesheet("/fileadmin/javascript/UIKit/themes/flat.css");
+ProgressiveKITT.render();</script>

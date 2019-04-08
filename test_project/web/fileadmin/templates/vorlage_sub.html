@@ -1,0 +1,67 @@
+{namespace t=Helhum\TyposcriptRendering\ViewHelpers}
+<style>
+    #content .row {
+        padding: 25px
+    }
+</style>
+<div id="content">
+    <div class="container">
+        <h1>Installation</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <button class="tertiary" id="btnAppInstall" style="display: block;">Installieren</button>
+            </div>
+        </div>
+        <h1>Batterie Info</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>Akku-Status: <b id="charging">unknown</b>, Ladezeit <b
+                        id="chargingTime">unknown</b>, Entladungszeit <b id="dischargingTime">unknown</b>,
+                    Prozent
+                    <b id="level">unknown</b>.</p>
+
+                <div id="target"></div>
+            </div>
+        </div>
+        <h1>RAM</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                RAM-Speicher des Gerätes ~<b id="result">unknown</b> GiB.
+            </div>
+        </div>
+        <script>document.getElementById('result').innerHTML = navigator.deviceMemory || 'unknown'</script>
+        <h1>Video und Audio</h1>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <p>
+                    <button type="button" class="primary" onclick="getStream('video')">Grab video
+                    </button>
+                </p>
+
+                <video controls autoplay style="height:180px; width: 240px;"></video>
+            </div>
+            <div class="col-sm-12">
+                <p>
+                    <button type="button" class="primary" onclick="getStream('audio')">Grab audio
+                    </button>
+                </p>
+
+                <audio controls autoplay></audio>
+            </div>
+        </div>
+        <h1>Vibration</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="primary" onclick="vibrateSimple()">Vibrate for 200 ms</button>
+                <button class="primary" onclick="vibratePattern()">Vibrate with pattern</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>Quelle: <a href="https://whatwebcando.today/">whatwebcando</a></p>

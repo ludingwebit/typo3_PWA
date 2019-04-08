@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Acme Reservation',
-    'description' => 'Extension für Reservierung in einem Restaurant',
+    'description' => 'Extension für ReservierungController in einem Restaurant',
     'category' => 'plugin',
     'author' => '',
     'author_email' => '',

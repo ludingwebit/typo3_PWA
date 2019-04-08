@@ -7,7 +7,7 @@
     </div>
 
     <div class="col-md-8">
-        <f:form.textfield id="form_name" property="name"/>
+        <f:form.textfield id="form_name" required="required" property="name" placeholder="Max Mustermann"/>
     </div>
 </div>
 <div class="row input-group">
@@ -18,7 +18,7 @@
     </div>
 
     <div class="col-md-8">
-        <f:form.textfield placeholder="dd.mm.yyyy" type="date" id="form_datum" property="datum" value="{reservierung.datum->f:format.date()}"/>
+        <f:form.textfield placeholder="dd.mm.yyyy" type="date" id="form_datum" property="datum" required="required" value="{reservierung.datum->f:format.date()}"/>
 
     </div>
 </div>
@@ -30,7 +30,7 @@
     </div>
 
     <div class="col-md-8">
-        <f:form.textfield type="time" id="form_zeit" property="zeit" value="{reservierung.zeit->f:format.date()}"/>
+        <f:form.textfield type="time" id="form_zeit" property="zeit" required="required" required="required" value="{reservierung.zeit->f:format.date()}"/>
 
     </div>
 </div>
@@ -44,7 +44,7 @@
     </div>
 
     <div class="col-md-8">
-        <f:form.textfield id="form_anzahl" property="anzahl"/>
+        <f:form.textfield id="form_anzahl" property="anzahl" required="required"/>
     </div>
 </div>
 <div class="row input-group">
@@ -55,7 +55,7 @@
     </div>
 
     <div class="col-md-8">
-        <f:form.textfield type="email" id="form_email" property="email"/>
+        <f:form.textfield type="email" id="form_email" property="email" required="required"/>
     </div>
 </div>
 </html>

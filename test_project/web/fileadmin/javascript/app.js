@@ -2,7 +2,10 @@
 'use strict';
 let swRegistration = null;
 let isSubscribed = false;
-
+const resStat = document.getElementById('message');
+const refresh = document.getElementById('reload');
+const resLoader = $('#res-loader');
+const subRes = $('#form_Reservieren');
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/workbox-sw.js").then(function (registration) {
         console.log("Service Worker wurde registriert mit dem Scope:", registration.scope);
@@ -23,7 +26,6 @@ if ("serviceWorker" in navigator) {
             console.log("Background Sync wird unterstützt.")
         } else {
             console.warn("Background Sync wird nicht unterstützt!")
-
         }
     }).catch(function (err) {
         console.log("Service Worker Registrierung fehlgeschlagen:", err);
@@ -39,13 +41,28 @@ if ("serviceWorker" in navigator) {
     if (reservForm) {//Formular
         reservForm.addEventListener('submit', function (event) {
             event.preventDefault();
+            resLoader.html('');
+            subRes.attr('disabled', true);
+            addSpinner(resLoader);
             fetch(reservForm.getAttribute('action'), {
                 method: reservForm.getAttribute('method'),
                 body: new FormData(reservForm)
             }).then(function (response) {
                 //Antwort "caching: true", sollte der Mode=navigate sein, rendert er die json. Der Modus muss cors sein-->Allow-Cross-origin requests.
                 //Da beim Ausführen mittels cors, der Post nicht im HTML angezeigt werden, werden die Elemente gepsiechert.
-                ProgressiveKITT.addAlert('Danke für ihre Reservierung. Selbst wenn sie offline sind wird diese an den Server geschickt.', "Okay.")
+                if (response.status == 500) {
+                    ProgressiveKITT.addAlert('Fehler Status 500 beim übertragen.')
+                    subRes.attr('disabled', false);
+                    removeSpinner(resLoader)
+
+
+                } else {
+                    ProgressiveKITT.addAlert('Danke für ihre Reservierung. Selbst wenn sie offline sind wird diese an den Server geschickt.', "Okay.")
+                    console.log(response);
+                    subRes.attr('disabled', false);
+                    removeSpinner(resLoader)
+                    resLoader.html("1.Anfrage wurde abgesendet\n 2.Neu Laden\n 3. Tabelle nachschauen")
+                }
             }).then(function () {
                 // removeLoading();
                 restDate.value = '';
@@ -53,6 +70,9 @@ if ("serviceWorker" in navigator) {
                 restName.value = '';
                 restMail.value = '';
                 restGuest.value = '';
+                notifyMe("Die Anfrage wird übermittelt, wenn eine Verbindung zum Internet besteht!");
+                resStat.textContent = "Die Anfrage wird übermittelt, wenn eine Verbindung zum Internet besteht!";
+                reload.style.display = 'block';
             });
         });
     }
@@ -206,9 +226,9 @@ function registerSubscription(subUrl, subscription, method) {
         }),
     }).then(function (response) {
         if (response && response.ok) {
-            console.log("Subscription wurde erfolgreich in die Datenbank geschrieben")
-            new Notification("Thank you for enabling notification", {
-                body: "We won't spam you , we promise",
+            console.log("Subscription wurde erfolgreich in die MySQL-Datenbank geschrieben")
+            new Notification("Danke, dass Sie die Notifications erlaubt haben", {
+                body: "Diese Nachricht wurde vom Client selber geschickt.",
                 tag: "success",
                 icon: "https://cdn1.iconfinder.com/data/icons/twitter-ui-colored/48/JD-24-128.png"
             })
@@ -302,9 +322,9 @@ window.addEventListener('offline', isOnline);
 isOnline();
 
 function registerAppInstall() {
-    // from https://developers.google.com/web/fundamentals/engage-and-retain/app-install-banners/
     let deferredPrompt;
     let btnAppInstall = document.getElementById('btnAppInstall');
+// ist die Anwendung im Standalone-Modus, um Installation-Button inaktiv zu schalten
 
     window.addEventListener('beforeinstallprompt', function (e) {
         console.log('beforeinstallprompt Event fired');
@@ -312,7 +332,8 @@ function registerAppInstall() {
 
         // Stash the event so it can be triggered later.
         deferredPrompt = e;
-
+        btnAppInstall.disabled = false;
+        btnAppInstall.style.display = 'initial';
         btnAppInstall.addEventListener('click', function (e) {
             e.preventDefault();
 
@@ -324,19 +345,72 @@ function registerAppInstall() {
 
                 if (choiceResult.outcome == 'dismissed') {
                     console.log('User cancelled home screen install');
+                    btnAppInstall.disabled = false;
+                    btnAppInstall.textContent = 'Installieren';
+                    btnAppInstall.css('background-color', 'gray')
+
                 } else {
                     console.log('User added to home screen');
-                    btnAppInstall.setAttribute('disabled');
+                    btnAppInstall.disabled = true;
+                    btnAppInstall.textContent = 'Installiert!';
+                    btnAppInstall.css('background-color', 'green')
 
                 }
 
                 // We no longer need the prompt.  Clear it up.
                 deferredPrompt = null;
-                btnAppInstall.setAttribute('disabled');
-                btnAppInstall = false;
+                btnAppInstall.disabled = true;
+                btnAppInstall.textContent = 'Installiert!';
             });
         });
 
         return false;
     });
+
 };
+
+function notifyMe(response) {
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+        console.log("This browser does not support desktop notification");
+    }
+
+    // Let's check whether notification permissions have alredy been granted
+    else if (Notification.permission === "granted") {
+        // If it's okay let's create a notification
+        var notification = new Notification(response);
+    }
+
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== 'denied' || Notification.permission === "default") {
+        Notification.requestPermission(function (permission) {
+            // If the user accepts, let's create a notification
+            if (permission === "granted") {
+                var notification = new Notification(response);
+            }
+        });
+    }
+
+    // At last, if the user has denied notifications, and you
+    // want to be respectful there is no need to bother them any more.
+}
+
+function addSpinner(el, static_pos) {
+    let spinner = el.children('.spinner');
+    if (spinner.length && !spinner.hasClass('spinner-remove')) return null;
+    !spinner.length && (spinner = $('<div class="spinner' + (static_pos ? '' : ' spinner-absolute') + '"/>').appendTo(el));
+    animateSpinner(spinner, 'add');
+}
+
+function removeSpinner(el, complete) {
+    let spinner = el.children('.spinner');
+    spinner.length && animateSpinner(spinner, 'remove', complete);
+}
+
+function animateSpinner(el, animation, complete) {
+    if (el.data('animating')) {
+        el.removeClass(el.data('animating')).data('animating', null);
+        el.data('animationTimeout') && clearTimeout(el.data('animationTimeout'));
+    }
+    el.addClass('spinner-' + animation).data('animating', 'spinner-' + animation);
+}

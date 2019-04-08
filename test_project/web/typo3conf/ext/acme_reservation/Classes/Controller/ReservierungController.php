@@ -1,9 +1,14 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Paul L
+ * Date: 08.04.2019
+ * Time: 13:34
+ */
 
 namespace WebitDe\AcmeReservation\Controller;
 
 use WebitDe\AcmeReservation\Domain\Model\Reservierung;
-use TYPO3\CMS\Core\Http\Response;
 
 /**
  * @var ReservierungController
@@ -26,19 +31,17 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function listAction()
     {
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings $querySettings */
-//
-//        $querySettings = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings');
-//        $querySettings->setRespectStoragePage(false);
-//        $this->ReservierungRepository->setDefaultQuerySettings($querySettings);
-//        $newReservations = $this->reservierungRepository->findAll();
-        $this->view->render('list');
+//        $newReservation = $this->ReservierungRepository->findAll();
+//        $this->view->assign('newReservations', $newReservation);
     }
 
     /**
      * action create
      * @param Reservierung $newReservation
-     * @throws InvalidArgumentException if the provided argument is not of type 'json'.
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
     public function createAction(Reservierung $newReservation)
     {
@@ -51,7 +54,7 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         );
         # Mit dem Vorschlaghammer in die Datenbank speichern / Nägel mit Köpfen machen
         $persistenceManager->persistAll();
-        $this->view->render('list');
+        $this->redirect('list');
 
     }
 
@@ -59,18 +62,19 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     /**
      * action update
      * @throws
-     * @param Reservierung $newReservierung
+     * @param Reservierung $newReservation
      * @return void
      */
-    public function updateAction(Reservierung $newReservierung)
+    public function updateAction(Reservierung $newReservation)
     {
         $this->addFlashMessage(
             'The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html',
             '',
             \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
         );
-        $this->reservierungRepository->update($newReservierung);
+        $this->reservierungRepository->update($newReservation);
         $this->redirect('list');
     }
+
 
 }

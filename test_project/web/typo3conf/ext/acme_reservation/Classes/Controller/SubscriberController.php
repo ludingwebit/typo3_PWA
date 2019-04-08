@@ -1,8 +1,9 @@
 <?php
 namespace WebitDe\AcmeReservation\Controller;
-// The use statements of course belong into the file header.
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 use WebitDe\AcmeReservation\Domain\Model\Subscriber;
+
 /**
  * @var SubscriberController
  */
@@ -33,15 +34,15 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             $subscriber->setEndpoint($data['endpoint']);
             $subscriber->setAuthSecret($data['authSecret']);
             $now = new \DateTime();
-            $subscriber->setSubscribedAt($now) ;
+            $subscriber->setSubscribedAt($now);
             $this->SubscriberRepository->add($subscriber);
-                    # Den Vorschlaghammer instanzieren / aus der Kiste kramen
+            # Den Vorschlaghammer instanzieren / aus der Kiste kramen
             $persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
             $persistenceManager->persistAll();
         }
-                return new JsonResponse(array('new' => $is_new, "success" => true, $subscriber));
+        return new JsonResponse(array('new' => $is_new, "success" => true, $subscriber));
 
-}
+    }
 
 
     /**
@@ -52,6 +53,13 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function deleteAction()
     {
+//        $data = json_decode(file_get_contents('php://input'), true);
+//        $subscriber = new Subscriber();
+//        $subscriber->setEnabled(0);
+//        $subscriber->setBrowserKey($data['key']);
+//        $subscriber->setEndpoint($data['endpoint']);
+//        $subscriber->setAuthSecret($data['authSecret']);
+//        $this->SubscriberRepository->update($subscriber);
         $data = json_decode(file_get_contents('php://input'), true);
         $subscriber = new Subscriber();
         $subscriber->setEnabled(1);
@@ -59,19 +67,19 @@ class SubscriberController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $subscriber->setEndpoint($data['endpoint']);
         $subscriber->setAuthSecret($data['authSecret']);
         $this->SubscriberRepository->remove($subscriber);
-        $servername = "84.129.199.240";
-        $username = "root";
-        $password = "xDxXDbK9UhYl8scD";
-        $dbname = "typo3_db";
-        // Create connection
-        $hans = $subscriber->getEndpoint();
-        $databaseConnect = mysqli_connect($servername, $username, $password, $dbname);
-        $repositoryRemove = "DELETE FROM `tx_acmereservation_domain_model_subscriber` WHERE `endpoint` = '$hans'";
-        $mysql = mysqli_query($databaseConnect, $repositoryRemove);
-        mysqli_close($databaseConnect);
-        $persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
-        $persistenceManager->persistAll();
-        return new JsonResponse(array("success" => true, "Wirklich",$hans ));
+//        $servername = "84.129.192.102";
+//        $username = "root";
+//        $password = "xDxXDbK9UhYl8scD";
+//        $dbname = "typo3_db";
+//        // Create connection
+//        $hans = $subscriber->getEndpoint();
+//        $databaseConnect = mysqli_connect($servername, $username, $password, $dbname);
+//        $repositoryRemove = "DELETE FROM `tx_acmereservation_domain_model_subscriber` WHERE `endpoint` = '$hans'";
+//        $mysql = mysqli_query($databaseConnect, $repositoryRemove);
+//        mysqli_close($databaseConnect);
+//        $persistenceManager = $this->objectManager->get("TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager");
+//        $persistenceManager->persistAll();
+        return new JsonResponse(array("success" => true, "Wirklich", $subscriber));
 
     }
 }

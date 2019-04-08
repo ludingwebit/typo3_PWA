@@ -1,7 +1,7 @@
 {
-  "short_name": "TYPO3 PWA",
-  "name": "Diplomarbeit TYPO3 Protoyp Projekt webit!",
-  "description": "TYPO3 Prototyp zum testen der PWA Funktionen.",
+  "short_name": "Sub TYPO3 PWA",
+  "name": "Diplomarbeit Sub TYPO3 Protoyp Projekt webit!",
+  "description": "TYPO3 Prototyp 2.0 in einem Projekt",
   "icons": [
     {
       "src": "/fileadmin/images/manifest/icon_32.png",

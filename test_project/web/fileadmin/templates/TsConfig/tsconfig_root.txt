@@ -63,7 +63,7 @@ page {
     headerData.100 = COA
     headerData.100 {
         10 = TEXT
-        10.value = <link rel="manifest" href="/fileadmin/manifest.json"></link><link rel="icon" type="image/png" href="/fileadmin/images/favicon.png" sizes="32x32"><link rel="mask-icon" href="/fileadmin/images/safari-pinned-tab.svg" color="#96bef9">
+        10.value = <link rel="manifest" href="/fileadmin/manifest.json"></link><link rel="icon" type="image/png" href="/fileadmin/images/favicon.ico" sizes="32x32"><link rel="mask-icon" href="/fileadmin/images/safari-pinned-tab.svg" color="#96bef9">
 
     }
 
@@ -127,23 +127,23 @@ page {
                 params = class="logo"
             }
 
-            now = TEXT
-            now {
-                data = date:U
-                strftime = %d.%m.%Y
-            }
-
-            labelToday = COA_INT
-            labelToday {
-                10 = TEXT
-                10.value = Guten Morgen
-                10.lang.en = Good Morning
-                10.wrap = |!&nbsp;
-
-                20 = TEXT
-                20.value = Heute ist der
-                20.lang.en = Today is
-            }
+#            now = TEXT
+#            now {
+#                data = date:U
+#                strftime = %d.%m.%Y
+#            }
+#
+#            labelToday = COA_INT
+#            labelToday {
+#                10 = TEXT
+#                10.value = Guten Morgen
+#                10.lang.en = Good Morning
+#                10.wrap = |!&nbsp;
+#
+#                20 = TEXT
+#                20.value = Heute ist der
+#                20.lang.en = Today is
+#            }
 
             labelMore = TEXT
             labelMore.value = Mehr

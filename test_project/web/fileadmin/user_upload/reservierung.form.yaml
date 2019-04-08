@@ -1,6 +1,6 @@
 
 renderingOptions:
-  submitButtonLabel: 'Reservierung tätigen'
+  submitButtonLabel: 'ReservierungController tätigen'
 identifier: form-reservation
 label: ''
 type: Form
@@ -8,13 +8,13 @@ prototypeName: standard
 finishers:
   -
     options:
-      message: 'Ihre Reservierung wurde abgesendet, sie werden über den Zustand benachrichtigt.'
+      message: 'Ihre ReservierungController wurde abgesendet, sie werden über den Zustand benachrichtigt.'
     identifier: Confirmation
 renderables:
   -
     renderingOptions:
       previousButtonLabel: 'Vorheriger Schritt'
-      nextButtonLabel: 'Reservierung tätigen'
+      nextButtonLabel: 'ReservierungController tätigen'
     identifier: page-1
     label: ''
     type: Page

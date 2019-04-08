@@ -2,7 +2,7 @@
 namespace WebitDe\AcmeReservation\Domain\Model;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
- * Reservierung
+ * ReservierungController
  */
 class Reservierung extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {

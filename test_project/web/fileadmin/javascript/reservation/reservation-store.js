@@ -57,10 +57,10 @@ let updateObjectStore = function (storeName, id, object) {
                 .openCursor().onsuccess = function (event) {
                 let cursor = event.target.result;
                 if (!cursor) {
-                    //Hole die Reservierung aus der Datenbank
+                    //Hole die ReservierungController aus der Datenbank
                     /*                    let dbObject = getReservationsFromServer()
                                         openObjectStore(db, storeName, "readwrite").add(dbObject);*/
-                    reject("Reservierung war nicht im lokalen Speicher, wurde aber hinzugefügt.");
+                    reject("ReservierungController war nicht im lokalen Speicher, wurde aber hinzugefügt.");
                 }
                 if (cursor.value.id === id) {
                     object.status = "Angekommen";
