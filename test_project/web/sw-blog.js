@@ -6,8 +6,8 @@ let imgCaching = new RegExp('/images/');
 let staticCaching = new RegExp('/javascript/.*\.js');
 let mainCaching = new RegExp('.*reservierung');
 let DB_VERSION = "3";
-let DB_NAME = "ReservierungController-DB";
-let DB_COLLECTION = "ReservierungController-requests"
+let DB_NAME = "Reservierung-DB";
+let DB_COLLECTION = "Reservierung-requests"
 let googleMapsAPIJS = "https://maps.googleapis.com/maps/api/js?key=" +
     "AIzaSyBvQNb0hkcnBkfpVL1--9Pyd48MwjXAG18&callback=initMap";
 

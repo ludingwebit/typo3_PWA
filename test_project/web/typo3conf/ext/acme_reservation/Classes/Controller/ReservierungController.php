@@ -22,7 +22,6 @@ class ReservierungController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @inject
      */
     protected $ReservierungRepository;
-
     /**
      * action list
      *

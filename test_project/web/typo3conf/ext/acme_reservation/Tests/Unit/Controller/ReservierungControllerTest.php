@@ -1,4 +1,5 @@
 <?php
+
 namespace WebitDe\AcmeReservation\Tests\Unit\Controller;
 
 /**
@@ -37,8 +38,8 @@ class ReservierungControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
         $reservierungRepository = $this->getMockBuilder(\::class)
             ->setMethods(['findAll'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        ->disableOriginalConstructor()
+        ->getMock();
         $reservierungRepository->expects(self::once())->method('findAll')->will(self::returnValue($allReservierungs));
         $this->inject($this->subject, 'reservierungRepository', $reservierungRepository);
 
@@ -72,8 +73,8 @@ class ReservierungControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
         $reservierungRepository = $this->getMockBuilder(\::class)
             ->setMethods(['add'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        ->disableOriginalConstructor()
+        ->getMock();
 
         $reservierungRepository->expects(self::once())->method('add')->with($reservierung);
         $this->inject($this->subject, 'reservierungRepository', $reservierungRepository);
@@ -104,8 +105,8 @@ class ReservierungControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
         $reservierungRepository = $this->getMockBuilder(\::class)
             ->setMethods(['update'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        ->disableOriginalConstructor()
+        ->getMock();
 
         $reservierungRepository->expects(self::once())->method('update')->with($reservierung);
         $this->inject($this->subject, 'reservierungRepository', $reservierungRepository);
@@ -122,8 +123,8 @@ class ReservierungControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 
         $reservierungRepository = $this->getMockBuilder(\::class)
             ->setMethods(['remove'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        ->disableOriginalConstructor()
+        ->getMock();
 
         $reservierungRepository->expects(self::once())->method('remove')->with($reservierung);
         $this->inject($this->subject, 'reservierungRepository', $reservierungRepository);

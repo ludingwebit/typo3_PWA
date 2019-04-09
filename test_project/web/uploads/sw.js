@@ -63,7 +63,7 @@ let openDatabase = function () {
                 if (!db.objectStoreNames.contains(DB_COLLECTION)) {
                     reservationsStore = db.createObjectStore(DB_COLLECTION, {autoIncrement: true});
                 } else {
-                    reservationsStore = upgradeTransaction.objectStore("ReservierungController");
+                    reservationsStore = upgradeTransaction.objectStore("Reservierung");
                 }
             };
             request.onsuccess = function (event) {

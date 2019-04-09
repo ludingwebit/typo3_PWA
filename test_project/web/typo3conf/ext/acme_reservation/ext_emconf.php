@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Acme Reservation',
-    'description' => 'Extension für ReservierungController in einem Restaurant',
+    'description' => 'Extension für Reservierung in einem Restaurant',
     'category' => 'plugin',
     'author' => '',
     'author_email' => '',
@@ -20,7 +20,7 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '8.27.1',
+    'version' => '8.27.2',
     'constraints' => [
         'depends' => [
             'typo3' => '8.7.0-8.7.99',

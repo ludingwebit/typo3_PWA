@@ -53,9 +53,9 @@ let showNewReserverationNotification = function () {
     navigator.serviceWorker.ready.then(function (registration) {
         if (Notification.requestPermission() === "granted") {
             registration.showNotification("Reservation erhalten!", {
-                body: "Danke für die ReservierungController.\n" +
-                    "Sobald Änderungen oder Neuigkeiten zu der ReservierungController entstehen, werden Sie informiert.\n",
-                tag: "Neue ReservierungController"
+                body: "Danke für die Reservierung.\n" +
+                    "Sobald Änderungen oder Neuigkeiten zu der Reservierung entstehen, werden Sie informiert.\n",
+                tag: "Neue Reservierung"
             });
         } else if (PERMISSION_ACCESS !== 'denied' || PERMISSION_ACCESS == 'default') {
             Notification.requestPermission().then(function (permission) {

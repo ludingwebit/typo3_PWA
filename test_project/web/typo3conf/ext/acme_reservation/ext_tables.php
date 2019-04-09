@@ -6,7 +6,7 @@ call_user_func(function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
         'WebitDe.AcmeReservation',
         'Reservaciaplugini',
-        'ReservierungController'
+        'Reservierung'
     );
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('acme_reservation', 'Configuration/TypoScript', 'Acme Reservation');

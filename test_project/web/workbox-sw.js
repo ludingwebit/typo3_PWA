@@ -137,7 +137,7 @@ let openDatabase = function () {
                 if (!db.objectStoreNames.contains(DB_COLLECTION)) {
                     reservationsStore = db.createObjectStore(DB_COLLECTION, {autoIncrement: true});
                 } else {
-                    reservationsStore = upgradeTransaction.objectStore("ReservierungController");
+                    reservationsStore = upgradeTransaction.objectStore("Reservierung");
                 }
             };
             request.onsuccess = function (event) {
@@ -336,7 +336,7 @@ self.addEventListener('fetch', function (event) {
         let requestURL = new URL(event.request.url);
         //Fange POST Methode ab, um Controller Action manuell auszuführen
         if (event.request.method == 'POST' &&
-            requestURL.search.indexOf("controller%5D=ReservierungController") > -1) {
+            requestURL.search.indexOf("controller%5D=Reservierung") > -1) {
             // Formular senden, wird in den Cache geschrieben und asynchron gesendet
             event.respondWith(new Response(
                 JSON.stringify({
